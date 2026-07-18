@@ -1,0 +1,172 @@
+/* ==========================================================================
+   Dompet Al-Qur'an Indonesia — Detail Berita
+   Dipakai bersama landing.css (variabel warna) + navbar.css + footer.css.
+   ========================================================================== */
+
+.article-page {
+  padding: 40px 0 40px;
+}
+
+.article-layout {
+  display: grid;
+  gap: 40px;
+  align-items: start;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 960px) {
+  .article-layout { grid-template-columns: 2fr 1fr; }
+}
+
+/* --------------------------------------------------------------------
+   Artikel utama
+   -------------------------------------------------------------------- */
+
+.article-cover {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 28px;
+}
+
+.article-cover img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.article-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.35;
+  color: var(--text-dark);
+  margin: 0 0 16px;
+}
+
+.article-byline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.article-byline-author { 
+    font-weight: 500; 
+    color: var(--text-muted); 
+}
+
+.article-body {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.article-body p { margin: 0 0 22px; }
+.article-body p:last-child { margin-bottom: 0; }
+
+.article-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-brand);
+}
+
+.article-back:hover { color: var(--text-brand-dark); }
+
+/* --------------------------------------------------------------------
+   Sidebar — Berita Lainnya
+   -------------------------------------------------------------------- */
+
+.article-sidebar {
+  padding: 20px;
+  background: var(--bg-white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card);
+}
+
+.sidebar-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-dark);
+  margin: 0 0 20px;
+}
+
+.sidebar-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar-card {
+  display: block;
+  background: var(--bg-white);
+  padding: 10px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  border: 1.2px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+}
+
+.sidebar-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--bg-soft);
+  display: block;
+}
+
+.sidebar-body {
+  padding: 12px 4px 2px;
+}
+
+.sidebar-card-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.4;
+  margin: 0 0 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sidebar-category {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-brand);
+  margin-bottom: 3px;
+}
+
+.sidebar-date {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .article-page { padding: 24px 0 48px; }
+  .article-cover img { aspect-ratio: 4 / 3; }
+  .article-byline { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
