@@ -52,7 +52,9 @@
                       <li><a href="{{ route('berita.index') }}">Berita</a></li>
                       <li><a href="{{ route('rekening.index') }}">Rekening Donasi</a></li>
                       <li><a href="#about">Tentang Kami</a></li>
-                      <li><a href="{{ route('login') }}">Masuk</a></li>
+                      <a href="{{ route('admin.login') }}">
+                          <li><a href="{{ route('admin.login') }}">Masuk</a></li>
+                      </a>
                   </ul>
 
                   <p class="footer-heading" style="grid-column: 1; grid-row: 3;">Jejaring Layanan</p>

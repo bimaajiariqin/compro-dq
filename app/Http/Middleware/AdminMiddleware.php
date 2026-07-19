@@ -17,7 +17,7 @@ class AdminMiddleware
     {
         if (! Auth::check()) {
             return redirect()
-                ->route('login')
+                ->route('admin.login')
                 ->with('error', 'Silakan login terlebih dahulu untuk mengakses halaman admin.');
         }
 

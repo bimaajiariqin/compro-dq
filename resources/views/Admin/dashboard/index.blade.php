@@ -22,7 +22,7 @@
                         <path d="M4 4h13a2 2 0 0 1 2 2v13a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2V4Z"/><path d="M8 8h8M8 12h8M8 16h4"/>
                     </svg>
                 </span>
-                <a href="{{ route('berita.index') }}" class="text-xs text-emerald-700 hover:underline">Kelola →</a>
+                <a href="{{ route('admin.berita.index') }}" class="text-xs text-emerald-700 hover:underline">Kelola →</a>
             </div>
             <p class="font-display text-3xl mt-4">{{ $stats['berita'] }}</p>
             <p class="text-sm text-ink/50">Berita</p>
@@ -35,7 +35,7 @@
                         <path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/>
                     </svg>
                 </span>
-                <a href="{{ route('testimoni.index') }}" class="text-xs text-emerald-700 hover:underline">Kelola →</a>
+                <a href="{{ route('admin.testimoni.index') }}" class="text-xs text-emerald-700 hover:underline">Kelola →</a>
             </div>
             <p class="font-display text-3xl mt-4">{{ $stats['testimoni'] }}</p>
             <p class="text-sm text-ink/50">Testimoni</p>
@@ -48,7 +48,7 @@
                         <circle cx="12" cy="8" r="5"/><path d="M8.5 12.5 7 21l5-3 5 3-1.5-8.5"/>
                     </svg>
                 </span>
-                <a href="{{ route('penghargaan.index') }}" class="text-xs text-emerald-700 hover:underline">Kelola →</a>
+                <a href="{{ route('admin.penghargaan.index') }}" class="text-xs text-emerald-700 hover:underline">Kelola →</a>
             </div>
             <p class="font-display text-3xl mt-4">{{ $stats['penghargaan'] }}</p>
             <p class="text-sm text-ink/50">Penghargaan</p>
@@ -61,7 +61,7 @@
                         <path d="M14 3v5h5"/><path d="M6 3h8l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M9 13h6M9 17h6"/>
                     </svg>
                 </span>
-                <a href="{{ route('laporan-keuangan.index') }}" class="text-xs text-emerald-700 hover:underline">Kelola →</a>
+                <a href="{{ route('admin.laporan-keuangan.index') }}" class="text-xs text-emerald-700 hover:underline">Kelola →</a>
             </div>
             <p class="font-display text-3xl mt-4">{{ $stats['laporan_keuangan'] }}</p>
             <p class="text-sm text-ink/50">Laporan Keuangan</p>
@@ -74,7 +74,7 @@
         <div class="lg:col-span-2 rounded-2xl border border-black/5 bg-white p-6">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="font-display text-lg">Berita Terbaru</h3>
-                <a href="{{ route('berita.index') }}" class="text-xs text-emerald-700 hover:underline">Lihat semua</a>
+                <a href="{{ route('admin.berita.index') }}" class="text-xs text-emerald-700 hover:underline">Lihat semua</a>
             </div>
 
             @forelse ($beritaTerbaru as $berita)
@@ -95,12 +95,12 @@
                             <p class="text-xs text-ink/40 mt-0.5">{{ $berita->kategori }} · {{ $berita->tanggal_terbit->translatedFormat('d M Y') }}</p>
                         </div>
                     </div>
-                    <a href="{{ route('berita.edit', $berita) }}" class="shrink-0 text-xs text-ink/50 hover:text-emerald-700">Edit</a>
+                    <a href="{{ route('admin.berita.edit', $berita) }}" class="shrink-0 text-xs text-ink/50 hover:text-emerald-700">Edit</a>
                 </div>
             @empty
                 <div class="py-10 text-center">
                     <p class="text-sm text-ink/40">Belum ada berita yang dipublikasikan.</p>
-                    <a href="{{ route('berita.create') }}" class="inline-block mt-3 text-xs text-emerald-700 hover:underline">Tambah berita pertama →</a>
+                    <a href="{{ route('admin.berita.create') }}" class="inline-block mt-3 text-xs text-emerald-700 hover:underline">Tambah berita pertama →</a>
                 </div>
             @endforelse
         </div>
@@ -113,20 +113,20 @@
             </div>
 
             <div class="mt-6 space-y-2">
-                <a href="{{ route('berita.create') }}" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm bg-white/5 hover:bg-white/10 transition">
+                <a href="{{ route('admin.berita.create') }}" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm bg-white/5 hover:bg-white/10 transition">
                     Tambah Berita <span>+</span>
                 </a>
-                <a href="{{ route('testimoni.create') }}" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm bg-white/5 hover:bg-white/10 transition">
+                <a href="{{ route('admin.testimoni.create') }}" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm bg-white/5 hover:bg-white/10 transition">
                     Tambah Testimoni <span>+</span>
                 </a>
-                <a href="{{ route('laporan-keuangan.create') }}" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm bg-white/5 hover:bg-white/10 transition">
+                <a href="{{ route('admin.laporan-keuangan.create') }}" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm bg-white/5 hover:bg-white/10 transition">
                     Unggah Laporan Keuangan <span>+</span>
                 </a>
-                <a href="{{ route('users.index') }}" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm bg-white/5 hover:bg-white/10 transition">
+                <a href="{{ route('admin.users.index') }}" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm bg-white/5 hover:bg-white/10 transition">
                     Kelola Akun Admin <span>→</span>
                 </a>
             </div>
         </div>
     </div>
 </div>
-@endsection 
+@endsection

@@ -12,7 +12,7 @@
             <h2 class="font-display text-2xl text-ink">Laporan Keuangan</h2>
             <p class="text-sm text-ink/50 mt-1">Kelola dokumen laporan keuangan tahunan yang bisa diunduh publik.</p>
         </div>
-        <a href="{{ route('laporan-keuangan.create') }}"
+        <a href="{{ route('admin.laporan-keuangan.create') }}"
            class="inline-flex items-center gap-2 rounded-xl bg-emerald-800 hover:bg-emerald-900 transition text-white text-sm font-medium px-4 py-2.5">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                 <path d="M12 5v14M5 12h14"/>
@@ -61,8 +61,8 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-end gap-3">
-                                    <a href="{{ route('laporan-keuangan.edit', $item) }}" class="text-xs text-ink/50 hover:text-emerald-700">Edit</a>
-                                    <form method="POST" action="{{ route('laporan-keuangan.destroy', $item) }}"
+                                    <a href="{{ route('admin.laporan-keuangan.edit', $item) }}" class="text-xs text-ink/50 hover:text-emerald-700">Edit</a>
+                                    <form method="POST" action="{{ route('admin.laporan-keuangan.destroy', $item) }}"
                                           onsubmit="return confirm('Hapus laporan keuangan tahun {{ $item->tahun }}? Tindakan ini tidak bisa dibatalkan.');">
                                         @csrf
                                         @method('DELETE')
@@ -75,7 +75,7 @@
                         <tr>
                             <td colspan="3" class="px-6 py-10 text-center text-sm text-ink/40">
                                 Belum ada laporan keuangan.
-                                <a href="{{ route('laporan-keuangan.create') }}" class="text-emerald-700 hover:underline">Tambah laporan pertama →</a>
+                                <a href="{{ route('admin.laporan-keuangan.create') }}" class="text-emerald-700 hover:underline">Tambah laporan pertama →</a>
                             </td>
                         </tr>
                     @endforelse

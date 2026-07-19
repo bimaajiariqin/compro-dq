@@ -35,7 +35,7 @@ Route::prefix('program')->name('program.')->group(function () {
 | Panel admin
 |--------------------------------------------------------------------------
 */
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
@@ -43,7 +43,7 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware('admin')->group(function () {
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('users', UserController::class);
         Route::resource('berita', AdminBeritaController::class)

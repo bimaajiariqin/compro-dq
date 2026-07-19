@@ -12,7 +12,7 @@
             <h2 class="font-display text-2xl text-ink">Rekening Donasi</h2>
             <p class="text-sm text-ink/50 mt-1">Kelola daftar rekening Infaq, Zakat, dan Wakaf yang tampil di halaman publik.</p>
         </div>
-        <a href="{{ route('rekening-donasi.create') }}"
+        <a href="{{ route('admin.rekening-donasi.create') }}"
            class="inline-flex items-center gap-2 rounded-xl bg-emerald-800 hover:bg-emerald-900 transition text-white text-sm font-medium px-4 py-2.5">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                 <path d="M12 5v14M5 12h14"/>
@@ -62,8 +62,8 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-end gap-3">
-                                    <a href="{{ route('rekening-donasi.edit', $item) }}" class="text-xs text-ink/50 hover:text-emerald-700">Edit</a>
-                                    <form method="POST" action="{{ route('rekening-donasi.destroy', $item) }}"
+                                    <a href="{{ route('admin.rekening-donasi.edit', $item) }}" class="text-xs text-ink/50 hover:text-emerald-700">Edit</a>
+                                    <form method="POST" action="{{ route('admin.rekening-donasi.destroy', $item) }}"
                                           onsubmit="return confirm('Hapus rekening {{ $item->nama_bank }}? Tindakan ini tidak bisa dibatalkan.');">
                                         @csrf
                                         @method('DELETE')
@@ -76,7 +76,7 @@
                         <tr>
                             <td colspan="5" class="px-6 py-10 text-center text-sm text-ink/40">
                                 Belum ada rekening donasi.
-                                <a href="{{ route('rekening-donasi.create') }}" class="text-emerald-700 hover:underline">Tambah rekening pertama →</a>
+                                <a href="{{ route('admin.rekening-donasi.create') }}" class="text-emerald-700 hover:underline">Tambah rekening pertama →</a>
                             </td>
                         </tr>
                     @endforelse

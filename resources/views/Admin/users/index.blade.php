@@ -12,7 +12,7 @@
             <h2 class="font-display text-2xl text-ink">Akun Admin</h2>
             <p class="text-sm text-ink/50 mt-1">Kelola siapa saja yang punya akses ke panel admin ini.</p>
         </div>
-        <a href="{{ route('users.create') }}"
+        <a href="{{ route('admin.users.create') }}"
            class="inline-flex items-center gap-2 rounded-xl bg-emerald-800 hover:bg-emerald-900 transition text-white text-sm font-medium px-4 py-2.5">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                 <path d="M12 5v14M5 12h14"/>
@@ -67,10 +67,10 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-end gap-3">
-                                    <a href="{{ route('users.edit', $user) }}" class="text-xs text-ink/50 hover:text-emerald-700">Edit</a>
+                                    <a href="{{ route('admin.users.edit', $user) }}" class="text-xs text-ink/50 hover:text-emerald-700">Edit</a>
 
                                     @if ($user->id !== auth()->id())
-                                        <form method="POST" action="{{ route('users.destroy', $user) }}"
+                                        <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
                                               onsubmit="return confirm('Hapus admin {{ $user->email }}? Tindakan ini tidak bisa dibatalkan.');">
                                             @csrf
                                             @method('DELETE')

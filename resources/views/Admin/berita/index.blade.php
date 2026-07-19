@@ -12,7 +12,7 @@
             <h2 class="font-display text-2xl text-ink">Berita</h2>
             <p class="text-sm text-ink/50 mt-1">Kelola artikel berita yang tampil di halaman company profile.</p>
         </div>
-        <a href="{{ route('berita.create') }}"
+        <a href="{{ route('admin.berita.create') }}"
            class="inline-flex items-center gap-2 rounded-xl bg-emerald-800 hover:bg-emerald-900 transition text-white text-sm font-medium px-4 py-2.5">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                 <path d="M12 5v14M5 12h14"/>
@@ -81,8 +81,8 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-end gap-3">
-                                    <a href="{{ route('berita.edit', $item) }}" class="text-xs text-ink/50 hover:text-emerald-700">Edit</a>
-                                    <form method="POST" action="{{ route('berita.destroy', $item) }}"
+                                    <a href="{{ route('admin.berita.edit', $item) }}" class="text-xs text-ink/50 hover:text-emerald-700">Edit</a>
+                                    <form method="POST" action="{{ route('admin.berita.destroy', $item) }}"
                                           onsubmit="return confirm('Hapus berita &quot;{{ $item->judul }}&quot;? Tindakan ini tidak bisa dibatalkan.');">
                                         @csrf
                                         @method('DELETE')
@@ -95,7 +95,7 @@
                         <tr>
                             <td colspan="5" class="px-6 py-10 text-center text-sm text-ink/40">
                                 Belum ada berita.
-                                <a href="{{ route('berita.create') }}" class="text-emerald-700 hover:underline">Tambah berita pertama →</a>
+                                <a href="{{ route('admin.berita.create') }}" class="text-emerald-700 hover:underline">Tambah berita pertama →</a>
                             </td>
                         </tr>
                     @endforelse

@@ -23,10 +23,10 @@
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                   </button>
                   <div class="nav-dropdown">
-                      <a href="#berita" data-goto-filter="pendidikan">Peduli Pendidikan</a>
-                      <a href="#berita" data-goto-filter="ekonomi">Peduli Ekonomi</a>
-                      <a href="#berita" data-goto-filter="dakwah">Peduli Dakwah</a>
-                      <a href="#berita" data-goto-filter="kemanusiaan">Peduli Kemanusiaan</a>
+                      <a href="{{ route('program.pendidikan') }}">Peduli Pendidikan</a>
+                      <a href="{{ route('program.ekonomi') }}">Peduli Ekonomi</a>
+                      <a href="{{ route('program.dakwah') }}">Peduli Dakwah</a>
+                      <a href="{{ route('program.kemanusiaan') }}">Peduli Kemanusiaan</a>
                   </div>
               </div>
 
@@ -96,10 +96,10 @@
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                   </button>
                   <div class="mobile-submenu" id="programSubmenu">
-                      <a href="#berita" data-goto-filter="pendidikan">Peduli Pendidikan</a>
-                      <a href="#berita" data-goto-filter="ekonomi">Peduli Ekonomi</a>
-                      <a href="#berita" data-goto-filter="dakwah">Peduli Dakwah</a>
-                      <a href="#berita" data-goto-filter="kemanusiaan">Peduli Kemanusiaan</a>
+                      <a href="{{ route('program.pendidikan') }}">Peduli Pendidikan</a>
+                      <a href="{{ route('program.ekonomi') }}">Peduli Ekonomi</a>
+                      <a href="{{ route('program.dakwah') }}">Peduli Dakwah</a>
+                      <a href="{{ route('program.kemanusiaan') }}">Peduli Kemanusiaan</a>
                   </div>
               </div>
 
@@ -167,10 +167,6 @@
     --container-width: 1200px;
   }
 
-  /* ==========================================================================
-    Page backdrop (di desain, navbar "melayang" di atas background abu-abu muda)
-    ========================================================================== */
-
   body {
     background: var(--bg-white);
   }
@@ -184,10 +180,6 @@
     background: var(--text-brand);
     z-index: 110;
   }
-
-  /* ==========================================================================
-    Navbar — lebih compact: sticky offset, padding, dan tinggi elemen dikurangi
-    ========================================================================== */
 
   .navbar {
     position: sticky;
@@ -224,7 +216,6 @@
     flex-shrink: 0;
   }
 
-  /* Monogram "DQ" bulat, dua huruf saling tumpuk (biru + abu kebiruan) */
   .navbar-brand img.brand-mark {
     position: relative;
     width: 38px !important;
@@ -411,10 +402,6 @@
     color: var(--text-dark);
   }
 
-  /* ==========================================================================
-    Mobile nav (tetap seperti sebelumnya, disesuaikan dengan navbar melayang)
-    ========================================================================== */
-
   @media (max-width: 960px) {
     .navbar-menu,
     .lang-toggle {
@@ -430,10 +417,6 @@
       max-width: none;
     }
 
-    /* FIX: saat mobile nav terbuka, navbar jadi tinggi karena isi
-       menu banyak. Kalau border-radius tetap --radius-full (pil
-       penuh), sudutnya melengkung ekstrem sampai keliatan kayak
-       lingkaran/oval. Turunkan radius-nya di kondisi ini. */
     .navbar.navbar-mobile-open {
       border-radius: var(--radius-lg);
     }
