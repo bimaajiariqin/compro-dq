@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\PenghargaanController;
 use App\Http\Controllers\Admin\LaporanKeuanganController;
 use App\Http\Controllers\Admin\RekeningDonasiController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\IklanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,7 +57,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             ->parameters(['laporan-keuangan' => 'laporan_keuangan']);
         Route::resource('rekening-donasi', RekeningDonasiController::class)
             ->parameters(['rekening-donasi' => 'rekening_donasi']);
-
+        Route::resource('iklan', IklanController::class);
     });
 
 });
