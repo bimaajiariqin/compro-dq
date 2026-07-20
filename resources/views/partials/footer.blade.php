@@ -65,10 +65,10 @@
 
                   <p class="footer-heading" style="grid-column: 2; grid-row: 1;">Program Kami</p>
                   <ul class="footer-links" style="grid-column: 2; grid-row: 2;">
-                      <li><a href="#berita" data-goto-filter="pendidikan">Peduli Pendidikan</a></li>
-                      <li><a href="#berita" data-goto-filter="ekonomi">Peduli Ekonomi</a></li>
-                      <li><a href="#berita" data-goto-filter="dakwah">Peduli Dakwah</a></li>
-                      <li><a href="#berita" data-goto-filter="kemanusiaan">Peduli Kemanusiaan</a></li>
+                      <li><a href="{{ route('program.pendidikan') }}">Peduli Pendidikan</a></li>
+                      <li><a href="{{ route('program.ekonomi') }}">Peduli Ekonomi</a></li>
+                      <li><a href="{{ route('program.dakwah') }}">Peduli Dakwah</a></li>
+                      <li><a href="{{ route('program.kemanusiaan') }}">Peduli Kemanusiaan</a></li>
                   </ul>
 
                   <p class="footer-heading" style="grid-column: 2; grid-row: 3;">Pengunjung Website</p>

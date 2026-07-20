@@ -21,13 +21,45 @@ class ProgramController extends Controller
         ]);
     }
 
-    // 3 halaman program lainnya memakai pola yang sama: query filter_program
-    // berbeda, lalu view Program/{nama}.blade.php sendiri (isi Program Pokok
-    // ditulis langsung di masing-masing view, lihat komentar @php di dalamnya).
-    //
-    // public function ekonomi(): View
-    // {
-    //     $berita = Berita::where('filter_program', 'Ekonomi')->orderByDesc('tanggal_terbit')->get();
-    //     return view('Program.ekonomi', ['berita' => $berita]);
-    // }
+    /**
+     * Halaman Program Peduli Ekonomi (/program/ekonomi)
+     */
+    public function ekonomi(): View
+    {
+        $berita = Berita::where('filter_program', 'Ekonomi')
+            ->orderByDesc('tanggal_terbit')
+            ->get();
+
+        return view('Program.ekonomi', [
+            'berita' => $berita,
+        ]);
+    }
+
+    /**
+     * Halaman Program Peduli Dakwah (/program/dakwah)
+     */
+    public function dakwah(): View
+    {
+        $berita = Berita::where('filter_program', 'Dakwah')
+            ->orderByDesc('tanggal_terbit')
+            ->get();
+
+        return view('Program.dakwah', [
+            'berita' => $berita,
+        ]);
+    }
+
+    /**
+     * Halaman Program Peduli Kemanusiaan (/program/kemanusiaan)
+     */
+    public function kemanusiaan(): View
+    {
+        $berita = Berita::where('filter_program', 'Kemanusiaan')
+            ->orderByDesc('tanggal_terbit')
+            ->get();
+
+        return view('Program.kemanusiaan', [
+            'berita' => $berita,
+        ]);
+    }
 }

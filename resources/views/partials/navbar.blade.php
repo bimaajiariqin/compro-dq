@@ -56,7 +56,7 @@
               </div>
 
               <div class="nav-item">
-                  <a href="#about" class="nav-link">
+                  <a href="{{ route('tentang-kami') }}" class="nav-link">
                       <span data-id="Tentang Kami" data-en="About Us">Tentang Kami</span>
                   </a>
               </div>

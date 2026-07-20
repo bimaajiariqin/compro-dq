@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\TentangKamiController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BeritaController as AdminBeritaController;
@@ -23,6 +24,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
 Route::get('/berita/{berita}', [BeritaController::class, 'show'])->name('berita.show');
 Route::get('/rekening-donasi', [RekeningController::class, 'index'])->name('rekening.index');
+Route::get('/tentang-kami', [TentangKamiController::class, 'index'])->name('tentang-kami');
 Route::prefix('program')->name('program.')->group(function () {
     Route::get('/pendidikan', [ProgramController::class, 'pendidikan'])->name('pendidikan');
     Route::get('/ekonomi', [ProgramController::class, 'ekonomi'])->name('ekonomi');

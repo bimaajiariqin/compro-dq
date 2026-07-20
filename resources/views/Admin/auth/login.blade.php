@@ -112,7 +112,13 @@
                     </button>
                 </form>
 
-                <p class="mt-8 text-center text-xs text-ink/30">Akses hanya untuk administrator yang terdaftar.</p>
+                <p class="mt-6 text-center text-sm">
+                    <a href="{{ route('home') }}" class="text-emerald-700 hover:text-emerald-800 font-medium">
+                        Kembali ke Halaman Utama
+                    </a>
+                </p>
+
+                <p class="mt-4 text-center text-xs text-ink/30">Akses hanya untuk administrator yang terdaftar.</p>
             </div>
         </div>
     </div>

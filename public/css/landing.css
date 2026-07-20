@@ -505,8 +505,6 @@ button { font-family: inherit; cursor: pointer; }
 
 .berita-card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--shadow-card);
-  border-color: transparent;
 }
 
 .berita-thumb {
