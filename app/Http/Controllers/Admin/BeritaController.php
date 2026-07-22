@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Berita;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -18,6 +19,11 @@ class BeritaController extends Controller
      * Folder tempat thumbnail disimpan, relatif terhadap public/storage.
      */
     private const THUMBNAIL_FOLDER = 'berita';
+
+    /**
+     * Folder tempat gambar sisipan konten (dari editor deskripsi) disimpan.
+     */
+    private const KONTEN_FOLDER = 'berita-konten';
 
     public function index(): View
     {
@@ -44,12 +50,12 @@ class BeritaController extends Controller
 
         Berita::create($validated);
 
-        return redirect()->route('berita.index')->with('success', 'Berita berhasil ditambahkan.');
+        return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil ditambahkan.');
     }
 
     public function show(Berita $berita): RedirectResponse
     {
-        return redirect()->route('berita.edit', $berita);
+        return redirect()->route('admin.berita.edit', $berita);
     }
 
     public function edit(Berita $berita): View
@@ -72,7 +78,7 @@ class BeritaController extends Controller
 
         $berita->update($validated);
 
-        return redirect()->route('berita.index')->with('success', 'Berita berhasil diperbarui.');
+        return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil diperbarui.');
     }
 
     public function destroy(Berita $berita): RedirectResponse
@@ -81,7 +87,38 @@ class BeritaController extends Controller
 
         $berita->delete();
 
-        return redirect()->route('berita.index')->with('success', 'Berita berhasil dihapus.');
+        return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil dihapus.');
+    }
+
+    /**
+     * Upload gambar yang disisipkan langsung di dalam editor deskripsi (Quill).
+     * Dipanggil lewat AJAX dari halaman create/edit, mengembalikan URL gambar.
+     */
+    public function uploadImage(Request $request): JsonResponse
+    {
+        $request->validate([
+            'image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+        ], [
+            'image.required' => 'Gambar wajib diunggah.',
+            'image.image'    => 'File harus berupa gambar.',
+            'image.mimes'    => 'Format gambar harus jpg, jpeg, png, atau webp.',
+            'image.max'      => 'Ukuran gambar maksimal 2MB.',
+        ]);
+
+        $destinationPath = public_path('storage/' . self::KONTEN_FOLDER);
+
+        if (! File::exists($destinationPath)) {
+            File::makeDirectory($destinationPath, 0755, true);
+        }
+
+        $file = $request->file('image');
+        $filename = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
+
+        $file->move($destinationPath, $filename);
+
+        return response()->json([
+            'location' => asset('storage/' . self::KONTEN_FOLDER . '/' . $filename),
+        ]);
     }
 
     /**

@@ -42,11 +42,7 @@
                 </div>
 
                 <div class="article-body">
-                    @foreach (preg_split('/\r\n|\r|\n/', trim($berita->deskripsi)) as $paragraph)
-                        @if (trim($paragraph) !== '')
-                            <p>{{ $paragraph }}</p>
-                        @endif
-                    @endforeach
+                    {!! $berita->deskripsi !!}
                 </div>
             </article>
 

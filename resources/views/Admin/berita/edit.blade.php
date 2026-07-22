@@ -7,7 +7,7 @@
 @section('content')
 <div class="max-w-2xl">
     <div class="rounded-2xl border border-black/5 bg-white p-6">
-        <form method="POST" action="{{ route('admin.berita.update', $berita) }}" enctype="multipart/form-data" class="space-y-5">
+        <form id="berita-form" method="POST" action="{{ route('admin.berita.update', $berita) }}" enctype="multipart/form-data" class="space-y-5">
             @csrf
             @method('PUT')
 
@@ -83,10 +83,15 @@
             </div>
 
             <div>
-                <label for="deskripsi" class="block text-sm font-medium text-ink/70 mb-1.5">Deskripsi</label>
-                <textarea id="deskripsi" name="deskripsi" rows="8" required
-                          class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm
-                                 focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">{{ old('deskripsi', $berita->deskripsi) }}</textarea>
+                <label class="block text-sm font-medium text-ink/70 mb-1.5">Deskripsi</label>
+
+                <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+
+                <div class="rounded-xl border border-black/10 overflow-hidden focus-within:ring-2 focus-within:ring-emerald-700/30 focus-within:border-emerald-700">
+                    <div id="editor-deskripsi" style="min-height:280px;" class="bg-white text-sm">{!! old('deskripsi', $berita->deskripsi) !!}</div>
+                </div>
+                <textarea name="deskripsi" id="deskripsi" hidden>{{ old('deskripsi', $berita->deskripsi) }}</textarea>
+
                 @error('deskripsi') <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p> @enderror
             </div>
 
@@ -99,4 +104,74 @@
         </form>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<script>
+(function () {
+    const hiddenTextarea = document.getElementById('deskripsi');
+    const form = document.getElementById('berita-form');
+
+    const quillEditor = new Quill('#editor-deskripsi', {
+        theme: 'snow',
+        placeholder: 'Tulis isi berita di sini...',
+        modules: {
+            toolbar: {
+                container: [
+                    [{ header: [2, 3, false] }],
+                    ['bold', 'italic', 'underline'],
+                    ['blockquote'],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    ['link', 'image'],
+                    ['clean'],
+                ],
+                handlers: { image: imageHandler },
+            },
+        },
+    });
+
+    quillEditor.on('text-change', function () {
+        hiddenTextarea.value = quillEditor.root.innerHTML;
+    });
+    hiddenTextarea.value = quillEditor.root.innerHTML;
+
+    function imageHandler() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.click();
+
+        input.onchange = async () => {
+            const formData = new FormData();
+            formData.append('image', input.files[0]);
+
+            try {
+                const res = await fetch('{{ route('admin.berita.upload-gambar') }}', {
+                    method: 'POST',
+                    headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                    body: formData,
+                });
+
+                if (!res.ok) {
+                    console.error('Upload gagal, status:', res.status);
+                    alert('Gagal upload gambar. Cek console untuk detail.');
+                    return;
+                }
+
+                const data = await res.json();
+                const range = quillEditor.getSelection(true) || { index: quillEditor.getLength() };
+                quillEditor.insertEmbed(range.index, 'image', data.location, 'user');
+                quillEditor.setSelection(range.index + 1);
+            } catch (err) {
+                console.error('Upload error:', err);
+                alert('Terjadi error saat upload gambar. Cek console.');
+            }
+        };
+    }
+
+    form.addEventListener('submit', function () {
+        hiddenTextarea.value = quillEditor.root.innerHTML;
+        console.log('Deskripsi yang dikirim:', hiddenTextarea.value);
+    });
+})();
+</script>
 @endsection

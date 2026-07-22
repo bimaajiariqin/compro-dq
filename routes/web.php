@@ -52,8 +52,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('users', UserController::class);
+
+        Route::post('/berita/upload-gambar', [AdminBeritaController::class, 'uploadImage'])
+            ->name('berita.upload-gambar');
         Route::resource('berita', AdminBeritaController::class)
             ->parameters(['berita' => 'berita']);
+
         Route::resource('testimoni', TestimoniController::class);
         Route::resource('penghargaan', PenghargaanController::class);
         Route::resource('laporan-keuangan', LaporanKeuanganController::class)
