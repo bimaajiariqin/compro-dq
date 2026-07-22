@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\Iklan;
 use App\Models\Testimoni;
+use App\Models\VideoKebaikan;
 use App\Models\WebsiteVisit;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    /**
-     * Kategori & filter program yang dipakai untuk tab filter di section Berita.
-     * Diambil dari ENUM kolom `kategori` dan `filter_program` pada tabel `berita`.
-     */
     public const KATEGORI = ['Inspirasi', 'Kegiatan', 'Informasi'];
     public const FILTER_PROGRAM = ['Pendidikan', 'Ekonomi', 'Dakwah', 'Kemanusiaan'];
 
@@ -25,9 +23,13 @@ class HomeController extends Controller
 
         $berita = Berita::orderByDesc('tanggal_terbit')->take(24)->get();
 
-        // Angka pilar/donatur/penerima manfaat/dana tersalurkan belum punya tabel
-        // sumber datanya sendiri di database saat ini, jadi untuk sementara
-        // di-hardcode di sini. Ganti ke query asli begitu tabelnya tersedia.
+        $iklan = Iklan::orderByDesc('created_at')->get();
+
+        // Title/channel/thumbnail sudah tersimpan di database (diisi otomatis
+        // saat data dibuat/diedit lewat model VideoKebaikan), jadi di sini
+        // tinggal query biasa — gak ada panggilan ke API YouTube lagi.
+        $videoKebaikan = VideoKebaikan::orderByDesc('created_at')->get();
+
         $impactStats = [
             ['label' => 'Pilar Program', 'value' => 4, 'suffix' => ''],
             ['label' => 'Donatur', 'value' => 1000, 'suffix' => '+'],
@@ -46,6 +48,8 @@ class HomeController extends Controller
         return view('home', [
             'testimoni'          => $testimoni,
             'berita'             => $berita,
+            'iklan'              => $iklan,
+            'videoKebaikan'      => $videoKebaikan,
             'kategoriOptions'    => self::KATEGORI,
             'filterProgramOptions' => self::FILTER_PROGRAM,
             'impactStats'        => $impactStats,
@@ -53,11 +57,6 @@ class HomeController extends Controller
         ]);
     }
 
-    /**
-     * Menambah hitungan pengunjung untuk hari ini, maksimal satu kali per sesi
-     * browser per hari — jadi me-reload halaman tidak akan menambah angka
-     * terus-menerus.
-     */
     private function trackVisit(Request $request): void
     {
         $today = today()->toDateString();

@@ -81,9 +81,33 @@
 </section>
 
 {{-- ==========================================================
+     IKLAN / CAMPAIGN
+     ========================================================== --}}
+@if ($iklan->isNotEmpty())
+<section class="section" id="iklan">
+    <div class="container">
+        <div class="text-center reveal" style="margin-bottom: 32px;">
+            <h2 class="section-title">Yuk, Jadi <span>Orang Baik</span> Hari Ini!</h2>
+            <p class="section-subtitle mx-auto text-center">Temukan berbagai campaign terpercaya dan salurkan donasi dengan mudah, aman, dan penuh makna.</p>
+        </div>
+
+        <div class="iklan-carousel reveal">
+            <div class="iklan-track" id="iklanTrack">
+                @foreach ($iklan as $item)
+                    <a href="{{ $item->link }}" target="_blank" rel="noopener noreferrer" class="iklan-slide">
+                        <img src="{{ asset('storage/' . $item->thumbnail) }}" alt="Campaign Dompet Al-Qur'an Indonesia" class="iklan-img" loading="lazy">
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
+{{-- ==========================================================
      LAYANAN KEBAIKAN KAMI
      ========================================================== --}}
-<section class="section-soft" id="layanan">
+<section class="section" id="layanan">
     <div class="container">
         <h2 class="section-title">Layanan <span>Kebaikan Kami</span></h2>
 
@@ -240,6 +264,69 @@
 </section>
 
 {{-- ==========================================================
+     VIDEO KEBAIKAN
+     ========================================================== --}}
+@if ($videoKebaikan->isNotEmpty())
+<section class="section" id="video-kebaikan">
+    <div class="container">
+        <div class="video-kebaikan-grid reveal">
+            <div class="video-kebaikan-text">
+                <h2 class="video-kebaikan-title">Gerakan Nyata untuk Indonesia</h2>
+                <p>Saksikan bagaimana setiap kegiatan dan penyaluran bantuan memberi manfaat bagi yatim dan dhuafa yang membutuhkan.
+                    Jadilah bagian dari kebaikan. Temukan inspirasi, bagikan kepedulian, dan ikut memberi dampak nyata bagi mereka.
+                Semua video kebaikan bisa kamu lihat langsung di channel YouTube {{ $videoKebaikan->first()->channel_name }}.</p>
+            </div>
+
+            <div class="video-kebaikan-media">
+                @php $featured = $videoKebaikan->first(); @endphp
+
+                <div class="video-featured" data-video-id="{{ $featured->video_id }}">
+                    <div class="video-frame video-frame-featured" style="background-image:url('{{ $featured->thumbnail_url }}')">
+                        <div class="video-featured-top">
+                            <div class="video-featured-channel">
+                                <span class="video-channel-avatar">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.6-.46-5.32a2.9 2.9 0 0 0-2-2C18.88 4.2 12 4.2 12 4.2s-6.88 0-8.54.48a2.9 2.9 0 0 0-2 2C1 8.4 1 12 1 12s0 3.6.46 5.32a2.9 2.9 0 0 0 2 2C5.12 19.8 12 19.8 12 19.8s6.88 0 8.54-.48a2.9 2.9 0 0 0 2-2C23 15.6 23 12 23 12z"/><path fill="#fff" d="M9.75 15.5V8.5L15.75 12z"/></svg>
+                                </span>
+                                <span>
+                                    <span class="video-featured-title">{{ $featured->title }}</span>
+                                    <span class="video-featured-channel-name">{{ $featured->channel_name }}</span>
+                                </span>
+                            </div>
+
+                            <a href="https://www.youtube.com/watch?v={{ $featured->video_id }}" target="_blank" rel="noopener noreferrer" class="video-youtube-badge">
+                                Tonton di YouTube
+                            </a>
+                        </div>
+
+                        <button type="button" class="video-play-btn" aria-label="Putar video">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                @if ($videoKebaikan->count() > 1)
+                <div class="video-kebaikan-slider">
+                    <div class="video-kebaikan-list" id="videoKebaikanList">
+                        @foreach ($videoKebaikan->skip(1) as $video)
+                            <div class="video-thumb-card" data-video-id="{{ $video->video_id }}">
+                                <div class="video-frame video-frame-thumb" style="background-image:url('{{ $video->thumbnail_url }}')">
+                                    <button type="button" class="video-play-btn video-play-btn-sm" aria-label="Putar video">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+                                    </button>
+                                </div>
+                                <p class="video-thumb-title">{{ $video->title }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
+{{-- ==========================================================
      CTA
      ========================================================== --}}
 <section class="section" id="cta">
@@ -263,8 +350,193 @@
     </div>
 </section>
 
+{{-- ==========================================================
+     QR DONASI
+     ========================================================== --}}
+<section class="section" id="qr-donasi">
+    <div class="container">
+        <div class="qr-donasi-card">
+            <div class="qr-donasi-pattern" aria-hidden="true"></div>
+
+            <div class="qr-donasi-inner">
+                <div class="qr-donasi-scan">
+                    <div class="qr-donasi-frame">
+                        <span class="qr-scanline" aria-hidden="true"></span>
+                        <img src="{{ asset('assets/qris.png') }}" alt="QRIS Donasi Dompet Al-Qur'an Indonesia" class="qr-donasi-img">
+                    </div>
+                    <div class="qr-donasi-trust">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+                        <span>QRIS resmi, diawasi Bank Indonesia</span>
+                    </div>
+                </div>
+
+                <div class="qr-donasi-content">
+                    <h2 class="qr-donasi-heading">
+                        Donasi Lebih Mudah,<br>
+                        <span>Kapan Saja</span> dan <span>Di Mana Saja</span>
+                    </h2>
+                    <p class="qr-donasi-desc">
+                        Tak perlu transfer manual atau catat nomor rekening. Cukup pindai kode
+                        QRIS di samping lewat aplikasi e-wallet atau m-banking favoritmu.
+                    </p>
+
+
+                    <div class="qr-donasi-apps">
+                        <p class="qr-donasi-apps-label">Didukung oleh</p>
+                        @php
+                            $qrisApps = [
+                                ['name' => 'OVO', 'logo' => 'ewallet-ovo.png'],
+                                ['name' => 'GoPay', 'logo' => 'ewallet-gopay.png'],
+                                ['name' => 'DANA', 'logo' => 'ewallet-dana.png'],
+                                ['name' => 'ShopeePay', 'logo' => 'ewallet-shopeepay.png'],
+                            ];
+                        @endphp
+                        <div class="qr-donasi-apps-list">
+                            @foreach ($qrisApps as $app)
+                                <span class="qr-donasi-app-badge">
+                                    <img src="{{ asset('assets/' . $app['logo']) }}" alt="{{ $app['name'] }}">
+                                </span>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 @include('partials.footer')
 
 <script src="{{ asset('js/landing.js') }}"></script>
+
+{{-- Auto-slide carousel untuk section Iklan --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const track = document.getElementById('iklanTrack');
+    if (!track) return;
+
+    const originalSlides = Array.from(track.children);
+    const totalSlides = originalSlides.length;
+
+    // Kalau iklan cuma 1-2, gak perlu digeser otomatis.
+    if (totalSlides <= 2) return;
+
+    // Gandakan slide biar transisi loop dari slide terakhir balik ke awal terlihat mulus.
+    originalSlides.forEach(function (slide) {
+        track.appendChild(slide.cloneNode(true));
+    });
+
+    let currentIndex = 0;
+    let slideStep = 0;
+
+    function measure() {
+        const trackStyle = window.getComputedStyle(track);
+        const gap = parseFloat(trackStyle.columnGap || trackStyle.gap || 0);
+        slideStep = track.children[0].getBoundingClientRect().width + gap;
+    }
+
+    function goTo(index, animate) {
+        track.style.transition = animate ? 'transform 0.6s ease' : 'none';
+        track.style.transform = 'translateX(' + (-index * slideStep) + 'px)';
+    }
+
+    measure();
+    goTo(currentIndex, false);
+
+    window.addEventListener('resize', function () {
+        measure();
+        goTo(currentIndex, false);
+    });
+
+    setInterval(function () {
+        currentIndex++;
+        goTo(currentIndex, true);
+
+        // Setelah nyampe slide duplikat pertama, lompat diam-diam balik ke index 0.
+        if (currentIndex >= totalSlides) {
+            setTimeout(function () {
+                currentIndex = 0;
+                goTo(currentIndex, false);
+            }, 620);
+        }
+    }, 5000);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.video-play-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const wrapper = btn.closest('[data-video-id]');
+            const frame = btn.closest('.video-frame');
+            if (!wrapper || !frame) return;
+
+            const videoId = wrapper.dataset.videoId;
+            const iframe = document.createElement('iframe');
+            iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+            iframe.title = 'YouTube video player';
+            iframe.className = 'video-iframe';
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+            iframe.setAttribute('allowfullscreen', '');
+
+            frame.style.backgroundImage = 'none';
+            frame.innerHTML = '';
+            frame.appendChild(iframe);
+        });
+    });
+});
+
+{{-- Bikin slider video kebaikan bisa digeser pakai mouse (klik-tahan-geser)
+     dan roda mouse vertikal (khusus saat kursor di atas slider), supaya
+     tetap bisa "di-slide" walau pengguna pakai mouse biasa di desktop --}}
+document.addEventListener('DOMContentLoaded', function () {
+    const list = document.getElementById('videoKebaikanList');
+    if (!list) return;
+
+    let isDown = false;
+    let startX = 0;
+    let scrollStart = 0;
+    let moved = false;
+
+    list.classList.add('is-draggable');
+
+    list.addEventListener('mousedown', function (e) {
+        isDown = true;
+        moved = false;
+        list.classList.add('is-dragging');
+        startX = e.pageX;
+        scrollStart = list.scrollLeft;
+    });
+
+    window.addEventListener('mouseup', function () {
+        isDown = false;
+        list.classList.remove('is-dragging');
+    });
+
+    window.addEventListener('mousemove', function (e) {
+        if (!isDown) return;
+        e.preventDefault();
+        const delta = e.pageX - startX;
+        if (Math.abs(delta) > 3) moved = true;
+        list.scrollLeft = scrollStart - delta;
+    });
+
+    // Cegah link/video ke-klik kalau ternyata itu drag, bukan klik biasa.
+    list.addEventListener('click', function (e) {
+        if (moved) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }, true);
+
+    // Roda mouse vertikal -> geser horizontal, hanya saat memang ada overflow.
+    list.addEventListener('wheel', function (e) {
+        if (list.scrollWidth <= list.clientWidth) return;
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+            e.preventDefault();
+            list.scrollLeft += e.deltaY;
+        }
+    }, { passive: false });
+});
+</script>
 </body>
 </html>

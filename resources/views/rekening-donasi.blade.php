@@ -73,6 +73,61 @@
     </div>
 </section>
 
+{{-- ==========================================================
+     QR DONASI
+     ========================================================== --}}
+<section class="section" id="qr-donasi">
+    <div class="container">
+        <div class="qr-donasi-card">
+            <div class="qr-donasi-pattern" aria-hidden="true"></div>
+
+            <div class="qr-donasi-inner">
+                <div class="qr-donasi-scan">
+                    <div class="qr-donasi-frame">
+                        <span class="qr-scanline" aria-hidden="true"></span>
+                        <img src="{{ asset('assets/qris.png') }}" alt="QRIS Donasi Dompet Al-Qur'an Indonesia" class="qr-donasi-img">
+                    </div>
+                    <div class="qr-donasi-trust">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+                        <span>QRIS resmi, diawasi Bank Indonesia</span>
+                    </div>
+                </div>
+
+                <div class="qr-donasi-content">
+                    <h2 class="qr-donasi-heading">
+                        Donasi Lebih Mudah,<br>
+                        <span>Kapan Saja</span> dan <span>Di Mana Saja</span>
+                    </h2>
+                    <p class="qr-donasi-desc">
+                        Tak perlu transfer manual atau catat nomor rekening. Cukup pindai kode
+                        QRIS di samping lewat aplikasi e-wallet atau m-banking favoritmu.
+                    </p>
+
+
+                    <div class="qr-donasi-apps">
+                        <p class="qr-donasi-apps-label">Didukung oleh</p>
+                        @php
+                            $qrisApps = [
+                                ['name' => 'OVO', 'logo' => 'ewallet-ovo.png'],
+                                ['name' => 'GoPay', 'logo' => 'ewallet-gopay.png'],
+                                ['name' => 'DANA', 'logo' => 'ewallet-dana.png'],
+                                ['name' => 'ShopeePay', 'logo' => 'ewallet-shopeepay.png'],
+                            ];
+                        @endphp
+                        <div class="qr-donasi-apps-list">
+                            @foreach ($qrisApps as $app)
+                                <span class="qr-donasi-app-badge">
+                                    <img src="{{ asset('assets/' . $app['logo']) }}" alt="{{ $app['name'] }}">
+                                </span>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 @include('partials.footer')
 
 <script src="{{ asset('js/landing.js') }}"></script>

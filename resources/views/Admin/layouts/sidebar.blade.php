@@ -84,6 +84,15 @@
             Iklan
         </a>
 
+        <a href="{{ route('admin.videokebaikan.index') }}"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition
+                {{ request()->routeIs('admin.videokebaikan.*') ? 'bg-white/10 text-white font-medium' : 'hover:bg-white/5 hover:text-white' }}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="15" height="16" rx="2"/><path d="m17 9 5-3v12l-5-3"/>
+            </svg>
+            Video Kebaikan
+        </a>    
+
         <p class="px-3 pt-5 text-[11px] uppercase tracking-[0.15em] text-emerald-100/30 mb-2">Sistem</p>
 
         <a href="{{ route('admin.users.index') }}"

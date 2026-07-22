@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\LaporanKeuanganController;
 use App\Http\Controllers\Admin\RekeningDonasiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\IklanController;
+use App\Http\Controllers\Admin\VideoKebaikanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,7 @@ Route::prefix('program')->name('program.')->group(function () {
     Route::get('/kemanusiaan', [ProgramController::class, 'kemanusiaan'])->name('kemanusiaan');
 });
 
+
 /*
 |--------------------------------------------------------------------------
 | Panel admin
@@ -43,6 +45,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
     Route::middleware('admin')->group(function () {
 
@@ -58,6 +61,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('rekening-donasi', RekeningDonasiController::class)
             ->parameters(['rekening-donasi' => 'rekening_donasi']);
         Route::resource('iklan', IklanController::class);
+        Route::resource('videokebaikan', VideoKebaikanController::class); // hapus ->names('admin.videokebaikan');
     });
 
 });

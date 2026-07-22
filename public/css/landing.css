@@ -240,6 +240,40 @@ button { font-family: inherit; cursor: pointer; }
 .about-text p { line-height: 1.5; }
 
 /* ==========================================================================
+   Iklan (Campaign carousel)
+   ========================================================================== */
+
+.iklan-carousel {
+  overflow: hidden;
+}
+
+.iklan-track {
+  display: flex;
+  gap: 20px;
+  will-change: transform;
+}
+
+.iklan-slide {
+  display: block;
+  flex: 0 0 calc(50% - 10px);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.iklan-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .iklan-track { gap: 14px; }
+  .iklan-slide { flex: 0 0 82%; }
+}
+
+/* ==========================================================================
    Layanan Kebaikan Kami
    ========================================================================== */
 
@@ -250,6 +284,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 .layanan-card {
+  margin-top: 20px;
   display: block;
   border-radius: var(--radius-md);
   padding: 24px;
@@ -627,6 +662,236 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* ==========================================================================
+   Video Kebaikan
+   ========================================================================== */
+
+.video-kebaikan-grid {
+  display: grid;
+  gap: 48px;
+  align-items: center;
+  margin-top: 30px;
+}
+
+@media (min-width: 900px) {
+  .video-kebaikan-grid { grid-template-columns: 0.85fr 1.15fr; }
+}
+
+.video-kebaikan-media {
+  max-width: 560px;
+  min-width: 0; /* cegah grid item melebar mengikuti konten flex di dalamnya */
+}
+
+@media (min-width: 900px) {
+  .video-kebaikan-media { margin-left: auto; }
+}
+
+.video-kebaikan-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.6vw, 2rem);
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.2;
+  margin: 0 0 20px;
+}
+
+.video-kebaikan-text p {
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+.video-kebaikan-text p:last-child { margin-bottom: 0; }
+
+.video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--bg-soft);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.video-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(16,24,40,0.6) 0%, rgba(16,24,40,0.05) 35%, rgba(16,24,40,0.55) 100%);
+  z-index: 0;
+}
+
+.video-frame-thumb::before {
+  background: linear-gradient(180deg, rgba(16,24,40,0.1) 0%, rgba(16,24,40,0.45) 100%);
+}
+
+.video-featured {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.video-featured-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px 20px;
+  gap: 12px;
+}
+
+.video-featured-channel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.video-channel-avatar {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #fff;
+  color: #FF0000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-featured-channel > span:last-child {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.video-featured-title {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 320px;
+}
+
+.video-featured-channel-name {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.75rem;
+}
+
+.video-youtube-badge {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s ease;
+}
+
+.video-youtube-badge:hover { background: rgba(255, 255, 255, 0.28); }
+
+.video-play-btn {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: #FF0000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.video-play-btn:hover {
+  background: #e60000;
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.video-play-btn-sm {
+  width: 32px;
+  height: 32px;
+}
+
+.video-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* --- Slider (bukan grid lagi) untuk daftar video kecil di bawah video utama ---
+   Murni scroll horizontal (drag/swipe/scroll), tanpa tombol panah. --- */
+.video-kebaikan-slider {
+  position: relative;
+  margin-top: 16px;
+  min-width: 0;
+}
+
+.video-kebaikan-list {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  min-width: 0;
+  user-select: none;
+}
+
+.video-kebaikan-list.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+
+.video-kebaikan-list::-webkit-scrollbar {
+  display: none;
+}
+
+.video-thumb-card {
+  flex: 0 0 44%;
+  scroll-snap-align: start;
+}
+
+.video-thumb-title {
+  margin: 8px 0 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .video-thumb-card { flex: 0 0 68%; }
+  .video-featured-title { max-width: 180px; }
+}
+
+/* ==========================================================================
    CTA
    ========================================================================== */
 
@@ -719,6 +984,151 @@ button { font-family: inherit; cursor: pointer; }
   line-height: 1.5;
   max-width: 560px;
   margin: 0;
+}
+
+/* ==========================================================================
+   QR Donasi
+   ========================================================================== */
+
+.qr-donasi-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, var(--text-brand-tint) 0%, var(--bg-white) 55%);
+  border: 1px solid var(--text-brand-tint-strong);
+  padding: clamp(28px, 5vw, 56px);
+}
+
+/* Motif geometris tipis, mengacu pada pola arabesque, bukan dekorasi acak */
+.qr-donasi-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.5;
+  background-image:
+    repeating-linear-gradient(45deg, var(--text-brand-tint-strong) 0, var(--text-brand-tint-strong) 1px, transparent 1px, transparent 34px),
+    repeating-linear-gradient(-45deg, var(--text-brand-tint-strong) 0, var(--text-brand-tint-strong) 1px, transparent 1px, transparent 34px);
+  -webkit-mask-image: radial-gradient(ellipse at 15% 20%, #000 0%, transparent 65%);
+  mask-image: radial-gradient(ellipse at 15% 20%, #000 0%, transparent 65%);
+}
+
+.qr-donasi-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .qr-donasi-inner { grid-template-columns: 0.75fr 1.25fr; }
+}
+
+/* --- QR --- */
+.qr-donasi-scan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  justify-self: center;
+}
+
+.qr-donasi-frame {
+  position: relative;
+  width: 100%;
+  max-width: 240px;
+  aspect-ratio: 1 / 1;
+  padding: 16px;
+  background: var(--bg-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.qr-donasi-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@keyframes qr-scan {
+  0%   { top: 16px; opacity: 0; }
+  8%   { opacity: 0.85; }
+  50%  { top: calc(100% - 18px); opacity: 0.85; }
+  92%  { opacity: 0; }
+  100% { top: calc(100% - 18px); opacity: 0; }
+}
+
+.qr-donasi-trust {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: var(--bg-white);
+  color: var(--text-brand);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* --- Konten --- */
+.qr-donasi-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-dark);
+  margin: 0 0 14px;
+}
+
+.qr-donasi-heading span { color: var(--text-brand); }
+
+.qr-donasi-desc {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0 0 24px;
+  max-width: 560px;
+}
+
+.qr-donasi-apps-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+
+.qr-donasi-apps-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.qr-donasi-app-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 5px;
+}
+
+.qr-donasi-app-badge img {
+  height: 16px;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 640px) {
+  .qr-donasi-card { padding: 24px 20px; }
+  .qr-donasi-heading,
+  .qr-donasi-desc { text-align: center; }
+  .qr-donasi-desc { margin-left: auto; margin-right: auto; }
+  .qr-steps-row,
+  .qr-donasi-apps-list { justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qr-scanline { animation: none !important; opacity: 0; }
 }
 
 /* ==========================================================================
