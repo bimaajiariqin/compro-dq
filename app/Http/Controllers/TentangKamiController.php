@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\LaporanKeuangan;
 use App\Models\Penghargaan;
+use App\Models\WebsiteVisit;
+use Illuminate\Http\Request;
 
 class TentangKamiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $this->trackVisit($request);
+
         // Laporan Keuangan: 1 record per tahun -> urutkan tahun terbaru dulu
         $laporanKeuangan = LaporanKeuangan::orderByDesc('tahun')->get();
 
@@ -24,7 +28,7 @@ class TentangKamiController extends Controller
             [
                 'nama'  => 'Yayasan',
                 'label' => 'Akta Yayasan',
-                'icon'  => 'yayasan',
+                'icon'  => 'kemenkumham',
                 'link'  => 'https://ahu.go.id/pencarian/detail-yayasan/XXXXXXX',
             ],
             [
@@ -57,75 +61,114 @@ class TentangKamiController extends Controller
         // public/images/riwayat/{logo}.png, dikosongkan jika tidak perlu logo.
         $riwayat = [
             [
-                'tanggal' => '11 November 2007',
+                'tanggal' => '11 November 2011',
                 'judul'   => 'Berdirinya Dompet Al-Qur\'an Indonesia',
                 'desc'    => 'Pada 11 November 2007, 5 orang tokoh sepakat mendirikan lembaga sosial menunjang perkembangan Pondok Pesantren Tahfizh Al-Qur\'an Darul Fikri.',
                 'logo'    => null,
             ],
+
             [
-                'tanggal' => '14 Maret 2012',
+                'tanggal' => '19 Maret 2013',
                 'judul'   => 'Berdirinya Yayasan',
                 'desc'    => 'Yayasan Dompet Al-Qur\'an Indonesia berdiri secara resmi. Akta notaris nomor 181 menjadi landasan sah berdirinya Dompet Al-Qur\'an Indonesia.',
-                'logo'    => 'dompet-alquran',
+                'logo'    => 'dq-1',
             ],
-            [
-                'tanggal' => '05 April 2015',
-                'judul'   => 'Menjadi Lembaga Sosial Kemanusiaan',
-                'desc'    => 'Dompet Al-Qur\'an Indonesia terdaftar di Dinas Sosial Kabupaten Sidoarjo sebagai lembaga sosial kemanusiaan.',
-                'logo'    => 'dq-badge',
-            ],
+
             [
                 'tanggal' => '30 Maret 2016',
                 'judul'   => 'Teraudit Wajar Tanpa Pengecualian (WTP)',
                 'desc'    => 'Laporan Keuangan Dompet Al-Qur\'an Indonesia teraudit WTP oleh Akuntan Publik, mencerminkan pengelolaan dana yang transparan dan profesional.',
                 'logo'    => null,
             ],
+
             [
-                'tanggal' => '23 Januari 2020',
+                'tanggal' => '05 April 2017',
+                'judul'   => 'Menjadi Lembaga Sosial Kemanusiaan',
+                'desc'    => 'Dompet Al-Qur\'an Indonesia terdaftar di Dinas Sosial Kabupaten Sidoarjo sebagai lembaga sosial kemanusiaan.',
+                'logo'    => 'dq-2',
+            ],
+
+            [
+                'tanggal' => '25 Januari 2021',
                 'judul'   => 'Resmi Sebagai Lembaga Amil Zakat',
                 'desc'    => 'Dompet Al-Qur\'an Indonesia resmi ditetapkan sebagai Lembaga Amil Zakat tingkat Provinsi oleh Kementerian Agama Republik Indonesia.',
                 'logo'    => null,
             ],
+
             [
                 'tanggal' => '14 Maret 2023',
                 'judul'   => 'Mendapat Izin Wakaf',
                 'desc'    => 'Telah memperoleh izin resmi sebagai Nazhir Wakaf dari Badan Wakaf Indonesia, sebagai bentuk legalitas dalam pengelolaan wakaf.',
-                'logo'    => 'bwi-badge',
+                'logo'    => null,
             ],
         ];
 
-        // Profil kepengurusan. 'foto' merujuk ke file di public/images/pengurus/{foto}
+        // Profil kepengurusan. 'foto' merujuk ke file di public/images/pengurus/{foto}.
+        // 'is_ketua' menandai anggota yang merupakan ketua/pimpinan kelompok tsb —
+        // dipakai di Blade & CSS mobile untuk menempatkan ketua di baris atas,
+        // terpisah dari anggota lain di bawahnya.
         $kepengurusan = [
             'Penasehat' => [
-                ['nama' => 'K. H. Muhammad Shaleh Drehem, Lc.', 'jabatan' => 'Penasehat DQ', 'foto' => 'penasehat-1.jpg'],
+                ['nama' => null, 'jabatan' => null, 'foto' => 'penasehat-1.png', 'is_ketua' => false],
             ],
             'Dewan Pembina' => [
-                ['nama' => 'K. H. Syaiful Arifin, S.S., M.Pd.', 'jabatan' => 'Anggota Dewan Pembina', 'foto' => 'pembina-1.jpg'],
-                ['nama' => 'K. H. Agung Cahyadi, Lc. M.A.', 'jabatan' => 'Ketua Dewan Pembina', 'foto' => 'pembina-2.jpg'],
-                ['nama' => 'Ust. M. Mohamad Yoto, SKM. M.Kes', 'jabatan' => 'Anggota Dewan Pembina', 'foto' => 'pembina-3.jpg'],
+                ['nama' => null, 'jabatan' => null, 'foto' => 'pembina-1.png', 'is_ketua' => false],
+                ['nama' => null, 'jabatan' => null, 'foto' => 'ketua-pembina.png', 'is_ketua' => true],
+                ['nama' => null, 'jabatan' => null, 'foto' => 'pembina-2.png', 'is_ketua' => false],
             ],
             'Dewan Pengawas Syariah' => [
-                ['nama' => 'K. H. Nashir Fahmi, S.Ag., M.H.I', 'jabatan' => 'Anggota Dewan Pengawas Syariah', 'foto' => 'pengawas-1.jpg'],
-                ['nama' => 'K. H. Farid Dhofir, Lc. M.Si', 'jabatan' => 'Ketua Dewan Pengawas Syariah', 'foto' => 'pengawas-2.jpg'],
-                ['nama' => 'K.H. Saifuddin Yahya, Lc', 'jabatan' => 'Anggota Dewan Pengawas Syariah', 'foto' => 'pengawas-3.jpg'],
+                ['nama' => null, 'jabatan' => null, 'foto' => 'pengawas-1.png', 'is_ketua' => false],
+                ['nama' => null, 'jabatan' => null, 'foto' => 'ketua-pengawas.png', 'is_ketua' => true],
+                ['nama' => null, 'jabatan' => null, 'foto' => 'pengawas-2.png', 'is_ketua' => false],
             ],
             'Dewan Pengurus' => [
-                ['nama' => 'Ust. Basuki Rakhmad, M.Pd', 'jabatan' => 'Sekretaris Dewan Pengurus', 'foto' => 'pengurus-1.jpg'],
-                ['nama' => 'K. H. Syai\'in Anshori, S.Ag, M.H.I', 'jabatan' => 'Ketua Dewan Pengurus', 'foto' => 'pengurus-2.jpg'],
-                ['nama' => 'Ust. Suwandi, ST', 'jabatan' => 'Bendahara Dewan Pengurus', 'foto' => 'pengurus-3.jpg'],
+                ['nama' => null, 'jabatan' => null, 'foto' => 'pengurus-1.png', 'is_ketua' => false],
+                ['nama' => null, 'jabatan' => null, 'foto' => 'ketua-pengurus.png', 'is_ketua' => true],
+                ['nama' => null, 'jabatan' => null, 'foto' => 'pengurus-2.png', 'is_ketua' => false],
             ],
             'Direktur LAZ & Wakaf' => [
-                ['nama' => 'Agung Untuk Utsanan, S.T, M.M', 'jabatan' => 'Direktur Utama Dompet Al-Qur\'an', 'foto' => 'direktur-1.jpg'],
-                ['nama' => 'Agung Heru Setiawan', 'jabatan' => 'Direktur Manajemen Wakaf Dompet', 'foto' => 'direktur-2.jpg'],
+                ['nama' => null, 'jabatan' => null, 'foto' => 'direktur-laz.png', 'is_ketua' => false],
+                ['nama' => null, 'jabatan' => null, 'foto' => 'direktur-wakaf.png', 'is_ketua' => false],
             ],
         ];
+
+        $visitorStats = $this->visitorStats();
 
         return view('tentang-kami', compact(
             'laporanKeuangan',
             'penghargaan',
             'legalitas',
             'riwayat',
-            'kepengurusan'
+            'kepengurusan',
+            'visitorStats'
         ));
+    }
+
+    private function visitorStats(): array
+    {
+        return [
+            'hari_ini'  => (int) (WebsiteVisit::whereDate('visit_date', today())->value('count') ?? 0),
+            'bulan_ini' => (int) WebsiteVisit::whereYear('visit_date', now()->year)
+                ->whereMonth('visit_date', now()->month)
+                ->sum('count'),
+            'tahun_ini' => (int) WebsiteVisit::whereYear('visit_date', now()->year)->sum('count'),
+        ];
+    }
+
+    private function trackVisit(Request $request): void
+    {
+        $today = today()->toDateString();
+
+        if ($request->session()->get('dq_last_visit_date') === $today) {
+            return;
+        }
+
+        $visit = WebsiteVisit::firstOrCreate(
+            ['visit_date' => $today],
+            ['count' => 0]
+        );
+        $visit->increment('count');
+
+        $request->session()->put('dq_last_visit_date', $today);
     }
 }

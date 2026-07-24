@@ -22,12 +22,12 @@ class PenghargaanController extends Controller
     {
         $penghargaan = Penghargaan::orderByDesc('tanggal_terbit')->paginate(10);
 
-        return view('Admin.penghargaan.index', compact('penghargaan'));
+        return view('admin.penghargaan.index', compact('penghargaan'));
     }
 
     public function create(): View
     {
-        return view('Admin.penghargaan.create');
+        return view('admin.penghargaan.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -39,7 +39,7 @@ class PenghargaanController extends Controller
 
         Penghargaan::create($validated);
 
-        return redirect()->route('penghargaan.index')->with('success', 'Penghargaan berhasil ditambahkan.');
+        return redirect()->route('admin.penghargaan.index')->with('success', 'Penghargaan berhasil ditambahkan.');
     }
 
     /**
@@ -47,12 +47,12 @@ class PenghargaanController extends Controller
      */
     public function show(Penghargaan $penghargaan): RedirectResponse
     {
-        return redirect()->route('penghargaan.edit', $penghargaan);
+        return redirect()->route('admin.penghargaan.edit', $penghargaan);
     }
 
     public function edit(Penghargaan $penghargaan): View
     {
-        return view('Admin.penghargaan.edit', compact('penghargaan'));
+        return view('admin.penghargaan.edit', compact('penghargaan'));
     }
 
     public function update(Request $request, Penghargaan $penghargaan): RedirectResponse
@@ -67,7 +67,7 @@ class PenghargaanController extends Controller
 
         $penghargaan->update($validated);
 
-        return redirect()->route('penghargaan.index')->with('success', 'Penghargaan berhasil diperbarui.');
+        return redirect()->route('admin.penghargaan.index')->with('success', 'Penghargaan berhasil diperbarui.');
     }
 
     public function destroy(Penghargaan $penghargaan): RedirectResponse
@@ -76,7 +76,7 @@ class PenghargaanController extends Controller
 
         $penghargaan->delete();
 
-        return redirect()->route('penghargaan.index')->with('success', 'Penghargaan berhasil dihapus.');
+        return redirect()->route('admin.penghargaan.index')->with('success', 'Penghargaan berhasil dihapus.');
     }
 
     /**

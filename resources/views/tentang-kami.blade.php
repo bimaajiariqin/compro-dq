@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Program Peduli Dakwah — Dompet Al-Qur'an Indonesia</title>
+    <title>Dompet Al-Qur'an Indonesia</title>
     <meta name="description" content="Peduli Dakwah adalah program Dompet Al-Qur'an Indonesia yang berfokus pada penguatan syiar Islam melalui distribusi Al-Qur'an, pembinaan umat dan mualaf, serta dukungan bagi dai.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,6 +28,9 @@
 {{-- ============ PROFIL LEMBAGA ============ --}}
 <section class="hero">
     <div class="container hero__grid">
+        <div class="hero__mark">
+            <img src="assets/logo.png" alt="Amil Dompet Al-Qur'an">
+        </div>
         <div class="fade-in">
             <h1 class="hero__title">Profil <span class="eyebrow">Lembaga</span></h1>
             <p class="hero__text">
@@ -38,12 +41,6 @@
                 berbagai program, seperti: Pendidikan, Ekonomi, Dakwah, dan Kemanusiaan, demi mewujudkan kesejahteraan
                 masyarakat secara berkelanjutan.
             </p>
-        </div>
-        <div class="hero__mark">
-            <svg width="280" height="200" viewBox="0 0 280 200">
-                <text x="0" y="150" font-family="Inter" font-weight="800" font-size="130" fill="#3365AF" opacity="0.12">DQ</text>
-                <text x="10" y="140" font-family="Inter" font-weight="800" font-size="110" fill="#3365AF">DQ</text>
-            </svg>
         </div>
     </div>
 </section>
@@ -86,7 +83,7 @@
         </div>
 
         <div class="visi-misi__image fade-in">
-            <img src="https://placehold.co/420x520/3365AF/FFFFFF?text=Amil+DQ" alt="Amil Dompet Al-Qur'an">
+            <img src="assets/visi-misi.png" alt="Amil Dompet Al-Qur'an">
         </div>
     </div>
 </section>
@@ -105,7 +102,7 @@
             @foreach ($legalitas as $item)
                 <div class="legalitas-card">
                     <span class="legalitas-card__badge">
-                        <img src="{{ asset('images/legalitas/' . $item['icon'] . '.png') }}"
+                        <img src="{{ asset('assets/' . $item['icon'] . '.png') }}"
                              alt="{{ $item['nama'] }}"
                              loading="lazy">
                     </span>
@@ -184,20 +181,20 @@
 
         <div class="journey" id="journey">
             @foreach ($riwayat as $i => $r)
-                @php $side = $i % 2 === 0 ? 'left' : 'right'; @endphp
-                <div class="journey__row journey__row--{{ $side }} journey__row--reveal" style="transition-delay: {{ $i * 90 }}ms">
-                    <div class="journey__card">
-                        <p class="journey__title">{{ $r['judul'] }}</p>
-                        <p class="journey__date">{{ $r['tanggal'] }}</p>
+                <div class="journey__item journey__item--reveal" style="transition-delay: {{ $i * 80 }}ms">
+                    <div class="journey__marker">
+                        <span class="journey__dot"></span>
+                    </div>
+                    <div class="journey__content">
+                        <span class="journey__date">{{ $r['tanggal'] }}</span>
+                        <h3 class="journey__title">{{ $r['judul'] }}</h3>
                         <div class="journey__body">
                             @if(!empty($r['logo']))
-                                <img class="journey__logo" src="{{ asset('images/riwayat/' . $r['logo'] . '.png') }}" alt="{{ $r['judul'] }}">
+                                <img class="journey__logo" src="{{ asset('assets/' . $r['logo'] . '.png') }}" alt="{{ $r['judul'] }}">
                             @endif
                             <p class="journey__desc">{{ $r['desc'] }}</p>
                         </div>
                     </div>
-                    <span class="journey__dot"></span>
-                    <div class="journey__spacer"></div>
                 </div>
             @endforeach
         </div>
@@ -205,7 +202,10 @@
 </section>
 
 {{-- ============ PROFIL KEPENGURUSAN ============ --}}
-{{-- FIX: foto asli dari public/images/pengurus, grid dipusatkan (flex + center) --}}
+{{-- FIX: foto asli dari public/images/pengurus, grid dipusatkan (flex + center).
+     Ketua/pimpinan kelompok (is_ketua) diberi class tambahan
+     "pengurus-card--ketua" supaya di mobile bisa ditata terpisah
+     di baris atas, dengan anggota lain di bawahnya. --}}
 <section class="section">
     <div class="container">
         <h2 class="section-title">Profil <span class="eyebrow">Kepengurusan</span></h2>
@@ -219,8 +219,8 @@
                 <h3 class="pengurus-group__title">{{ $kelompok }}</h3>
                 <div class="pengurus-grid">
                     @foreach ($anggota as $orang)
-                        <div class="pengurus-card">
-                            <img src="{{ asset('images/pengurus/' . $orang['foto']) }}" alt="{{ $orang['nama'] }}" loading="lazy">
+                        <div class="pengurus-card {{ !empty($orang['is_ketua']) ? 'pengurus-card--ketua' : '' }}">
+                            <img src="{{ asset('assets/' . $orang['foto']) }}" alt="{{ $orang['nama'] }}" loading="lazy">
                             <p class="pengurus-card__name">{{ $orang['nama'] }}</p>
                             <p class="pengurus-card__role">{{ $orang['jabatan'] }}</p>
                         </div>
@@ -232,8 +232,8 @@
 </section>
 
 {{-- ============ PENGHARGAAN ============ --}}
-{{-- FIX: gambar penghargaan diambil dari field asli ($award->gambar) via Storage::url,
-     bukan placeholder statis. Kartu didesain ulang: badge tahun, overlay gradient, ikon medali. --}}
+{{-- Diramping-kan: kartu kecil, hanya thumbnail + badge tahun + judul singkat,
+     karena isinya cuma sertifikat (tidak butuh detail org/tanggal yang panjang). --}}
 <section class="section section--soft">
     <div class="container">
         <h2 class="section-title">Penghargaan <span class="eyebrow">yang di Peroleh</span></h2>
@@ -281,7 +281,6 @@
                                     </div>
                                     <div class="pgh-card__body">
                                         <p class="pgh-card__title">{{ $award->judul }}</p>
-                                        <p class="pgh-card__org">Dompet Al-Qur'an Indonesia</p>
                                         <p class="pgh-card__date">
                                             {{ optional($award->tanggal_terbit)->translatedFormat('d F Y') }}
                                         </p>
@@ -302,10 +301,10 @@
 
 
 <script>
-    // Animasi reveal untuk Awal Perjalanan Kami: setiap kartu muncul (fade + slide)
-    // saat scroll masuk viewport, dengan jeda bertahap antar kartu.
+    // Animasi reveal untuk Awal Perjalanan Kami: setiap item muncul (fade + slide)
+    // saat scroll masuk viewport, dengan jeda bertahap antar item.
     (function () {
-        const rows = document.querySelectorAll('.journey__row--reveal');
+        const rows = document.querySelectorAll('.journey__item--reveal');
         if (!rows.length) return;
 
         if (!('IntersectionObserver' in window)) {
