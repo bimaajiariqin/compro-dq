@@ -61,12 +61,6 @@
                   </a>
               </div>
           </nav>
-
-          <div class="navbar-actions">
-              <div class="lang-toggle">
-                  <button type="button" data-lang="id" class="is-active">ID</button>
-                  <button type="button" data-lang="en">EN</button>
-              </div>
               <a href="https://orangbaik.id" class="btn btn-primary" target="_blank">
                   <span data-id="Donasi Sekarang" data-en="Donate Now">Donasi Sekarang</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -124,16 +118,17 @@
                   <span data-id="Rekening Donasi" data-en="Donation Account">Rekening Donasi</span>
               </a>
 
-              <a href="#about" class="nav-link">
+              <a href="{{ route('tentang-kami') }}" class="nav-link">
                   <span data-id="Tentang Kami" data-en="About Us">Tentang Kami</span>
               </a>
 
-              <div class="mobile-nav-footer">
-                  <div class="lang-toggle" data-lang-toggle-mobile>
-                      <button type="button" data-lang="id" class="is-active">ID</button>
-                      <button type="button" data-lang="en">EN</button>
-                  </div>
-              </div>
+              <a href="https://orangbaik.id" class="btn btn-primary mobile-donate-btn" target="_blank">
+                  <span data-id="Donasi Sekarang" data-en="Donate Now">Donasi Sekarang</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0L12 5.34l-.77-.76a5.4 5.4 0 0 0-7.65 7.65L12 20.31l8.42-8.42a5.4 5.4 0 0 0 0-7.31Z"/>
+                      <path d="M9 12h1.5l1 3 2-6 1 3H16"/>
+                  </svg>
+              </a>
           </nav>
       </div>
   </header>
@@ -185,7 +180,14 @@
     position: sticky;
     top: 12px;
     z-index: 100;
-    max-width: 1000px;
+    /* FIX: sebelumnya max-width:1000px (lebar tetap) membuat pil navbar
+       dipaksa selebar itu walau isinya jauh lebih sempit — sisa ruang
+       kosong itu lalu "dimakan" oleh margin-left:auto pada tombol,
+       menghasilkan white space besar. Sekarang lebar navbar mengikuti
+       kontennya sendiri (fit-content), dibatasi agar tidak overflow di
+       layar sempit lewat max-width: calc(100% - 24px). */
+    width: fit-content;
+    max-width: calc(100% - 24px);
     margin: 12px auto 0;
     background: var(--bg-white);
     border-radius: var(--radius-full);
@@ -195,11 +197,13 @@
 
   }
 
+  /* Jarak logo ke menu tetap rapat (gap tetap, bukan space-between yang
+     ikut melebar mengikuti sisa ruang). */
   .navbar-inner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 18px;
+    justify-content: flex-start;
+    gap: 28px;
     padding: 8px 16px;
     flex-wrap: wrap;
   }
@@ -377,6 +381,10 @@
     background: var(--text-brand);
     color: #fff;
     box-shadow: 0 12px 24px -10px var(--text-brand-tint-strong);
+    /* Dorong tombol (dan navbar-toggle di sebelahnya) ke ujung kanan
+       navbar-inner, menggantikan peran justify-content:space-between
+       yang sebelumnya membuat jarak logo-menu ikut melebar. */
+    margin-left: auto;
   }
 
   .btn-primary:hover {
@@ -408,13 +416,43 @@
       display: none;
     }
 
+    /* Tombol "Donasi Sekarang" versi baris atas disembunyikan di mobile.
+       Tombol yang sama muncul lagi di dalam dropdown mobile-nav
+       (lihat .mobile-donate-btn) begitu tombol hamburger dipencet. */
+    .navbar-inner > a.btn-primary {
+      display: none;
+    }
+
     .navbar-toggle {
       display: inline-flex;
     }
 
+    .mobile-donate-btn {
+      order: 20;
+      margin-top: 12px;
+      justify-content: center !important;
+    }
+
     .navbar {
-      margin: 10px 12px 0;
-      max-width: none;
+      /* FIX: sebelumnya "margin: 10px 12px 0" memakai nilai kiri-kanan
+         TETAP (12px), bukan "auto". Karena lebar navbar mengikuti isi
+         (width: fit-content), margin tetap ini membuat pil navbar
+         menempel/geser ke KIRI dengan sisa ruang kosong menumpuk di
+         kanan — itulah yang bikin tampilan mobile terlihat "aneh"/tidak
+         center. Dikembalikan ke margin auto kiri-kanan supaya navbar
+         tetap center di semua lebar layar, sama seperti versi desktop. */
+      margin: 10px auto 0;
+      /* Di mobile navbar dibuat memanjang (bukan fit-content lagi)
+         supaya logo & tombol hamburger terdorong ke ujung kiri-kanan,
+         bukan menggerombol kecil di tengah seperti pil desktop. Margin
+         kiri-kanan sedikit ditambah (40px, bukan 24px) supaya navbar
+         tidak terlalu mepet/lebar sampai ke tepi layar. */
+      width: calc(100% - 40px);
+      max-width: calc(100% - 40px);
+    }
+
+    .navbar-inner {
+      justify-content: space-between;
     }
 
     .navbar.navbar-mobile-open {
@@ -481,19 +519,6 @@
       color: var(--text-brand);
     }
 
-    .mobile-nav-footer {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 10px;
-      margin-top: 8px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border-soft);
-    }
-
-    .mobile-nav-footer .lang-toggle {
-      display: flex;
-    }
   }
   </style>
 

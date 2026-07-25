@@ -8,6 +8,7 @@
   /* Warna sesuai spesifikasi */
   --bg-soft: #F9F9F9;
   --bg-white: #FFFFFF;
+  --bg-blue-tint: #F2F9FF;
   --text-brand: #3365AF;
   --text-dark: #101828;
   --text-muted: #5D5D5D;
@@ -331,10 +332,7 @@ html {
   box-shadow: var(--shadow-card);
   transition: box-shadow .2s ease, transform .2s ease;
 }
-.tk .lk-doc:hover {
-  box-shadow: var(--shadow-soft);
-  transform: translateY(-3px);
-}
+
 .tk .lk-doc__label {
   display: flex;
   align-items: center;
@@ -534,14 +532,24 @@ html {
    PENGHARGAAN
    Diramping-kan: kartu kecil (bukan kartu berat dengan org/tanggal),
    grid lebih rapat, thumbnail rasio potret ala sertifikat.
+
+   FIX: ditambahkan justify-content: flex-start agar posisi kartu
+   pertama selalu menempel rata kiri, tidak peduli jumlah kartu yang
+   ditampilkan (1 kartu vs banyak kartu). Sebelumnya tanpa
+   justify-content eksplisit, jarak ke kiri bisa terlihat berbeda
+   antar tahun tergantung berapa banyak penghargaan yang ada.
    ========================================================= */
 .tk .pgh-panel.is-hidden { display: none; }
 .tk .pgh-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 240px));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: 16px;
 }
 .tk .pgh-card {
+  flex: 0 1 220px;
+  max-width: 240px;
   background: var(--bg-white);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-md);
@@ -608,7 +616,41 @@ html {
   .tk .section, .tk .section--soft { padding: 32px 0; }
   .tk .hero__grid { padding: 32px 0; }
   .tk .hero__title { font-size: clamp(1.5rem, 5vw, 1.8rem); }
-  .tk .legalitas-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* FIX: sebelumnya legalitas-grid di mobile pakai repeat(2, 1fr),
+     sehingga 5 kartu tersusun 2-2-1 (baris terakhir cuma 1 kartu,
+     timpang). Sekarang diubah dari grid ke flexbox dengan
+     justify-content: center, supaya jadi 3-2 (3 kartu di baris atas,
+     2 di baris bawah) DAN baris terakhir yang tidak penuh (2 kartu)
+     otomatis berada di tengah, bukan menempel ke kiri seperti default
+     perilaku CSS grid. Kartunya sendiri diperkecil (padding, badge,
+     dan font dikecilkan) supaya 3 kartu tetap muat berdampingan di
+     layar sempit tanpa penuh sesak. */
+  .tk .legalitas-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .tk .legalitas-card {
+    flex: 0 0 calc(33.333% - 7px);
+    max-width: calc(33.333% - 7px);
+    padding: 14px 8px;
+  }
+  .tk .legalitas-card__badge {
+    width: 56px;
+    height: 56px;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  .tk .legalitas-card__label {
+    font-size: 0.7rem;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .tk .legalitas-card__link { font-size: 0.68rem; }
+  .tk .legalitas-card__link svg { width: 10px; height: 10px; }
+
   .tk .lk-grid { grid-template-columns: 1fr; }
 
   /* Kepengurusan mobile: ketua (pengurus-card--ketua) ditempatkan di
@@ -651,19 +693,22 @@ html {
   .tk .pengurus-card__name { font-size: 0.72rem; }
   .tk .pengurus-card__role { font-size: 0.65rem; }
 
-  /* Penghargaan jadi slider horizontal di mobile, bukan wrap ke bawah */
+  /* Penghargaan jadi slider horizontal di mobile. FIX: sebelumnya pakai
+     trik margin-left:-16px + padding-left:16px supaya slider "bleed"
+     sampai tepi layar, tapi ini membuat posisi card pertama bergantung
+     pada dua nilai yang saling membatalkan — rawan meleset dan sulit
+     didiagnosis. Sekarang disederhanakan: grid mengikuti padding
+     container apa adanya, sehingga card pertama DIJAMIN selalu rata
+     kiri persis sejajar dengan heading/teks di atasnya. */
   .tk .pgh-grid {
     display: flex;
-    grid-template-columns: none;
+    flex-wrap: nowrap;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none; /* Firefox */
     padding-bottom: 4px;
-    margin-left: -16px;
-    margin-right: -16px;
-    padding-left: 16px;
-    padding-right: 16px;
+    justify-content: flex-start;
   }
   .tk .pgh-grid::-webkit-scrollbar { display: none; } /* Chrome/Safari */
   .tk .pgh-card {

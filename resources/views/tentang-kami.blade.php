@@ -119,7 +119,7 @@
 
 {{-- ============ LAPORAN KEUANGAN ============ --}}
 {{-- Link langsung ke dokumen PDF (dibuka di tab baru, memakai viewer PDF bawaan browser) --}}
-<section class="section">
+<section class="section-blue">
     <div class="container">
         <h2 class="section-title">Laporan <span class="eyebrow">Keuangan</span></h2>
         <p class="section-lead">
@@ -234,7 +234,7 @@
 {{-- ============ PENGHARGAAN ============ --}}
 {{-- Diramping-kan: kartu kecil, hanya thumbnail + badge tahun + judul singkat,
      karena isinya cuma sertifikat (tidak butuh detail org/tanggal yang panjang). --}}
-<section class="section section--soft">
+<section class="section">
     <div class="container">
         <h2 class="section-title">Penghargaan <span class="eyebrow">yang di Peroleh</span></h2>
         <p class="section-lead">
@@ -277,7 +277,6 @@
                                     <div class="pgh-card__thumb">
                                         <img src="{{ $pghImg }}" alt="{{ $award->judul }}" loading="lazy"
                                              onerror="this.onerror=null;this.src='{{ $pghFallback }}';">
-                                        <span class="pgh-card__year">{{ $tahun }}</span>
                                     </div>
                                     <div class="pgh-card__body">
                                         <p class="pgh-card__title">{{ $award->judul }}</p>
