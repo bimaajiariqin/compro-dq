@@ -52,7 +52,7 @@ class UserController extends Controller
             'password' => $validated['password'], // auto-hashed via the model's 'hashed' cast
         ]);
 
-        return redirect()->route('users.index')->with('success', 'Admin baru berhasil ditambahkan.');
+        return redirect()->route('admin.users.index')->with('success', 'Admin baru berhasil ditambahkan.');
     }
 
     /**
@@ -60,7 +60,7 @@ class UserController extends Controller
      */
     public function show(User $user): RedirectResponse
     {
-        return redirect()->route('users.edit', $user);
+        return redirect()->route('admin.users.edit', $user);
     }
 
     /**
@@ -95,7 +95,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('users.index')->with('success', 'Data admin berhasil diperbarui.');
+        return redirect()->route('admin.users.index')->with('success', 'Data admin berhasil diperbarui.');
     }
 
     /**
@@ -114,6 +114,6 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'Admin berhasil dihapus.');
+        return redirect()->route('admin.users.index')->with('success', 'Admin berhasil dihapus.');
     }
 }

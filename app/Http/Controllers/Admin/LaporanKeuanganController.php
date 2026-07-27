@@ -38,7 +38,7 @@ class LaporanKeuanganController extends Controller
 
         LaporanKeuangan::create($validated);
 
-        return redirect()->route('laporan-keuangan.index')->with('success', 'Laporan keuangan berhasil ditambahkan.');
+        return redirect()->route('admin.laporan-keuangan.index')->with('success', 'Laporan keuangan berhasil ditambahkan.');
     }
 
     /**
@@ -46,7 +46,7 @@ class LaporanKeuanganController extends Controller
      */
     public function show(LaporanKeuangan $laporan_keuangan): RedirectResponse
     {
-        return redirect()->route('laporan-keuangan.edit', $laporan_keuangan);
+        return redirect()->route('admin.laporan-keuangan.edit', $laporan_keuangan);
     }
 
     public function edit(LaporanKeuangan $laporan_keuangan): View
@@ -66,7 +66,7 @@ class LaporanKeuanganController extends Controller
 
         $laporan_keuangan->update($validated);
 
-        return redirect()->route('laporan-keuangan.index')->with('success', 'Laporan keuangan berhasil diperbarui.');
+        return redirect()->route('admin.laporan-keuangan.index')->with('success', 'Laporan keuangan berhasil diperbarui.');
     }
 
     public function destroy(LaporanKeuangan $laporan_keuangan): RedirectResponse
@@ -75,7 +75,7 @@ class LaporanKeuanganController extends Controller
 
         $laporan_keuangan->delete();
 
-        return redirect()->route('laporan-keuangan.index')->with('success', 'Laporan keuangan berhasil dihapus.');
+        return redirect()->route('admin.laporan-keuangan.index')->with('success', 'Laporan keuangan berhasil dihapus.');
     }
 
     /**

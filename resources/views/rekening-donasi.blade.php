@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekening Donasi — Dompet Al-Qur'an Indonesia</title>
+    <title>Dompet Al-Qur'an Indonesia</title>
     <meta name="description" content="Salurkan zakat, infak, sedekah, dan wakaf Anda melalui rekening resmi Dompet Al-Qur'an Indonesia.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">

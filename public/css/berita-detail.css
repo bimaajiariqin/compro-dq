@@ -164,8 +164,8 @@
 .article-body img {
     max-width: 80%;
     height: auto;
-    border-radius: 8px;
-    margin: 10px 0;
+    border-radius: 5px;
+    margin: 10px auto;   /* diubah dari "10px 0" */
     display: block;
 }
 .article-body p {

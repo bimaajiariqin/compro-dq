@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berita — Dompet Al-Qur'an Indonesia</title>
+    <title>Dompet Al-Qur'an Indonesia</title>
     <meta name="description" content="Ikuti berbagai berita dan informasi terkini seputar program, penyaluran, dan kegiatan Dompet Al-Qur'an Indonesia.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">

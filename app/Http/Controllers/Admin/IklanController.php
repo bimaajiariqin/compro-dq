@@ -41,12 +41,12 @@ class IklanController extends Controller
 
         Iklan::create($validated);
 
-        return redirect()->route('iklan.index')->with('success', 'Iklan berhasil ditambahkan.');
+        return redirect()->route('admin.iklan.index')->with('success', 'Iklan berhasil ditambahkan.');
     }
 
     public function show(Iklan $iklan): RedirectResponse
     {
-        return redirect()->route('iklan.edit', $iklan);
+        return redirect()->route('admin.iklan.edit', $iklan);
     }
 
     public function edit(Iklan $iklan): View
@@ -66,7 +66,7 @@ class IklanController extends Controller
 
         $iklan->update($validated);
 
-        return redirect()->route('iklan.index')->with('success', 'Iklan berhasil diperbarui.');
+        return redirect()->route('admin.iklan.index')->with('success', 'Iklan berhasil diperbarui.');
     }
 
     public function destroy(Iklan $iklan): RedirectResponse
@@ -75,7 +75,7 @@ class IklanController extends Controller
 
         $iklan->delete();
 
-        return redirect()->route('iklan.index')->with('success', 'Iklan berhasil dihapus.');
+        return redirect()->route('admin.iklan.index')->with('success', 'Iklan berhasil dihapus.');
     }
 
     private function storeThumbnail(Request $request): string

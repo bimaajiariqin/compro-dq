@@ -45,12 +45,12 @@ class RekeningDonasiController extends Controller
 
         RekeningDonasi::create($validated);
 
-        return redirect()->route('rekening-donasi.index')->with('success', 'Rekening berhasil ditambahkan.');
+        return redirect()->route('admin.rekening-donasi.index')->with('success', 'Rekening berhasil ditambahkan.');
     }
 
     public function show(RekeningDonasi $rekening_donasi): RedirectResponse
     {
-        return redirect()->route('rekening-donasi.edit', $rekening_donasi);
+        return redirect()->route('admin.rekening-donasi.edit', $rekening_donasi);
     }
 
     public function edit(RekeningDonasi $rekening_donasi): View
@@ -73,7 +73,7 @@ class RekeningDonasiController extends Controller
 
         $rekening_donasi->update($validated);
 
-        return redirect()->route('rekening-donasi.index')->with('success', 'Rekening berhasil diperbarui.');
+        return redirect()->route('admin.rekening-donasi.index')->with('success', 'Rekening berhasil diperbarui.');
     }
 
     public function destroy(RekeningDonasi $rekening_donasi): RedirectResponse
@@ -82,7 +82,7 @@ class RekeningDonasiController extends Controller
 
         $rekening_donasi->delete();
 
-        return redirect()->route('rekening-donasi.index')->with('success', 'Rekening berhasil dihapus.');
+        return redirect()->route('admin.rekening-donasi.index')->with('success', 'Rekening berhasil dihapus.');
     }
 
     private function storeLogo(Request $request): string

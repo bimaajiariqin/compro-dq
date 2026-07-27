@@ -39,7 +39,7 @@ class TestimoniController extends Controller
 
         Testimoni::create($validated);
 
-        return redirect()->route('testimoni.index')->with('success', 'Testimoni berhasil ditambahkan.');
+        return redirect()->route('admin.testimoni.index')->with('success', 'Testimoni berhasil ditambahkan.');
     }
 
     /**
@@ -47,7 +47,7 @@ class TestimoniController extends Controller
      */
     public function show(Testimoni $testimoni): RedirectResponse
     {
-        return redirect()->route('testimoni.edit', $testimoni);
+        return redirect()->route('admin.testimoni.edit', $testimoni);
     }
 
     public function edit(Testimoni $testimoni): View
@@ -67,7 +67,7 @@ class TestimoniController extends Controller
 
         $testimoni->update($validated);
 
-        return redirect()->route('testimoni.index')->with('success', 'Testimoni berhasil diperbarui.');
+        return redirect()->route('admin.testimoni.index')->with('success', 'Testimoni berhasil diperbarui.');
     }
 
     public function destroy(Testimoni $testimoni): RedirectResponse
@@ -76,7 +76,7 @@ class TestimoniController extends Controller
 
         $testimoni->delete();
 
-        return redirect()->route('testimoni.index')->with('success', 'Testimoni berhasil dihapus.');
+        return redirect()->route('admin.testimoni.index')->with('success', 'Testimoni berhasil dihapus.');
     }
 
     /**
