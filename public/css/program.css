@@ -126,17 +126,25 @@
 
 .program-pokok__grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
 }
 
 .program-pokok__card {
+    display: block;
     border: 1.5px dashed var(--border-soft, #d9d9d9);
     border-radius: var(--radius-md, 16px);
     background: var(--bg-white, #fff);
     padding: 28px 22px;
     text-align: left;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
     transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.program-pokok__card[href] {
+    cursor: pointer;
 }
 
 .program-pokok__card:hover {
@@ -154,6 +162,7 @@
     background: var(--text-brand-tint, rgba(51, 101, 175, 0.14));
     color: var(--text-brand, #3365AF);
     margin-bottom: 16px;
+    overflow: hidden;
 }
 
 .program-pokok__icon svg {
@@ -161,11 +170,19 @@
     height: 24px;
 }
 
+.program-pokok__icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
 .program-pokok__title {
     font-size: 16px;
     font-weight: 600;
     color: var(--text-dark, #101828);
     margin: 0 0 10px;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .program-pokok__desc {
@@ -173,6 +190,16 @@
     line-height: 1.6;
     color: var(--text-muted, #5D5D5D);
     margin: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.program-pokok__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-muted, #5D5D5D);
+    padding: 20px 0;
 }
 
 /* -------------------------------------------------------------------- */

@@ -36,11 +36,12 @@
 
             <div>
                 <label for="deskripsi" class="block text-sm font-medium text-ink/70 mb-1.5">Deskripsi</label>
-                <textarea id="deskripsi" name="deskripsi" rows="3" required
+                <textarea id="deskripsi" name="deskripsi" rows="3" required maxlength="100"
                           placeholder="Deskripsi singkat program pokok ini..."
                           class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm placeholder:text-ink/30
                                  focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">{{ old('deskripsi', $programPokok->deskripsi) }}</textarea>
                 @error('deskripsi') <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p> @enderror
+                <p class="mt-1.5 text-xs text-ink/40">Maksimal 100 karakter.</p>
             </div>
 
             <div>

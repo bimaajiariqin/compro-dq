@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\ProgramPokok;
 use Illuminate\View\View;
 
 class ProgramController extends Controller
@@ -16,8 +17,13 @@ class ProgramController extends Controller
             ->orderByDesc('tanggal_terbit')
             ->get();
 
+        $programPokok = ProgramPokok::where('kategori_program', 'Pendidikan')
+            ->latest()
+            ->get();
+
         return view('Program.pendidikan', [
             'berita' => $berita,
+            'programPokok' => $programPokok,
         ]);
     }
 
@@ -30,8 +36,13 @@ class ProgramController extends Controller
             ->orderByDesc('tanggal_terbit')
             ->get();
 
+        $programPokok = ProgramPokok::where('kategori_program', 'Ekonomi')
+            ->latest()
+            ->get();
+
         return view('Program.ekonomi', [
             'berita' => $berita,
+            'programPokok' => $programPokok,
         ]);
     }
 
@@ -44,8 +55,13 @@ class ProgramController extends Controller
             ->orderByDesc('tanggal_terbit')
             ->get();
 
+        $programPokok = ProgramPokok::where('kategori_program', 'Dakwah')
+            ->latest()
+            ->get();
+
         return view('Program.dakwah', [
             'berita' => $berita,
+            'programPokok' => $programPokok,
         ]);
     }
 
@@ -58,8 +74,13 @@ class ProgramController extends Controller
             ->orderByDesc('tanggal_terbit')
             ->get();
 
+        $programPokok = ProgramPokok::where('kategori_program', 'Kemanusiaan')
+            ->latest()
+            ->get();
+
         return view('Program.kemanusiaan', [
             'berita' => $berita,
+            'programPokok' => $programPokok,
         ]);
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Program Peduli Kemanusiaan — Dompet Al-Qur'an Indonesia</title>
+    <title>Program Peduli Kemanusiaan</title>
     <meta name="description" content="Peduli Kemanusiaan adalah program Dompet Al-Qur'an Indonesia yang berfokus pada bantuan kemanusiaan bagi masyarakat terdampak bencana, krisis, dan kondisi darurat.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,57 +56,40 @@
 
 {{-- =====================================================================
      PROGRAM POKOK
+     $programPokok dikirim dari ProgramController::kemanusiaan(), sudah
+     difilter where kategori_program = 'Kemanusiaan' (tabel program_pokok).
      ===================================================================== --}}
-@php
-    $programPokok = [
-        [
-            'title' => 'Paket Pangan Kemanusiaan',
-            'desc'  => 'Distribusi bahan pangan dan kebutuhan pokok bagi keluarga yang membutuhkan.',
-            'icon'  => '<path d="M6 8h12l-1.2 11.2a1 1 0 01-1 .8H8.2a1 1 0 01-1-.8L6 8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
-        ],
-        [
-            'title' => 'Tanggap Bencana',
-            'desc'  => 'Bantuan darurat bagi masyarakat terdampak bencana alam dan musibah.',
-            'icon'  => '<path d="M12 4L2.5 20h19L12 4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 10.5v4M12 17h.01" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>',
-        ],
-        [
-            'title' => 'Hunian Sementara',
-            'desc'  => 'Penyediaan tempat tinggal sementara bagi masyarakat yang kehilangan tempat tinggal akibat bencana.',
-            'icon'  => '<path d="M4 11.5L12 4l8 7.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 001 1h10a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M10 20v-5h4v5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
-        ],
-        [
-            'title' => 'Bantuan Air Bersih',
-            'desc'  => 'Penyediaan air bersih, sanitasi, dan perlengkapan kebersihan di wilayah terdampak.',
-            'icon'  => '<path d="M12 3.5C9 8 6.5 11.5 6.5 14.8a5.5 5.5 0 0011 0C17.5 11.5 15 8 12 3.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
-        ],
-        [
-            'title' => 'Dapur Umum',
-            'desc'  => 'Penyediaan makanan siap saji bagi penyintas bencana dan masyarakat dalam kondisi darurat.',
-            'icon'  => '<path d="M4 9.5h16v9a1 1 0 01-1 1H5a1 1 0 01-1-1v-9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M4 9.5l1.5-5h13l1.5 5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 13.5v3M15 13.5v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
-        ],
-        [
-            'title' => 'Relawan Kemanusiaan',
-            'desc'  => 'Pemberdayaan dan pelatihan relawan untuk mendukung aksi kemanusiaan di berbagai wilayah.',
-            'icon'  => '<path d="M12 21s-7-4.4-9.3-9.1C1.3 9 3 5.5 6.3 5.5c1.9 0 3.4 1.1 4.4 2.6C11.7 6.6 13.2 5.5 15.1 5.5c3.3 0 5 3.5 3.6 6.4C16.4 16.6 12 21 12 21z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
-        ],
-    ];
-@endphp
-
 <section class="section program-pokok" id="program-pokok">
     <div class="container">
 
         <h2 class="section-title">Program <span>Pokok</span> Kami</h2>
 
         <div class="program-pokok__grid">
-            @foreach ($programPokok as $item)
-                <div class="program-pokok__card">
-                    <span class="program-pokok__icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">{!! $item['icon'] !!}</svg>
-                    </span>
-                    <h3 class="program-pokok__title">{{ $item['title'] }}</h3>
-                    <p class="program-pokok__desc">{{ $item['desc'] }}</p>
-                </div>
-            @endforeach
+            @forelse ($programPokok as $item)
+                @if ($item->link)
+                    <a href="{{ $item->link }}" target="_blank" rel="noopener" class="program-pokok__card">
+                        <span class="program-pokok__icon">
+                            @if ($item->icon)
+                                <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
+                            @endif
+                        </span>
+                        <h3 class="program-pokok__title">{{ $item->judul }}</h3>
+                        <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
+                    </a>
+                @else
+                    <div class="program-pokok__card">
+                        <span class="program-pokok__icon">
+                            @if ($item->icon)
+                                <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
+                            @endif
+                        </span>
+                        <h3 class="program-pokok__title">{{ $item->judul }}</h3>
+                        <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
+                    </div>
+                @endif
+            @empty
+                <p class="program-pokok__empty">Belum ada program pokok untuk kategori ini.</p>
+            @endforelse
         </div>
 
     </div>
@@ -157,3 +140,12 @@
         @if ($berita->count() > 4)
             <div class="program-berita__dots" data-berita-dots></div>
         @endif
+
+    </div>
+</section>
+
+@include('partials.footer')
+
+<script src="{{ asset('js/program-berita-slider.js') }}"></script>
+</body>
+</html>

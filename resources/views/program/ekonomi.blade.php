@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Program Peduli Ekonomi — Dompet Al-Qur'an Indonesia</title>
+    <title>Program Peduli Ekonomi</title>
     <meta name="description" content="Peduli Ekonomi adalah program Dompet Al-Qur'an Indonesia yang berfokus pada pemberdayaan ekonomi masyarakat prasejahtera melalui bantuan modal usaha, pelatihan keterampilan, dan pendampingan usaha.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,62 +56,40 @@
 
 {{-- =====================================================================
      PROGRAM POKOK
+     $programPokok dikirim dari ProgramController::ekonomi(), sudah
+     difilter where kategori_program = 'Ekonomi' (tabel program_pokok).
      ===================================================================== --}}
-@php
-    $programPokok = [
-        [
-            'title' => 'Bantuan Modal Usaha',
-            'desc'  => 'Pemberian modal usaha bagi pelaku UMKM dan masyarakat prasejahtera untuk mengembangkan usahanya.',
-            'icon'  => '<path d="M4 6.5h16a1 1 0 011 1V17a1 1 0 01-1 1H4a1 1 0 01-1-1V7.5a1 1 0 011-1z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M3.3 7l8.7 6 8.7-6" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
-        ],
-        [
-            'title' => 'Rombong Berkah',
-            'desc'  => 'Bantuan gerobak atau booth usaha bagi pedagang kecil agar dapat meningkatkan produktivitas dan pendapatan.',
-            'icon'  => '<path d="M4 10l1.3-4.5A1 1 0 016.3 4.8h11.4a1 1 0 011 .7L20 10" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M4 10h16v8a1 1 0 01-1 1H5a1 1 0 01-1-1v-8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 19v-5h6v5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
-        ],
-        [
-            'title' => 'Pelatihan Kewirausahaan',
-            'desc'  => 'Pelatihan bisnis, pemasaran, dan pengelolaan usaha untuk meningkatkan kemampuan berwirausaha.',
-            'icon'  => '<path d="M4 5h16v11H4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 20h6M12 16v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M7.5 12.5l2.4-2.6 2 1.8 3-3.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
-        ],
-        [
-            'title' => 'Pendampingan Ekonomi',
-            'desc'  => 'Pendampingan berkelanjutan bagi pelaku usaha dalam pengembangan bisnis, manajemen, dan pemasaran.',
-            'icon'  => '<path d="M8 12.5l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 14.5A8.5 8.5 0 119.5 4a6.8 6.8 0 1010.5 10.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
-        ],
-        [
-            'title' => 'Ekonomi Berdaya',
-            'desc'  => 'Bantuan beserta pendampingannya sebagai sumber penghasilan bagi keluarga penerima manfaat.',
-            'icon'  => '<path d="M12 21c-4.4 0-7-2-7-5.3 0-2 1.2-3 1.2-4.7 0-3 2.6-5.5 5.8-5.5s5.8 2.5 5.8 5.5c0 1.7 1.2 2.7 1.2 4.7 0 3.3-2.6 5.3-7 5.3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.5 11.5c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
-        ],
-        [
-            'title' => 'Ekonomi Kreatif',
-            'desc'  => 'Pemberdayaan masyarakat melalui pelatihan dan pengembangan usaha berbasis keterampilan dan kreativitas.',
-            'icon'  => '<path d="M4 5.5h16V16H4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M2.5 19h19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M9 16l1.2-2M15 16l-1.2-2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
-        ],
-        [
-            'title' => 'Program Kemandirian Ekonomi',
-            'desc'  => 'Pendampingan terpadu untuk membantu keluarga prasejahtera mencapai kemandirian ekonomi secara berkelanjutan.',
-            'icon'  => '<path d="M8 12c-1.7-1.9-4.2-1.9-5.6-.4-1.4 1.5-1.3 3.9.4 5.3 1.9 1.5 4.7.7 6.2-1.4l2-2.8c1.5-2.1 4.3-2.9 6.2-1.4 1.7 1.4 1.8 3.8.4 5.3-1.4 1.5-3.9 1.5-5.6-.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
-        ],
-    ];
-@endphp
-
 <section class="section program-pokok" id="program-pokok">
     <div class="container">
 
         <h2 class="section-title">Program <span>Pokok</span> Kami</h2>
 
         <div class="program-pokok__grid">
-            @foreach ($programPokok as $item)
-                <div class="program-pokok__card">
-                    <span class="program-pokok__icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">{!! $item['icon'] !!}</svg>
-                    </span>
-                    <h3 class="program-pokok__title">{{ $item['title'] }}</h3>
-                    <p class="program-pokok__desc">{{ $item['desc'] }}</p>
-                </div>
-            @endforeach
+            @forelse ($programPokok as $item)
+                @if ($item->link)
+                    <a href="{{ $item->link }}" target="_blank" rel="noopener" class="program-pokok__card">
+                        <span class="program-pokok__icon">
+                            @if ($item->icon)
+                                <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
+                            @endif
+                        </span>
+                        <h3 class="program-pokok__title">{{ $item->judul }}</h3>
+                        <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
+                    </a>
+                @else
+                    <div class="program-pokok__card">
+                        <span class="program-pokok__icon">
+                            @if ($item->icon)
+                                <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
+                            @endif
+                        </span>
+                        <h3 class="program-pokok__title">{{ $item->judul }}</h3>
+                        <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
+                    </div>
+                @endif
+            @empty
+                <p class="program-pokok__empty">Belum ada program pokok untuk kategori ini.</p>
+            @endforelse
         </div>
 
     </div>

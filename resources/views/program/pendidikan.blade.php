@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Program Peduli Pendidikan — Dompet Al-Qur'an Indonesia</title>
+    <title>Program Peduli Pendidikan</title>
     <meta name="description" content="Peduli Pendidikan adalah program Dompet Al-Qur'an Indonesia yang mendukung pendidikan anak-anak dan generasi muda dari keluarga prasejahtera melalui beasiswa, perlengkapan sekolah, dan pembinaan karakter Islami.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,64 +53,40 @@
 
 {{-- =====================================================================
      PROGRAM POKOK
-     Isi array ini yang beda-beda tiap halaman Program
-     (Pendidikan / Ekonomi / Dakwah / Kemanusiaan).
+     $programPokok dikirim dari ProgramController::pendidikan(), sudah
+     difilter where kategori_program = 'Pendidikan' (tabel program_pokok).
      ===================================================================== --}}
-@php
-    $programPokok = [
-        [
-            'title' => 'Beasiswa Pendidikan',
-            'desc'  => 'Bantuan biaya pendidikan bagi siswa dan mahasiswa berprestasi dari keluarga prasejahtera.',
-            'icon'  => '<path d="M12 3L2 8l10 5 10-5-10-5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M6 10.5V16c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5v-5.5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M21 9v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
-        ],
-        [
-            'title' => 'Paket Perlengkapan Sekolah',
-            'desc'  => 'Penyaluran tas, seragam, sepatu, alat tulis, dan kebutuhan sekolah lainnya agar anak dapat belajar dengan nyaman.',
-            'icon'  => '<path d="M4 20l1-4.2L15.2 5.6a1.5 1.5 0 012.1 0l1.1 1.1a1.5 1.5 0 010 2.1L8.2 19 4 20z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M13.5 7.3l3.2 3.2" stroke="currentColor" stroke-width="1.7"/>',
-        ],
-        [
-            'title' => 'Rumah Belajar Qurani',
-            'desc'  => "Program pendampingan belajar yang menggabungkan pelajaran akademik dengan pembelajaran Al-Qur'an dan nilai-nilai Islam.",
-            'icon'  => '<path d="M4 11.5L12 4l8 7.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 001 1h10a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M10 20v-5h4v5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
-        ],
-        [
-            'title' => 'Pembinaan Karakter Islami',
-            'desc'  => 'Kegiatan pembinaan akhlak, kepemimpinan, dan pembiasaan ibadah untuk membentuk generasi yang berkarakter mulia.',
-            'icon'  => '<path d="M20 14.5A8.5 8.5 0 119.5 4a6.8 6.8 0 1010.5 10.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
-        ],
-        [
-            'title' => "Distribusi Al-Qur'an & Buku Islami",
-            'desc'  => "Penyaluran Al-Qur'an, Iqra', buku-buku Islami, dan buku edukatif untuk mendukung kegiatan belajar dan meningkatkan literasi keislaman.",
-            'icon'  => '<path d="M12 6.5c-1.7-1-4-1.5-6.5-1.5v13c2.5 0 4.8.5 6.5 1.5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 6.5c1.7-1 4-1.5 6.5-1.5v13c-2.5 0-4.8.5-6.5 1.5V6.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
-        ],
-        [
-            'title' => 'Sekolah Layak Belajar',
-            'desc'  => 'Renovasi ruang kelas serta penyediaan sarana dan prasarana pendidikan yang nyaman dan aman.',
-            'icon'  => '<path d="M5 20V6.5L12 3l7 3.5V20" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 20v-4h6v4" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 11h.01M12 11h.01M15 11h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
-        ],
-        [
-            'title' => 'Gerakan Peduli Pendidikan',
-            'desc'  => 'Aksi kolaborasi bersama masyarakat dan donatur untuk memenuhi kebutuhan pendidikan anak-anak serta mendukung keberlangsungan proses belajar.',
-            'icon'  => '<path d="M12 20s-6.5-3.9-9-8.2C1.4 8.6 3 5.5 6 5.5c1.7 0 3 1 4 2.3 1-1.3 2.3-2.3 4-2.3 3 0 4.6 3.1 3 6.3-2.5 4.3-9 8.2-9 8.2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
-        ],
-    ];
-@endphp
-
 <section class="section program-pokok" id="program-pokok">
     <div class="container">
 
         <h2 class="section-title">Program <span>Pokok</span> Kami</h2>
 
         <div class="program-pokok__grid">
-            @foreach ($programPokok as $item)
-                <div class="program-pokok__card">
-                    <span class="program-pokok__icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">{!! $item['icon'] !!}</svg>
-                    </span>
-                    <h3 class="program-pokok__title">{{ $item['title'] }}</h3>
-                    <p class="program-pokok__desc">{{ $item['desc'] }}</p>
-                </div>
-            @endforeach
+            @forelse ($programPokok as $item)
+                @if ($item->link)
+                    <a href="{{ $item->link }}" target="_blank" rel="noopener" class="program-pokok__card">
+                        <span class="program-pokok__icon">
+                            @if ($item->icon)
+                                <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
+                            @endif
+                        </span>
+                        <h3 class="program-pokok__title">{{ $item->judul }}</h3>
+                        <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
+                    </a>
+                @else
+                    <div class="program-pokok__card">
+                        <span class="program-pokok__icon">
+                            @if ($item->icon)
+                                <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
+                            @endif
+                        </span>
+                        <h3 class="program-pokok__title">{{ $item->judul }}</h3>
+                        <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
+                    </div>
+                @endif
+            @empty
+                <p class="program-pokok__empty">Belum ada program pokok untuk kategori ini.</p>
+            @endforelse
         </div>
 
     </div>
