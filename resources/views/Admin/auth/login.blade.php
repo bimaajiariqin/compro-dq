@@ -100,10 +100,26 @@
 
                     <div>
                         <label for="password" class="block text-sm font-medium text-ink/70 mb-1.5">Password</label>
-                        <input id="password" name="password" type="password" required
-                               placeholder="••••••••"
-                               class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm placeholder:text-ink/30
-                                      focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">
+                        <div class="relative">
+                            <input id="password" name="password" type="password" required
+                                   placeholder="••••••••"
+                                   class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 pr-11 text-sm placeholder:text-ink/30
+                                          focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">
+
+                            <button type="button" id="togglePassword"
+                                    class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-ink/40 hover:text-ink/70 transition">
+                                {{-- Eye icon (password hidden state) --}}
+                                <svg id="eyeShow" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                {{-- Eye-off icon (password visible state) --}}
+                                <svg id="eyeHide" class="hidden h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a20.3 20.3 0 0 1 5.06-6.06M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a20.3 20.3 0 0 1-2.68 3.9M14.12 14.12a3 3 0 1 1-4.24-4.24"/>
+                                    <line x1="1" y1="1" x2="23" y2="23"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit"
@@ -122,6 +138,20 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const eyeShow = document.getElementById('eyeShow');
+        const eyeHide = document.getElementById('eyeHide');
+
+        togglePassword.addEventListener('click', () => {
+            const isHidden = passwordInput.type === 'password';
+            passwordInput.type = isHidden ? 'text' : 'password';
+            eyeShow.classList.toggle('hidden', isHidden);
+            eyeHide.classList.toggle('hidden', !isHidden);
+        });
+    </script>
 
 </body>
 </html>
