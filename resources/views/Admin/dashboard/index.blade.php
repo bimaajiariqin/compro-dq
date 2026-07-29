@@ -13,7 +13,7 @@
     </div>
 
     {{-- Stat cards --}}
-    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
 
         <div class="rounded-2xl border border-black/5 bg-white p-5">
             <div class="flex items-center justify-between">
@@ -65,6 +65,19 @@
             </div>
             <p class="font-display text-3xl mt-4">{{ $stats['laporan_keuangan'] }}</p>
             <p class="text-sm text-ink/50">Laporan Keuangan</p>
+        </div>
+
+        <div class="rounded-2xl border border-black/5 bg-white p-5">
+            <div class="flex items-center justify-between">
+                <span class="h-9 w-9 rounded-lg bg-emerald-700/10 text-emerald-700 flex items-center justify-center">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2 3 7l9 5 9-5-9-5Z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/>
+                    </svg>
+                </span>
+                <a href="{{ route('admin.program-pokok.index') }}" class="text-xs text-emerald-700 hover:underline">Kelola →</a>
+            </div>
+            <p class="font-display text-3xl mt-4">{{ $stats['program_pokok'] }}</p>
+            <p class="text-sm text-ink/50">Program Pokok</p>
         </div>
     </div>
 
@@ -118,6 +131,9 @@
                 </a>
                 <a href="{{ route('admin.testimoni.create') }}" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm bg-white/5 hover:bg-white/10 transition">
                     Tambah Testimoni <span>+</span>
+                </a>
+                <a href="{{ route('admin.program-pokok.create') }}" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm bg-white/5 hover:bg-white/10 transition">
+                    Tambah Program Pokok <span>+</span>
                 </a>
                 <a href="{{ route('admin.laporan-keuangan.create') }}" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm bg-white/5 hover:bg-white/10 transition">
                     Unggah Laporan Keuangan <span>+</span>

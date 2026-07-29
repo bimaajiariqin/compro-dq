@@ -157,12 +157,3 @@
         @if ($berita->count() > 4)
             <div class="program-berita__dots" data-berita-dots></div>
         @endif
-
-    </div>
-</section>
-
-@include('partials.footer')
-
-<script src="{{ asset('js/program-berita-slider.js') }}"></script>
-</body>
-</html>
