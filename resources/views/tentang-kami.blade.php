@@ -29,7 +29,7 @@
 <section class="hero">
     <div class="container hero__grid">
         <div class="hero__mark">
-            <img src="assets/logo.png" alt="Amil Dompet Al-Qur'an">
+            <img src="assets/logo-1.png" alt="Amil Dompet Al-Qur'an">
         </div>
         <div class="fade-in">
             <h1 class="hero__title">Profil <span class="eyebrow">Lembaga</span></h1>

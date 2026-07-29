@@ -271,7 +271,7 @@
     <div class="container">
         <div class="video-kebaikan-grid reveal">
             <div class="video-kebaikan-text">
-                <h2 class="video-kebaikan-title">Gerakan Nyata untuk Indonesia</h2>
+                <h2 class="video-kebaikan-title"> <span>Gerakan Nyata</span> untuk Indonesia</h2>
                 <p>Saksikan bagaimana setiap kegiatan dan penyaluran bantuan memberi manfaat bagi yatim dan dhuafa yang membutuhkan.
                     Jadilah bagian dari kebaikan. Temukan inspirasi, bagikan kepedulian, dan ikut memberi dampak nyata bagi mereka.
                 Semua video kebaikan bisa kamu lihat langsung di channel YouTube {{ $videoKebaikan->first()->channel_name }}.</p>

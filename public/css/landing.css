@@ -198,7 +198,7 @@ button { font-family: inherit; cursor: pointer; }
 .hero-stat {
   position: relative;
   text-align: center;
-  padding: 0 4px;
+  padding: 4 4px;
 }
 
 .hero-stat:not(:first-child)::before {
@@ -219,10 +219,10 @@ button { font-family: inherit; cursor: pointer; }
 
 .hero-stat-value {
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-  font-weight: 900;
+  font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+  font-weight: 700;
   color: var(--text-brand);
-  line-height: 1;
+  line-height: 0;
 }
 
 @media (max-width: 640px) {
@@ -712,6 +712,7 @@ button { font-family: inherit; cursor: pointer; }
   line-height: 1.2;
   margin: 0 0 20px;
 }
+.video-kebaikan-title span { color: var(--text-brand); }
 
 .video-kebaikan-text p {
   line-height: 1.5;

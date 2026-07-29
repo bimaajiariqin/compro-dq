@@ -387,10 +387,6 @@
     margin-left: auto;
   }
 
-  .btn-primary:hover {
-    background: var(--text-brand-dark);
-    transform: translateY(-1px);
-  }
 
   .btn-outline {
     background: var(--bg-white);
