@@ -16,6 +16,8 @@
 
 @include('partials.navbar')
 
+@include('partials.wa-floating')
+
 {{-- ==========================================================
      HERO
      ========================================================== --}}
@@ -267,7 +269,7 @@
      VIDEO KEBAIKAN
      ========================================================== --}}
 @if ($videoKebaikan->isNotEmpty())
-<section class="section" id="video-kebaikan">
+<section class="section section-blue" id="video-kebaikan">
     <div class="container">
         <div class="video-kebaikan-grid reveal">
             <div class="video-kebaikan-text">

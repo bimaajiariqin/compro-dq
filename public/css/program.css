@@ -84,11 +84,6 @@
     transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.btn-primary.program-hero__cta:hover {
-    background: var(--text-brand-dark, #274E86);
-    transform: translateY(-1px);
-}
-
 .btn-primary.program-hero__cta svg {
     flex-shrink: 0;
 }
@@ -158,9 +153,6 @@
     justify-content: center;
     width: 42px;
     height: 42px;
-    border-radius: var(--radius-sm);
-    background: var(--text-brand-tint, rgba(51, 101, 175, 0.14));
-    color: var(--text-brand, #3365AF);
     margin-bottom: 16px;
     overflow: hidden;
 }

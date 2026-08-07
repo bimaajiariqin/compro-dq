@@ -18,6 +18,8 @@
 
 @include('partials.navbar')
 
+@include('partials.wa-floating')
+
 <section class="section" style="padding-top: 32px;">
     <div class="container">
 

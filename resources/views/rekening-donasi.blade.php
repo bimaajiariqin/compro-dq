@@ -19,6 +19,8 @@
 
 @include('partials.navbar')
 
+@include('partials.wa-floating')
+
 <section class="rekening-page">
     <div class="container">
 

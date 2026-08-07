@@ -7,7 +7,7 @@
   <header class="navbar">
       <div class="navbar-inner">
           <a href="{{ route('home') }}" class="navbar-brand">
-              <img src="{{ asset('assets/logo.png') }}" alt="Dompet Al-Qur'an" class="brand-mark">
+              <img src="{{ asset('assets/Logo-DQ.png') }}" alt="Dompet Al-Qur'an" class="brand-mark">
           </a>
 
           <nav class="navbar-menu">

@@ -23,6 +23,8 @@
 
 @include('partials.navbar')
 
+@include('partials.wa-floating')
+
 <div class="tk">
 
 {{-- ============ PROFIL LEMBAGA ============ --}}
@@ -52,8 +54,11 @@
             <h2 class="section-title">Visi & Misi <span class="eyebrow">Lembaga</span></h2>
 
             <div class="vm-block">
-                <span class="vm-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21 7.5 13.5 2 9h7l3-7z" fill="currentColor"/></svg>
+                <span class="vm-icon vm-icon--visi">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                    </svg>
                 </span>
                 <div>
                     <h3>Visi Lembaga</h3>
@@ -65,8 +70,10 @@
             </div>
 
             <div class="vm-block">
-                <span class="vm-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/></svg>
+                <span class="vm-icon vm-icon--misi">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M4 22V4a1 1 0 011-1h13.5a.5.5 0 01.4.8l-3.4 4.2 3.4 4.2a.5.5 0 01-.4.8H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </span>
                 <div style="flex:1;">
                     <h3>Misi Lembaga</h3>

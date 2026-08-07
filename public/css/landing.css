@@ -69,7 +69,7 @@ button { font-family: inherit; cursor: pointer; }
 
 .section-blue {
   padding: 40px 0;
-  background: var(--bg-blue-tint);
+  background: var(--text-brand-tint);
 }
 
 .section-eyebrow {
@@ -122,7 +122,7 @@ button { font-family: inherit; cursor: pointer; }
   margin-bottom: 10px;
 }
 
-.hero-eyebrow span { color: var(--text-brand); font-weight: 600; }
+.hero-eyebrow span { color: var(--text-brand); font-weight: 500; }
 
 .hero-title {
   font-family: var(--font-display);
@@ -1061,7 +1061,7 @@ button { font-family: inherit; cursor: pointer; }
   padding: 16px;
   background: var(--bg-white);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-card);
   overflow: hidden;
 }
 

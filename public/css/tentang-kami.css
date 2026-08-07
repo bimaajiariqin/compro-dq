@@ -557,7 +557,6 @@ html {
   box-shadow: var(--shadow-card);
   transition: box-shadow .25s ease, transform .25s ease;
 }
-.tk .pgh-card:hover { box-shadow: var(--shadow-soft); transform: translateY(-4px); }
 .tk .pgh-card__thumb { position: relative; aspect-ratio: 1 / 1; background: var(--bg-soft); overflow: hidden; }
 .tk .pgh-card__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
 .tk .pgh-card:hover .pgh-card__thumb img { transform: scale(1.05); }
