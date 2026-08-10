@@ -319,14 +319,48 @@
         margin-left: auto;
         margin-right: auto;
     }
+
+    /* ------------------------------------------------------------
+       Berita Terkait -> mode scroll horizontal (swipe) di mobile,
+       menggantikan slider dot berbasis transform.
+       ------------------------------------------------------------ */
+    .program-berita__slider {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .program-berita__slider::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Edge */
+    }
+
+    .program-berita__slider .program-berita__track {
+        display: flex !important;
+        transform: none !important;
+        width: max-content;
+        gap: 16px;
+    }
+
+    /* Jaga agar state "belum ada berita" tetap full-width & center */
+    .program-berita__slider .program-berita__track:has(.berita-empty) {
+        display: block !important;
+        width: 100%;
+    }
+
+    .program-berita__card {
+        flex: 0 0 78vw;
+        max-width: 300px;
+        scroll-snap-align: start;
+    }
+
+    .program-berita__dots {
+        display: none;
+    }
 }
 
 @media (max-width: 560px) {
     .program-pokok__grid {
         grid-template-columns: 1fr;
-    }
-
-    .program-berita__track {
-        grid-auto-columns: 100%;
     }
 }
