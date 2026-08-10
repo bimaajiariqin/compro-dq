@@ -3,138 +3,8 @@
       Dipakai lewat @include('partials.navbar') di setiap halaman publik.
       ========================================================== --}}
 
-
-  <header class="navbar">
-      <div class="navbar-inner">
-          <a href="{{ route('home') }}" class="navbar-brand">
-              <img src="{{ asset('assets/Logo-DQ.png') }}" alt="Dompet Al-Qur'an" class="brand-mark">
-          </a>
-
-          <nav class="navbar-menu">
-              <div class="nav-item">
-                  <a href="{{ route('home') }}" class="nav-link is-active">
-                      <span data-id="Beranda" data-en="Home">Beranda</span>
-                  </a>
-              </div>
-
-              <div class="nav-item">
-                  <button type="button" class="nav-link">
-                      <span data-id="Program" data-en="Programs">Program</span>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                  </button>
-                  <div class="nav-dropdown">
-                      <a href="{{ route('program.pendidikan') }}">Peduli Pendidikan</a>
-                      <a href="{{ route('program.ekonomi') }}">Peduli Ekonomi</a>
-                      <a href="{{ route('program.dakwah') }}">Peduli Dakwah</a>
-                      <a href="{{ route('program.kemanusiaan') }}">Peduli Kemanusiaan</a>
-                  </div>
-              </div>
-
-              <div class="nav-item">
-                  <button type="button" class="nav-link">
-                      <span data-id="Layanan" data-en="Services">Layanan</span>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                  </button>
-                  <div class="nav-dropdown">
-                      <a href="https://api.whatsapp.com/send/?phone=6281385002300&text&type=phone_number&app_absent=0" target="_blank">Konsultasi ZISWAF</a>
-                      <a href="https://orangbaik.id" target="_blank">Donasi Online</a>
-                      <a href="https://orangbaik.id/kalkulator-banget/" target="_blank">Kalkulator Zakat</a>
-                      <a href="https://fliphtml5.com/bookcase/ytxkr/" target="_blank">Inspirasi Kebaikan</a>
-                  </div>
-              </div>
-
-              <div class="nav-item">
-                  <a href="{{ route('berita.index') }}" class="nav-link">
-                      <span data-id="Berita" data-en="News">Berita</span>
-                  </a>
-              </div>
-
-              <div class="nav-item">
-                  <a href="{{ route('rekening.index') }}" class="nav-link">
-                      <span data-id="Rekening Donasi" data-en="Donation Account">Rekening Donasi</span>
-                  </a>
-              </div>
-
-              <div class="nav-item">
-                  <a href="{{ route('tentang-kami') }}" class="nav-link">
-                      <span data-id="Tentang Kami" data-en="About Us">Tentang Kami</span>
-                  </a>
-              </div>
-          </nav>
-              <a href="https://orangbaik.id" class="btn btn-primary" target="_blank">
-                  <span data-id="Donasi Sekarang" data-en="Donate Now">Donasi Sekarang</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0L12 5.34l-.77-.76a5.4 5.4 0 0 0-7.65 7.65L12 20.31l8.42-8.42a5.4 5.4 0 0 0 0-7.31Z"/>
-                      <path d="M9 12h1.5l1 3 2-6 1 3H16"/>
-                  </svg>
-              </a>
-              <button type="button" class="navbar-toggle" id="navbarToggle" aria-label="Buka menu" aria-expanded="false" aria-controls="mobileNav">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="icon-open"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="icon-close" style="display:none"><path d="M18 6 6 18M6 6l12 12"/></svg>
-              </button>
-          </div>
-
-          {{-- ======================================================
-              MOBILE NAV
-              Disembunyikan lewat CSS (.mobile-nav), ditampilkan saat
-              #navbarToggle diklik (lihat script di bawah).
-              ====================================================== --}}
-          <nav class="mobile-nav" id="mobileNav">
-              <a href="{{ route('home') }}" class="nav-link is-active">
-                  <span data-id="Beranda" data-en="Home">Beranda</span>
-              </a>
-
-              <div class="mobile-nav-group">
-                  <button type="button" class="nav-link mobile-submenu-toggle" data-target="programSubmenu">
-                      <span data-id="Program" data-en="Programs">Program</span>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                  </button>
-                  <div class="mobile-submenu" id="programSubmenu">
-                      <a href="{{ route('program.pendidikan') }}">Peduli Pendidikan</a>
-                      <a href="{{ route('program.ekonomi') }}">Peduli Ekonomi</a>
-                      <a href="{{ route('program.dakwah') }}">Peduli Dakwah</a>
-                      <a href="{{ route('program.kemanusiaan') }}">Peduli Kemanusiaan</a>
-                  </div>
-              </div>
-
-              <div class="mobile-nav-group">
-                  <button type="button" class="nav-link mobile-submenu-toggle" data-target="layananSubmenu">
-                      <span data-id="Layanan" data-en="Services">Layanan</span>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                  </button>
-                  <div class="mobile-submenu" id="layananSubmenu">
-                      <a href="https://api.whatsapp.com/send/?phone=6281385002300&text&type=phone_number&app_absent=0" target="_blank">Konsultasi ZISWAF</a>
-                      <a href="https://orangbaik.id" target="_blank">Donasi Online</a>
-                      <a href="https://orangbaik.id/kalkulator-banget/" target="_blank">Kalkulator Zakat</a>
-                      <a href="https://fliphtml5.com/bookcase/ytxkr/" target="_blank">Inspirasi Kebaikan</a>
-                  </div>
-              </div>
-
-              <a href="{{ route('berita.index') }}" class="nav-link">
-                  <span data-id="Berita" data-en="News">Berita</span>
-              </a>
-
-              <a href="{{ route('rekening.index') }}" class="nav-link">
-                  <span data-id="Rekening Donasi" data-en="Donation Account">Rekening Donasi</span>
-              </a>
-
-              <a href="{{ route('tentang-kami') }}" class="nav-link">
-                  <span data-id="Tentang Kami" data-en="About Us">Tentang Kami</span>
-              </a>
-
-              <a href="https://orangbaik.id" class="btn btn-primary mobile-donate-btn" target="_blank">
-                  <span data-id="Donasi Sekarang" data-en="Donate Now">Donasi Sekarang</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0L12 5.34l-.77-.76a5.4 5.4 0 0 0-7.65 7.65L12 20.31l8.42-8.42a5.4 5.4 0 0 0 0-7.31Z"/>
-                      <path d="M9 12h1.5l1 3 2-6 1 3H16"/>
-                  </svg>
-              </a>
-          </nav>
-      </div>
-  </header>
-
-  <style>
-      :root {
+<style>
+  :root {
     /* Warna sesuai spesifikasi */
     --bg-soft: #F9F9F9;
     --bg-white: #FFFFFF;
@@ -162,7 +32,9 @@
     --container-width: 1200px;
   }
 
-  body {
+  /* html + body diisi background yang sama supaya tidak ada celah
+     putih polos default browser sebelum CSS ini selesai di-load. */
+  html, body {
     background: var(--bg-white);
   }
 
@@ -180,12 +52,6 @@
     position: sticky;
     top: 12px;
     z-index: 100;
-    /* FIX: sebelumnya max-width:1000px (lebar tetap) membuat pil navbar
-       dipaksa selebar itu walau isinya jauh lebih sempit — sisa ruang
-       kosong itu lalu "dimakan" oleh margin-left:auto pada tombol,
-       menghasilkan white space besar. Sekarang lebar navbar mengikuti
-       kontennya sendiri (fit-content), dibatasi agar tidak overflow di
-       layar sempit lewat max-width: calc(100% - 24px). */
     width: fit-content;
     max-width: calc(100% - 24px);
     margin: 12px auto 0;
@@ -194,11 +60,8 @@
     box-shadow: var(--border-muted);
     border: 0.5px solid var(--border-muted);
     transition: border-radius 0.15s ease;
-
   }
 
-  /* Jarak logo ke menu tetap rapat (gap tetap, bukan space-between yang
-     ikut melebar mengikuti sisa ruang). */
   .navbar-inner {
     display: flex;
     align-items: center;
@@ -381,12 +244,8 @@
     background: var(--text-brand);
     color: #fff;
     box-shadow: 0 12px 24px -10px var(--text-brand-tint-strong);
-    /* Dorong tombol (dan navbar-toggle di sebelahnya) ke ujung kanan
-       navbar-inner, menggantikan peran justify-content:space-between
-       yang sebelumnya membuat jarak logo-menu ikut melebar. */
     margin-left: auto;
   }
-
 
   .btn-outline {
     background: var(--bg-white);
@@ -406,15 +265,19 @@
     color: var(--text-dark);
   }
 
+  /* Default: menu mobile selalu tersembunyi di luar breakpoint mobile,
+     baru dimunculkan lewat class .is-open (di-toggle JS) di dalam
+     @media di bawah. */
+  .mobile-nav {
+    display: none;
+  }
+
   @media (max-width: 960px) {
     .navbar-menu,
     .lang-toggle {
       display: none;
     }
 
-    /* Tombol "Donasi Sekarang" versi baris atas disembunyikan di mobile.
-       Tombol yang sama muncul lagi di dalam dropdown mobile-nav
-       (lihat .mobile-donate-btn) begitu tombol hamburger dipencet. */
     .navbar-inner > a.btn-primary {
       display: none;
     }
@@ -430,19 +293,7 @@
     }
 
     .navbar {
-      /* FIX: sebelumnya "margin: 10px 12px 0" memakai nilai kiri-kanan
-         TETAP (12px), bukan "auto". Karena lebar navbar mengikuti isi
-         (width: fit-content), margin tetap ini membuat pil navbar
-         menempel/geser ke KIRI dengan sisa ruang kosong menumpuk di
-         kanan — itulah yang bikin tampilan mobile terlihat "aneh"/tidak
-         center. Dikembalikan ke margin auto kiri-kanan supaya navbar
-         tetap center di semua lebar layar, sama seperti versi desktop. */
       margin: 10px auto 0;
-      /* Di mobile navbar dibuat memanjang (bukan fit-content lagi)
-         supaya logo & tombol hamburger terdorong ke ujung kiri-kanan,
-         bukan menggerombol kecil di tengah seperti pil desktop. Margin
-         kiri-kanan sedikit ditambah (40px, bukan 24px) supaya navbar
-         tidak terlalu mepet/lebar sampai ke tepi layar. */
       width: calc(100% - 40px);
       max-width: calc(100% - 40px);
     }
@@ -514,55 +365,181 @@
     .mobile-submenu a:hover {
       color: var(--text-brand);
     }
-
   }
-  </style>
+</style>
 
-  <script>
-  (function () {
-    var toggleBtn = document.getElementById('navbarToggle');
-    var mobileNav = document.getElementById('mobileNav');
-    if (!toggleBtn || !mobileNav) return;
+<header class="navbar">
+    <div class="navbar-inner">
+        <a href="{{ route('home') }}" class="navbar-brand">
+            <img src="{{ asset('assets/Logo-DQ.png') }}" alt="Dompet Al-Qur'an" class="brand-mark">
+        </a>
 
-    var iconOpen = toggleBtn.querySelector('.icon-open');
-    var iconClose = toggleBtn.querySelector('.icon-close');
-    var navbarEl = document.querySelector('.navbar');
+        <nav class="navbar-menu">
+            <div class="nav-item">
+                <a href="{{ route('home') }}" class="nav-link is-active">
+                    <span data-id="Beranda" data-en="Home">Beranda</span>
+                </a>
+            </div>
 
-    toggleBtn.addEventListener('click', function () {
-      var isOpen = mobileNav.classList.toggle('is-open');
-      toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      if (navbarEl) {
-        navbarEl.classList.toggle('navbar-mobile-open', isOpen);
-      }
+            <div class="nav-item">
+                <button type="button" class="nav-link">
+                    <span data-id="Program" data-en="Programs">Program</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="nav-dropdown">
+                    <a href="{{ route('program.pendidikan') }}">Peduli Pendidikan</a>
+                    <a href="{{ route('program.ekonomi') }}">Peduli Ekonomi</a>
+                    <a href="{{ route('program.dakwah') }}">Peduli Dakwah</a>
+                    <a href="{{ route('program.kemanusiaan') }}">Peduli Kemanusiaan</a>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <button type="button" class="nav-link">
+                    <span data-id="Layanan" data-en="Services">Layanan</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="nav-dropdown">
+                    <a href="https://api.whatsapp.com/send/?phone=6281385002300&text&type=phone_number&app_absent=0" target="_blank">Konsultasi ZISWAF</a>
+                    <a href="https://orangbaik.id" target="_blank">Donasi Online</a>
+                    <a href="https://orangbaik.id/kalkulator-banget/" target="_blank">Kalkulator Zakat</a>
+                    <a href="https://fliphtml5.com/bookcase/ytxkr/" target="_blank">Inspirasi Kebaikan</a>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <a href="{{ route('berita.index') }}" class="nav-link">
+                    <span data-id="Berita" data-en="News">Berita</span>
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a href="{{ route('rekening.index') }}" class="nav-link">
+                    <span data-id="Rekening Donasi" data-en="Donation Account">Rekening Donasi</span>
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a href="{{ route('tentang-kami') }}" class="nav-link">
+                    <span data-id="Tentang Kami" data-en="About Us">Tentang Kami</span>
+                </a>
+            </div>
+        </nav>
+
+        <a href="https://orangbaik.id" class="btn btn-primary" target="_blank">
+            <span data-id="Donasi Sekarang" data-en="Donate Now">Donasi Sekarang</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0L12 5.34l-.77-.76a5.4 5.4 0 0 0-7.65 7.65L12 20.31l8.42-8.42a5.4 5.4 0 0 0 0-7.31Z"/>
+                <path d="M9 12h1.5l1 3 2-6 1 3H16"/>
+            </svg>
+        </a>
+        <button type="button" class="navbar-toggle" id="navbarToggle" aria-label="Buka menu" aria-expanded="false" aria-controls="mobileNav">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="icon-open"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="icon-close" style="display:none"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+
+        {{-- ======================================================
+            MOBILE NAV
+            Disembunyikan lewat CSS (.mobile-nav), ditampilkan saat
+            #navbarToggle diklik (lihat script di bawah).
+            ====================================================== --}}
+        <nav class="mobile-nav" id="mobileNav">
+            <a href="{{ route('home') }}" class="nav-link is-active">
+                <span data-id="Beranda" data-en="Home">Beranda</span>
+            </a>
+
+            <div class="mobile-nav-group">
+                <button type="button" class="nav-link mobile-submenu-toggle" data-target="programSubmenu">
+                    <span data-id="Program" data-en="Programs">Program</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="mobile-submenu" id="programSubmenu">
+                    <a href="{{ route('program.pendidikan') }}">Peduli Pendidikan</a>
+                    <a href="{{ route('program.ekonomi') }}">Peduli Ekonomi</a>
+                    <a href="{{ route('program.dakwah') }}">Peduli Dakwah</a>
+                    <a href="{{ route('program.kemanusiaan') }}">Peduli Kemanusiaan</a>
+                </div>
+            </div>
+
+            <div class="mobile-nav-group">
+                <button type="button" class="nav-link mobile-submenu-toggle" data-target="layananSubmenu">
+                    <span data-id="Layanan" data-en="Services">Layanan</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="mobile-submenu" id="layananSubmenu">
+                    <a href="https://api.whatsapp.com/send/?phone=6281385002300&text&type=phone_number&app_absent=0" target="_blank">Konsultasi ZISWAF</a>
+                    <a href="https://orangbaik.id" target="_blank">Donasi Online</a>
+                    <a href="https://orangbaik.id/kalkulator-banget/" target="_blank">Kalkulator Zakat</a>
+                    <a href="https://fliphtml5.com/bookcase/ytxkr/" target="_blank">Inspirasi Kebaikan</a>
+                </div>
+            </div>
+
+            <a href="{{ route('berita.index') }}" class="nav-link">
+                <span data-id="Berita" data-en="News">Berita</span>
+            </a>
+
+            <a href="{{ route('rekening.index') }}" class="nav-link">
+                <span data-id="Rekening Donasi" data-en="Donation Account">Rekening Donasi</span>
+            </a>
+
+            <a href="{{ route('tentang-kami') }}" class="nav-link">
+                <span data-id="Tentang Kami" data-en="About Us">Tentang Kami</span>
+            </a>
+
+            <a href="https://orangbaik.id" class="btn btn-primary mobile-donate-btn" target="_blank">
+                <span data-id="Donasi Sekarang" data-en="Donate Now">Donasi Sekarang</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0L12 5.34l-.77-.76a5.4 5.4 0 0 0-7.65 7.65L12 20.31l8.42-8.42a5.4 5.4 0 0 0 0-7.31Z"/>
+                    <path d="M9 12h1.5l1 3 2-6 1 3H16"/>
+                </svg>
+            </a>
+        </nav>
+    </div>
+</header>
+
+<script>
+(function () {
+  var toggleBtn = document.getElementById('navbarToggle');
+  var mobileNav = document.getElementById('mobileNav');
+  if (!toggleBtn || !mobileNav) return;
+
+  var iconOpen = toggleBtn.querySelector('.icon-open');
+  var iconClose = toggleBtn.querySelector('.icon-close');
+  var navbarEl = document.querySelector('.navbar');
+
+  toggleBtn.addEventListener('click', function () {
+    var isOpen = mobileNav.classList.toggle('is-open');
+    toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    if (navbarEl) {
+      navbarEl.classList.toggle('navbar-mobile-open', isOpen);
+    }
+    if (iconOpen && iconClose) {
+      iconOpen.style.display = isOpen ? 'none' : '';
+      iconClose.style.display = isOpen ? '' : 'none';
+    }
+  });
+
+  var submenuToggles = mobileNav.querySelectorAll('.mobile-submenu-toggle');
+  submenuToggles.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var targetId = btn.getAttribute('data-target');
+      var submenu = document.getElementById(targetId);
+      if (!submenu) return;
+      var isOpen = submenu.classList.toggle('is-open');
+      btn.classList.toggle('is-open', isOpen);
+    });
+  });
+
+  mobileNav.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      mobileNav.classList.remove('is-open');
+      if (navbarEl) navbarEl.classList.remove('navbar-mobile-open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
       if (iconOpen && iconClose) {
-        iconOpen.style.display = isOpen ? 'none' : '';
-        iconClose.style.display = isOpen ? '' : 'none';
+        iconOpen.style.display = '';
+        iconClose.style.display = 'none';
       }
     });
-
-    // Submenu Program / Layanan di mobile: klik untuk buka/tutup
-    var submenuToggles = mobileNav.querySelectorAll('.mobile-submenu-toggle');
-    submenuToggles.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var targetId = btn.getAttribute('data-target');
-        var submenu = document.getElementById(targetId);
-        if (!submenu) return;
-        var isOpen = submenu.classList.toggle('is-open');
-        btn.classList.toggle('is-open', isOpen);
-      });
-    });
-
-    // Tutup mobile nav saat salah satu link diklik (kecuali toggle submenu)
-    mobileNav.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        mobileNav.classList.remove('is-open');
-        if (navbarEl) navbarEl.classList.remove('navbar-mobile-open');
-        toggleBtn.setAttribute('aria-expanded', 'false');
-        if (iconOpen && iconClose) {
-          iconOpen.style.display = '';
-          iconClose.style.display = 'none';
-        }
-      });
-    });
-  })();
-  </script>
+  });
+})();
+</script>
