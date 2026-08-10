@@ -30,7 +30,7 @@
     <div class="container program-hero__inner">
 
         <div class="program-hero__media">
-            <img src="{{ asset('assets/pendidikan-hero.png') }}" alt="Program Peduli Pendidikan" class="program-hero__img">
+            <img src="{{ asset('assets/pendidikan.png') }}" alt="Program Peduli Pendidikan" class="program-hero__img">
         </div>
 
         <div class="program-hero__content">
