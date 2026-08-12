@@ -273,6 +273,19 @@
   }
 
   @media (max-width: 960px) {
+    /* FIX: matikan transisi border-radius khusus di breakpoint mobile.
+       Sebabnya: saat tombol hamburger diklik, class .navbar-mobile-open
+       (radius 999px -> 24px) dan tampilnya .mobile-nav (yang membuat
+       tinggi navbar berubah instan, tanpa transisi) terjadi bersamaan.
+       Karena radius dianimasikan 0.15s sementara tinggi berubah instan,
+       sesaat radius besar (999px) bertemu kotak yang sudah lebih tinggi,
+       sehingga sudutnya melengkung penuh dan terlihat seperti lingkaran/pil
+       sekilas sebelum settle ke 24px. Dengan transition: none, perubahan
+       radius jadi instan juga, selaras dengan perubahan tinggi. */
+    .navbar {
+      transition: none;
+    }
+
     .navbar-menu,
     .lang-toggle {
       display: none;

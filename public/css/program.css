@@ -4,10 +4,11 @@
    Pendidikan, Ekonomi, Dakwah, Kemanusiaan
    (resources/views/Program/*.blade.php)
 
-   Variabel warna (--text-brand, --bg-soft, dll) diasumsikan sudah
-   didefinisikan secara global di css/landing.css. Fallback value
-   disertakan di setiap var() agar file ini tetap aman dipakai berdiri
-   sendiri kalau urutan <link> berubah.
+   Wajib dimuat SETELAH global.css — semua token warna/tipografi/shadow/
+   spacing/radius sudah tersedia lewat :root di global.css, jadi TIDAK
+   perlu fallback var(--x, #hex) lagi di file ini.
+   .section-title, .pill-tab/.berita-tab & .dot-pagination/#beritaPagination-
+   .program-berita__dots juga sudah didefinisikan di global.css.
    ========================================================================== */
 
 /* -------------------------------------------------------------------- */
@@ -15,104 +16,82 @@
 /* -------------------------------------------------------------------- */
 
 .program-hero {
-    padding: 10px 0 50px;
-    overflow: hidden;
-    min-height: calc(100vh - 90px); /* 90px = perkiraan tinggi navbar, sesuaikan */
-    display: flex;
-    align-items: center;
+  padding: 10px 0 50px;
+  overflow: hidden;
+  min-height: calc(100vh - 90px); /* 90px = perkiraan tinggi navbar */
+  display: flex;
+  align-items: center;
 }
 
 .program-hero__inner {
-    display: grid;
-    grid-template-columns: 0.85fr 1fr;
-    align-items: center;
-    gap: 56px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 0.85fr 1fr;
+  align-items: center;
+  gap: var(--space-9);
+  width: 100%;
 }
 
 .program-hero__media {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 24px 8px 8px 32px;
-    min-height: 480px; /* tinggi tetap agar jarak ke bawah tidak berubah saat gambar dikecilkan */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-6) var(--space-2) var(--space-2) var(--space-7);
+  min-height: 480px; /* tinggi tetap agar jarak ke bawah tidak berubah saat gambar dikecilkan */
 }
 
 .program-hero__img {
-    position: relative;
-    z-index: 1;
-    width: 70%;
-    max-width: 340px;
-    height: auto;
-    max-height: 400px;
-    object-fit: contain;
-    border-radius: var(--radius-lg, 24px);
+  position: relative;
+  z-index: 1;
+  width: 70%;
+  max-width: 340px;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
 }
 
-.program-hero__content {
-    padding-right: 8px;
-}
+.program-hero__content { padding-right: var(--space-2); }
 
 .program-hero__title {
-    font-family: var(--font-display, 'Inter', sans-serif);
-    font-weight: 600;
-    font-size: clamp(28px, 3.2vw, 40px);
-    line-height: 1.25;
-    color: var(--text-dark, #101828);
-    margin: 0 0 15px;
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: clamp(28px, 3.2vw, 40px);
+  line-height: 1.25;
+  color: var(--text-dark);
+  margin: 0 0 15px;
 }
 
-.program-hero__title span {
-    color: var(--text-brand, #3365AF);
-}
+.program-hero__title span { color: var(--text-brand); }
 
 .program-hero__desc {
-    color: var(--text-muted, #5D5D5D);
-    font-size: 16px;
-    line-height: 1.5;
-    margin: 0 0 20px;
-    max-width: 54ch;
+  color: var(--text-muted);
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  margin: 0 0 var(--space-5);
+  max-width: 54ch;
 }
 
 .btn-primary.program-hero__cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--text-brand, #3365AF);
-    color: #fff;
-    font-weight: 600;
-    font-size: 15px;
-    text-decoration: none;
-    padding: 14px 26px;
-    border-radius: var(--radius-full, 999px);
-    transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.btn-primary.program-hero__cta svg {
-    flex-shrink: 0;
+  font-size: var(--fs-md);
 }
 
 /* -------------------------------------------------------------------- */
 /* Section title (dipakai ulang oleh program-pokok & berita-terkait)    */
 /* -------------------------------------------------------------------- */
 
-.section-title {
-    text-align: center;
-    font-family: var(--font-display, 'Inter', sans-serif);
-    font-weight: 600;
-    font-size: clamp(24px, 2.6vw, 32px);
-    color: var(--text-dark, #101828);
-    margin: 0 0 40px;
+/* .section-title sudah didefinisikan di global.css. Di halaman ini judul
+   ditengahkan & sedikit lebih besar, jadi ditambahkan sebagai modifier. */
+.program-pokok .section-title,
+.program-berita .section-title {
+  text-align: center;
+  font-size: clamp(24px, 2.6vw, 32px);
+  margin-bottom: var(--space-8);
 }
 
-.section-title span {
-    color: var(--text-brand, #3365AF);
-}
-
-.section-title--left {
-    text-align: left;
-    margin-bottom: 12px;
+.program-berita .section-title--left {
+  text-align: left;
+  margin-bottom: var(--space-3);
 }
 
 /* -------------------------------------------------------------------- */
@@ -120,247 +99,165 @@
 /* -------------------------------------------------------------------- */
 
 .program-pokok {
-    background: var(--bg-soft, #F9F9F9);
-    padding: 80px 0;
+  background: var(--bg-soft);
+  padding: var(--section-space-xl) 0;
 }
 
 .program-pokok__grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--card-gap);
 }
 
 .program-pokok__card {
-    display: block;
-    border: 1.5px dashed var(--border-soft, #d9d9d9);
-    border-radius: var(--radius-md, 16px);
-    background: var(--bg-white, #fff);
-    padding: 28px 22px;
-    text-align: left;
-    min-width: 0;
-    color: inherit;
-    text-decoration: none;
-    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  display: block;
+  border: 1.5px dashed var(--border-soft);
+  border-radius: var(--radius-md);
+  background: var(--bg-white);
+  padding: 28px 22px;
+  text-align: left;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--transition-base), background var(--transition-base), transform var(--transition-base);
 }
 
-.program-pokok__card[href] {
-    cursor: pointer;
-}
+.program-pokok__card[href] { cursor: pointer; }
 
 .program-pokok__card:hover {
-    border-color: var(--text-brand, #3365AF);
-    transform: translateY(-3px);
+  border-color: var(--text-brand);
+  transform: translateY(-3px);
 }
 
 .program-pokok__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    margin-bottom: 16px;
-    overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: var(--space-4);
+  overflow: hidden;
 }
 
-.program-pokok__icon svg {
-    width: 24px;
-    height: 24px;
-}
-
-.program-pokok__icon img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-}
+.program-pokok__icon svg { width: 24px; height: 24px; }
+.program-pokok__icon img { width: 24px; height: 24px; object-fit: contain; }
 
 .program-pokok__title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-dark, #101828);
-    margin: 0 0 10px;
-    overflow-wrap: break-word;
-    word-break: break-word;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+  color: var(--text-dark);
+  margin: 0 0 10px;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .program-pokok__desc {
-    font-size: 13.5px;
-    line-height: 1.6;
-    color: var(--text-muted, #5D5D5D);
-    margin: 0;
-    overflow-wrap: break-word;
-    word-break: break-word;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .program-pokok__empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    font-size: 14px;
-    color: var(--text-muted, #5D5D5D);
-    padding: 20px 0;
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  padding: var(--space-5) 0;
 }
 
 /* -------------------------------------------------------------------- */
 /* Berita Terkait (slider dengan dot pagination)                        */
 /* -------------------------------------------------------------------- */
 
-.program-berita {
-    padding: 60px 0;
-}
+.program-berita { padding: var(--section-space-lg) 0; }
 
 .program-berita__lead {
-    color: var(--text-muted, #5D5D5D);
-    font-size: 16px;
-    line-height: 1.5;
-    max-width: 1200px;
-    margin: 0 0 36px;
+  color: var(--text-muted);
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  max-width: 1200px;
+  margin: 0 0 var(--space-8);
 }
 
-.program-berita__slider {
-    overflow: hidden;
-}
+.program-berita__slider { overflow: hidden; }
 
 .program-berita__track {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: calc((100% - 3 * 20px) / 4);
-    gap: 20px;
-    transition: transform 0.45s ease;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 3 * 20px) / 4);
+  gap: var(--card-gap);
+  transition: transform 0.45s ease;
 }
 
-.program-berita__card {
-    min-width: 0;
-}
+.program-berita__card { min-width: 0; }
 
 /* Saat berita kosong, track jangan berperilaku grid (biar .berita-empty full-width & center) */
-.program-berita__track:has(.berita-empty) {
-    display: block;
-}
+.program-berita__track:has(.berita-empty) { display: block; }
 
 .program-berita__track .berita-empty {
-    display: block;
-    width: 100%;
-    text-align: center;
-    font-size: 0.9rem;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: var(--fs-sm);
 }
 
-/* Dot pagination — disamakan dengan #beritaPagination di berita.blade.php */
-.program-berita__dots {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 22px;
-    margin-top: 28px;
-}
-
-.program-berita__dots button {
-    width: 8px;
-    height: 8px;
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    background: #b9bec7;
-    cursor: pointer;
-    transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.program-berita__dots button.is-active {
-    width: 12px;
-    height: 12px;
-    background: var(--text-brand, #3365AF);
-}
-
-.program-berita__dots button:hover:not(.is-active) {
-    background: #8b919b;
-}
+/* .program-berita__dots sudah didapat style dasarnya dari global.css */
 
 /* -------------------------------------------------------------------- */
-/* Responsive                                                            */
+/* Responsive (breakpoint acuan: lihat komentar di global.css)          */
 /* -------------------------------------------------------------------- */
 
 @media (max-width: 1024px) {
-    .program-pokok__grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .program-berita__track {
-        grid-auto-columns: calc((100% - 20px) / 2);
-    }
+  .program-pokok__grid { grid-template-columns: repeat(2, 1fr); }
+  .program-berita__track { grid-auto-columns: calc((100% - 20px) / 2); }
 }
 
 @media (max-width: 860px) {
-    .program-hero {
-        min-height: auto;
-    }
+  .program-hero { min-height: auto; }
+  .program-hero__media { min-height: auto; }
 
-    .program-hero__media {
-        min-height: auto;
-    }
+  .program-hero__inner { grid-template-columns: 1fr; gap: var(--space-8); text-align: center; }
+  .program-hero__content { padding-right: 0; }
+  .program-hero__desc { margin-left: auto; margin-right: auto; }
 
-    .program-hero__inner {
-        grid-template-columns: 1fr;
-        gap: 40px;
-        text-align: center;
-    }
+  .program-berita .section-title--left { text-align: center; }
+  .program-berita__lead { margin-left: auto; margin-right: auto; }
 
-    .program-hero__content {
-        padding-right: 0;
-    }
+  /* Berita Terkait -> mode scroll horizontal (swipe) di mobile,
+     menggantikan slider dot berbasis transform. */
+  .program-berita__slider {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .program-berita__slider::-webkit-scrollbar { display: none; }
 
-    .program-hero__desc {
-        margin-left: auto;
-        margin-right: auto;
-    }
+  .program-berita__slider .program-berita__track {
+    display: flex !important;
+    transform: none !important;
+    width: max-content;
+    gap: var(--space-4);
+  }
 
-    .section-title--left {
-        text-align: center;
-    }
+  /* Jaga agar state "belum ada berita" tetap full-width & center */
+  .program-berita__slider .program-berita__track:has(.berita-empty) {
+    display: block !important;
+    width: 100%;
+  }
 
-    .program-berita__lead {
-        margin-left: auto;
-        margin-right: auto;
-    }
+  .program-berita__card {
+    flex: 0 0 78vw;
+    max-width: 300px;
+    scroll-snap-align: start;
+  }
 
-    /* ------------------------------------------------------------
-       Berita Terkait -> mode scroll horizontal (swipe) di mobile,
-       menggantikan slider dot berbasis transform.
-       ------------------------------------------------------------ */
-    .program-berita__slider {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none; /* Firefox */
-    }
-
-    .program-berita__slider::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, Edge */
-    }
-
-    .program-berita__slider .program-berita__track {
-        display: flex !important;
-        transform: none !important;
-        width: max-content;
-        gap: 16px;
-    }
-
-    /* Jaga agar state "belum ada berita" tetap full-width & center */
-    .program-berita__slider .program-berita__track:has(.berita-empty) {
-        display: block !important;
-        width: 100%;
-    }
-
-    .program-berita__card {
-        flex: 0 0 78vw;
-        max-width: 300px;
-        scroll-snap-align: start;
-    }
-
-    .program-berita__dots {
-        display: none;
-    }
+  .program-berita__dots { display: none; }
 }
 
 @media (max-width: 560px) {
-    .program-pokok__grid {
-        grid-template-columns: 1fr;
-    }
+  .program-pokok__grid { grid-template-columns: 1fr; }
 }

@@ -1,0 +1,294 @@
+/* ==========================================================================
+   Dompet Al-Qur'an Indonesia — Global Design Tokens
+   Dimuat di SETIAP halaman, SEBELUM stylesheet lain (landing.css,
+   program.css, tentang-kami.css, rekening.css, navbar.css, footer.css).
+
+   Semua file di atas HARUS mengacu ke variabel & class di sini —
+   jangan duplikasi warna / ukuran / shadow / spacing di file lain.
+   ========================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------------
+     WARNA
+     --------------------------------------------------------------------- */
+  --bg-white: #FFFFFF;
+  --bg-soft: #F9F9F9;
+  --bg-blue-tint: #F2F9FF;
+
+  --text-brand: #3365AF;
+  --text-brand-dark: #274E86;          /* hover/aksen gelap dari brand */
+  --text-brand-tint: rgba(51, 101, 175, 0.08);
+  --text-brand-tint-strong: rgba(51, 101, 175, 0.14);
+
+  --text-dark: #101828;
+  --text-muted: #5D5D5D;
+
+  --border-soft: #d9d9d9;
+
+  /* ---------------------------------------------------------------------
+     TIPOGRAFI
+     --------------------------------------------------------------------- */
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Inter', sans-serif;
+
+  /* Skala ukuran (fluid untuk heading, tetap untuk teks kecil) */
+  --fs-xs: 0.75rem;                         /* 12px  — meta, badge, label */
+  --fs-sm: 0.85rem;                         /* 13.6px — tab, teks sekunder */
+  --fs-base: 1rem;                          /* 16px  — body */
+  --fs-md: 1.05rem;                         /* 16.8px — sub-heading kecil */
+  --fs-lg: 1.2rem;                          /* judul grup / card besar */
+  --fs-h3: clamp(1.1rem, 2vw, 1.2rem);      /* testimoni quote, dsb */
+  --fs-h2: clamp(1.6rem, 3vw, 2rem);        /* section-title */
+  --fs-h1: clamp(2rem, 5vw, 2.8rem);        /* hero-title */
+  --fs-display: clamp(1.7rem, 3.6vw, 2.4rem); /* CTA / QR heading besar */
+
+  /* Ketebalan */
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ---------------------------------------------------------------------
+     SHADOW
+     --------------------------------------------------------------------- */
+  --shadow-card: 0 10px 30px -12px rgba(16, 24, 40, 0.12);
+  --shadow-soft: 0 20px 40px -20px rgba(16, 24, 40, 0.18);
+
+  /* ---------------------------------------------------------------------
+     RADIUS
+     --------------------------------------------------------------------- */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 999px;
+
+  /* ---------------------------------------------------------------------
+     SPACING SCALE (basis 4px)
+     --------------------------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+
+  /* ---------------------------------------------------------------------
+     LAYOUT
+     --------------------------------------------------------------------- */
+  --container-width: 1200px;
+  --page-padding: 24px;              /* padding kiri-kanan container, desktop */
+  --page-padding-mobile: 16px;       /* padding kiri-kanan container, <=640px */
+
+  --section-space: 40px;             /* padding vertikal section standar */
+  --section-space-lg: 60px;          /* section lebih longgar (hero besar, rekening) */
+  --section-space-xl: 80px;          /* section berat (program-pokok) */
+  --section-space-mobile: 32px;      /* padding vertikal section, <=640px */
+
+  --card-padding: 24px;              /* padding kartu standar (layanan, dsb) */
+  --card-padding-sm: 16px;           /* padding kartu kecil (berita, rekening) */
+  --card-gap: 20px;                  /* jarak antar kartu dalam grid, default */
+
+  /* ---------------------------------------------------------------------
+     TRANSISI
+     --------------------------------------------------------------------- */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.35s ease;
+
+  /* ---------------------------------------------------------------------
+     BREAKPOINT (acuan)
+     CSS murni tidak mendukung var() di dalam @media, jadi angka berikut
+     dipakai MANUAL & KONSISTEN di semua file — jangan pakai nilai lain:
+       1024px → grid 4 kolom → 2 kolom
+        900px → gap section mengecil
+        860px → layout 2 kolom → 1 kolom (hero, about, cta)
+        768px → grid berita menyesuaikan
+        640px → mobile (page padding, section padding ikut mengecil)
+        480px → mobile kecil (carousel, font lebih kecil lagi)
+     --------------------------------------------------------------------- */
+}
+
+/* ==========================================================================
+   Reset & base tipografi bersama
+   ========================================================================== */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  background: var(--bg-white);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+h1, h2, h3, h4, p { margin: 0; }
+h1, h2, h3, h4 { font-family: var(--font-display); }
+
+/* ==========================================================================
+   Layout utilities bersama
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--page-padding);
+}
+
+.section { padding: var(--section-space) 0; }
+.section-soft { padding: var(--section-space) 0; background: var(--bg-soft); }
+.section-blue { padding: var(--section-space) 0; background: var(--text-brand-tint); }
+
+.text-center { text-align: center; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+.section-eyebrow { color: var(--text-brand); font-weight: var(--fw-bold); }
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  color: var(--text-dark);
+  font-weight: var(--fw-semibold);
+  margin: 0 0 var(--space-3);
+}
+.section-title span { color: var(--text-brand); }
+.section-title--left { text-align: left; margin-bottom: var(--space-3); }
+
+.section-subtitle,
+.section-lead {
+  color: var(--text-muted);
+  font-size: var(--fs-base);
+  max-width: 1200px;
+  margin: 1px 0 var(--space-3);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Tombol bersama
+   ========================================================================== */
+.btn-primary,
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--text-brand);
+  color: #fff;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-sm);
+  padding: 14px var(--space-6);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  transition: background var(--transition-base), transform var(--transition-base);
+}
+.btn-primary:hover,
+.cta-btn:hover {
+  background: var(--text-brand-dark);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-soft);
+  background: var(--bg-white);
+  color: var(--text-dark);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+.btn-outline:hover,
+.btn-outline.is-active {
+  border-color: var(--text-brand);
+  color: var(--text-brand);
+}
+
+/* Pill/tab bersama — satu rule dipakai oleh SEMUA tab berbentuk pill di
+   situs (berita-tab di landing/program, year-tab di tentang-kami), jadi
+   tidak perlu markup baru — cukup daftarkan class halaman di sini. */
+.pill-tab,
+.berita-tab,
+.year-tab {
+  padding: 9px 18px;
+  border-radius: var(--radius-full);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  border: 1px solid var(--border-soft);
+  background: var(--bg-white);
+  color: var(--text-muted);
+  transition: background var(--transition-fast), color var(--transition-fast),
+              border-color var(--transition-fast), box-shadow var(--transition-fast),
+              transform var(--transition-fast);
+}
+.pill-tab:hover,
+.berita-tab:hover,
+.year-tab:hover { border-color: var(--text-brand); color: var(--text-brand); }
+.pill-tab.is-active,
+.berita-tab.is-active,
+.year-tab.is-active {
+  background: var(--text-brand);
+  color: #fff;
+  border-color: var(--text-brand);
+  box-shadow: 0 8px 16px -8px var(--text-brand-tint-strong);
+}
+.pill-tab:active,
+.berita-tab:active,
+.year-tab:active { transform: scale(0.97); }
+
+/* Dot pagination bersama — dipakai untuk #beritaPagination & .program-berita__dots */
+.dot-pagination,
+#beritaPagination,
+.program-berita__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin-top: var(--space-7);
+}
+.dot-pagination button,
+#beritaPagination button,
+.program-berita__dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #b9bec7;
+  cursor: pointer;
+  transition: transform var(--transition-base), background var(--transition-base);
+}
+.dot-pagination button.is-active,
+#beritaPagination button.is-active,
+.program-berita__dots button.is-active { width: 12px; height: 12px; background: var(--text-brand); }
+.dot-pagination button:hover:not(.is-active),
+#beritaPagination button:hover:not(.is-active),
+.program-berita__dots button:hover:not(.is-active) { background: #8b919b; }
+
+/* ==========================================================================
+   Responsive base (breakpoint acuan lihat komentar di :root)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .container { padding: 0 var(--page-padding-mobile); }
+  .section,
+  .section-soft { padding: var(--section-space-mobile) 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,48 +1,19 @@
 /* =========================================================
    TENTANG KAMI — OrangBaik.id
-   Disamakan dengan konvensi landing.css: padding section,
-   tipografi section-title/section-subtitle, dan pola grid
-   2-kolom (align-items: center, rasio ala .about).
+   Wajib dimuat SETELAH global.css. Warna, tipografi, shadow,
+   radius, spacing, tombol, pill-tab & dot-pagination sudah ada
+   di global.css — file ini di-scope ke .tk supaya tidak
+   memengaruhi navbar/footer di luar wrapper ini, dan HANYA
+   berisi style spesifik halaman Tentang Kami.
    ========================================================= */
-.tk {
-  /* Warna sesuai spesifikasi */
-  --bg-soft: #F9F9F9;
-  --bg-white: #FFFFFF;
-  --bg-blue-tint: #F2F9FF;
-  --text-brand: #3365AF;
-  --text-dark: #101828;
-  --text-muted: #5D5D5D;
-
-  --text-brand-dark: #274E86;
-  --text-brand-tint: rgba(51, 101, 175, 0.08);
-  --text-brand-tint-strong: rgba(51, 101, 175, 0.14);
-  --border-soft: #d9d9d9;
-  --shadow-soft: 0 20px 40px -20px rgba(16, 24, 40, 0.18);
-  --shadow-card: 0 10px 30px -12px rgba(16, 24, 40, 0.12);
-
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-full: 999px;
-
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Inter', sans-serif;
-
-  --container-width: 1200px;
-}
 
 /* =========================================================
-   RESET & BASE — di-scope ke .tk supaya tidak memengaruhi
-   navbar/footer di luar wrapper ini.
+   RESET & BASE — di-scope ke .tk (reset umum sudah di global.css,
+   ini hanya memastikan cakupannya konsisten di dalam wrapper)
    ========================================================= */
 .tk, .tk *, .tk *::before, .tk *::after { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
-.tk {
-  scrollbar-gutter: stable;
-}
+.tk { scrollbar-gutter: stable; }
 
 .tk img { max-width: 100%; display: block; }
 .tk a { text-decoration: none; color: inherit; }
@@ -62,31 +33,28 @@ html {
   width: 100%;
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--page-padding);
 }
 
-/* Padding section disamakan dengan landing.css (.section) */
-.tk .section { padding: 40px 0; }
-.tk .section--soft { background: var(--bg-soft); padding: 40px 0; }
+.tk .section { padding: var(--section-space) 0; }
+.tk .section--soft { background: var(--bg-soft); padding: var(--section-space) 0; }
 
 .tk .eyebrow { color: var(--text-brand); }
 
-/* section-title disamakan persis dengan .section-title landing.css */
 .tk .section-title {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-size: var(--fs-h2);
   color: var(--text-dark);
-  font-weight: 600;
-  margin: 0 0 12px;
+  font-weight: var(--fw-semibold);
+  margin: 0 0 var(--space-3);
 }
 .tk .section-title .eyebrow { color: var(--text-brand); }
 
-/* section-lead disamakan dengan .section-subtitle landing.css */
 .tk .section-lead {
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: var(--fs-base);
   max-width: 1200px;
-  margin: 1px 0 24px;
+  margin: 1px 0 var(--space-6);
   line-height: 1.5;
 }
 
@@ -98,53 +66,36 @@ html {
 
 /* =========================================================
    HERO / PROFIL LEMBAGA
-   Pola grid = .about landing.css (align-items: center, gap 40px).
+   Pola grid sama seperti .about di landing.css (align-items:
+   center, gap besar).
    ========================================================= */
-.tk .hero {
-  background: var(--bg-white);
-  overflow: hidden;
-}
-.tk section.hero .container {
-  padding-left: 24px !important;
-  padding-right: 24px !important;
-}
+.tk .hero { background: var(--bg-white); overflow: hidden; }
+
+.tk section.hero .container { padding-left: var(--page-padding) !important; padding-right: var(--page-padding) !important; }
 @media (max-width: 640px) {
   .tk section.hero .container {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
+    padding-left: var(--page-padding-mobile) !important;
+    padding-right: var(--page-padding-mobile) !important;
   }
 }
+
 .tk .hero__grid {
   display: grid;
   grid-template-columns: 0.4fr 0.6fr;
-  gap: 24px;
+  gap: var(--space-6);
   align-items: center;
-  padding: 40px 0;
+  padding: var(--space-8) 0;
 }
 .tk .hero__title {
-  font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-size: var(--fs-h2);
   font-weight: 550;
   line-height: 1.2;
   color: var(--text-dark);
-  margin-bottom: 12px;
+  margin-bottom: var(--space-3);
 }
-.tk .hero__text {
-  color: var(--text-muted);
-  font-size: 1rem;
-  line-height: 1.5;
-}
-.tk .hero__mark {
-  display: flex;
-  justify-content: center;
-}
-
-.tk .hero__mark img {
-  width: 100%;
-  max-width: 260px;
-  aspect-ratio: 4 / 3;
-  object-fit: contain;
-}
+.tk .hero__text { color: var(--text-muted); font-size: var(--fs-base); line-height: 1.5; }
+.tk .hero__mark { display: flex; justify-content: center; }
+.tk .hero__mark img { width: 100%; max-width: 260px; aspect-ratio: 4 / 3; object-fit: contain; }
 
 /* =========================================================
    VISI & MISI — grid sama persis dengan .hero__grid di atas.
@@ -152,14 +103,10 @@ html {
 .tk .visi-misi {
   display: grid;
   grid-template-columns: 1fr 0.85fr;
-  gap: 40px;
+  gap: var(--space-8);
   align-items: center;
 }
-.tk .vm-block {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 32px;
-}
+.tk .vm-block { display: flex; gap: var(--space-4); margin-bottom: var(--space-7); }
 .tk .vm-block:last-child { margin-bottom: 0; }
 .tk .vm-icon {
   width: 36px;
@@ -172,28 +119,10 @@ html {
   justify-content: center;
   flex-shrink: 0;
 }
-.tk .vm-block h3 {
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-bottom: 6px;
-}
-.tk .vm-block p {
-  color: var(--text-muted);
-  font-size: 16px;
-  line-height: 1.5;
-}
-.tk .vm-block ol {
-  color: var(--text-muted);
-  font-size: 16px;
-  line-height: 1.5;
-  counter-reset: item;
-}
-.tk .vm-block ol li {
-  counter-increment: item;
-  position: relative;
-  padding-left: 22px;
-  margin-bottom: 4px;
-}
+.tk .vm-block h3 { font-weight: var(--fw-semibold); color: var(--text-dark); margin-bottom: 6px; }
+.tk .vm-block p { color: var(--text-muted); font-size: var(--fs-md); line-height: 1.5; }
+.tk .vm-block ol { color: var(--text-muted); font-size: var(--fs-md); line-height: 1.5; counter-reset: item; }
+.tk .vm-block ol li { counter-increment: item; position: relative; padding-left: 22px; margin-bottom: 4px; }
 .tk .vm-block ol li::before {
   content: counter(item) ".";
   position: absolute;
@@ -201,48 +130,28 @@ html {
   font-weight: 200;
   color: var(--text-muted);
 }
-.tk .vm-note {
-  margin-top: 18px;
-  font-size: 0.875rem;
-  font-style: italic;
-  color: var(--text-muted);
-}
+.tk .vm-note { margin-top: var(--space-4); font-size: var(--fs-xs); font-style: italic; color: var(--text-muted); }
 .tk .visi-misi__image { display: flex; justify-content: center; }
-
-.tk .visi-misi__image img {
-  width: 100%;
-  max-width: 350px;
-  aspect-ratio: 3 / 4;
-  object-fit: contain;
-}
+.tk .visi-misi__image img { width: 100%; max-width: 350px; aspect-ratio: 3 / 4; object-fit: contain; }
 
 /* =========================================================
    LEGALITAS LEMBAGA
-   FIX: badge diperbesar dari 64px -> 96px agar logo lembaga
-   (Kemenag, BWI, dsb.) lebih jelas terbaca. Padding card juga
-   sedikit dilonggarkan mengikuti badge yang lebih besar.
+   Badge 96px agar logo lembaga (Kemenag, BWI, dsb.) lebih jelas.
    ========================================================= */
-.tk .legalitas-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-}
+.tk .legalitas-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-5); }
 .tk .legalitas-card {
   background: var(--bg-white);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-md);
-  padding: 28px 20px;
+  padding: 28px var(--space-5);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   box-shadow: var(--shadow-card);
-  transition: box-shadow .2s ease, transform .2s ease;
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
 }
-.tk .legalitas-card:hover {
-  box-shadow: var(--shadow-soft);
-  transform: translateY(-3px);
-}
+.tk .legalitas-card:hover { box-shadow: var(--shadow-soft); transform: translateY(-3px); }
 
 .tk .legalitas-card__badge {
   width: 96px;
@@ -251,94 +160,49 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
   overflow: hidden;
   padding: 14px;
 }
-.tk .legalitas-card__badge img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-.tk .legalitas-card__label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-bottom: 16px;
-}
+.tk .legalitas-card__badge img { width: 100%; height: 100%; object-fit: contain; }
+.tk .legalitas-card__label { font-size: var(--fs-sm); font-weight: var(--fw-semibold); color: var(--text-dark); margin-bottom: var(--space-4); }
 .tk .legalitas-card__link {
   margin-top: auto;
   display: inline-flex;
   align-items: center;
   gap: 4px;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--text-brand);
 }
 
 /* =========================================================
-   TABS (Laporan Keuangan & Penghargaan) — disamakan dengan
-   .berita-tab / .berita-tab.is-active landing.css
+   TABS (Laporan Keuangan & Penghargaan)
+   Gaya dasar pill-tab (termasuk .year-tab) sudah didefinisikan
+   sekali untuk seluruh situs di global.css.
    ========================================================= */
-.tk .year-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 24px;
-}
-
-.tk .year-tab {
-  padding: 9px 18px;
-  border-radius: var(--radius-full);
-  font-size: 0.85rem;
-  font-weight: 500;
-  border: 1px solid var(--border-soft);
-  background: var(--bg-white);
-  color: var(--text-muted);
-  transition: background .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease;
-}
-.tk .year-tab:hover { border-color: var(--text-brand); color: var(--text-brand); }
-.tk .year-tab.is-active {
-  background: var(--text-brand);
-  color: #fff;
-  border-color: var(--text-brand);
-  box-shadow: 0 8px 16px -8px var(--text-brand-tint-strong);
-}
-.tk .year-tab:active { transform: scale(0.97); }
+.tk .year-tabs { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6); }
 
 /* =========================================================
-   LAPORAN KEUANGAN
-   FIX: didesain ulang dari list satu kolom (max-width: 480px)
-   menjadi grid kartu 3-kolom, selaras dengan pola grid
-   Legalitas & Penghargaan. Ikon dokumen diperbesar (48px).
+   LAPORAN KEUANGAN — grid kartu 3-kolom, ikon dokumen 48px.
    ========================================================= */
 .tk .lk-panel.is-hidden { display: none; }
-
-.tk .lk-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
+.tk .lk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
 
 .tk .lk-doc {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: var(--space-4);
   background: var(--bg-white);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-md);
-  padding: 20px 24px;
+  padding: var(--space-5) var(--space-6);
   box-shadow: var(--shadow-card);
-  transition: box-shadow .2s ease, transform .2s ease;
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
 }
 
-.tk .lk-doc__label {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-width: 0;
-}
+.tk .lk-doc__label { display: flex; align-items: center; gap: 14px; min-width: 0; }
 .tk .lk-doc__icon {
   width: 48px;
   height: 48px;
@@ -351,26 +215,22 @@ html {
   flex-shrink: 0;
 }
 .tk .lk-doc__text {
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-md);
   color: var(--text-dark);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .tk .lk-doc__arrow { flex-shrink: 0; }
-.tk .lk-empty, .tk .pgh-empty { color: var(--text-muted); font-size: 0.9rem; }
+.tk .lk-empty, .tk .pgh-empty { color: var(--text-muted); font-size: var(--fs-sm); }
 
 /* =========================================================
    AWAL PERJALANAN KAMI (journey)
-   Didesain ulang jadi timeline satu kolom minimalis: garis tipis
-   di kiri, titik penanda kecil, tanpa kartu berbayang/berbingkai —
-   fokus ke tipografi dan whitespace.
+   Timeline satu kolom minimalis: garis tipis di kiri, titik
+   penanda kecil, tanpa kartu berbayang/berbingkai.
    ========================================================= */
-.tk .journey {
-  max-width: 760px;
-  position: relative;
-}
+.tk .journey { max-width: 760px; position: relative; }
 .tk .journey::before {
   content: '';
   position: absolute;
@@ -380,18 +240,9 @@ html {
   width: 1px;
   background: var(--border-soft);
 }
-.tk .journey__item {
-  position: relative;
-  display: flex;
-  gap: 24px;
-  padding-bottom: 40px;
-}
+.tk .journey__item { position: relative; display: flex; gap: var(--space-6); padding-bottom: var(--space-8); }
 .tk .journey__item:last-child { padding-bottom: 0; }
-.tk .journey__marker {
-  flex-shrink: 0;
-  width: 11px;
-  padding-top: 4px;
-}
+.tk .journey__marker { flex-shrink: 0; width: 11px; padding-top: 4px; }
 .tk .journey__dot {
   display: block;
   width: 11px;
@@ -406,66 +257,48 @@ html {
 .tk .journey__date {
   display: block;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--text-brand);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin-bottom: 6px;
 }
-.tk .journey__title {
-  font-weight: 500;
-  font-size: 16px;
-  color: var(--text-dark);
-  margin-bottom: 8px;
-}
+.tk .journey__title { font-weight: var(--fw-medium); font-size: var(--fs-base); color: var(--text-dark); margin-bottom: var(--space-2); }
 .tk .journey__body { display: flex; align-items: flex-start; gap: 18px; }
 .tk .journey__logo { width: 84px; height: 84px; object-fit: contain; border-radius: 12px; flex-shrink: 0; }
-.tk .journey__desc { font-size: 14px; line-height: 1.5; color: var(--text-muted); margin: 0; }
+.tk .journey__desc { font-size: var(--fs-sm); line-height: 1.5; color: var(--text-muted); margin: 0; }
 
 .tk .journey__item--reveal {
   opacity: 0;
   transform: translateX(-16px);
-  transition: opacity .5s ease, transform .5s ease;
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
 }
 .tk .journey__item--reveal.is-visible { opacity: 1; transform: translateX(0); }
 @media (prefers-reduced-motion: reduce) {
   .tk .journey__item--reveal { opacity: 1; transform: none; transition: none; }
 }
 
-/* Desktop: zig-zag minimalis — garis & titik di tengah, konten selang-seling
-   kiri/kanan. Mobile tetap satu kolom (di atas) karena sudah dinilai bagus. */
+/* Desktop: zig-zag minimalis — garis & titik di tengah, konten
+   selang-seling kiri/kanan. Mobile tetap satu kolom (di atas). */
 @media (min-width: 861px) {
   .tk .journey { max-width: 100%; }
-  .tk .journey::before {
-    left: 50%;
-    transform: translateX(-50%);
-  }
+  .tk .journey::before { left: 50%; transform: translateX(-50%); }
   .tk .journey__item {
     display: grid;
     grid-template-columns: 1fr 40px 1fr;
     gap: 0;
     align-items: start;
-    padding-bottom: 48px;
+    padding-bottom: var(--space-9);
   }
-  .tk .journey__marker {
-    grid-column: 2;
-    justify-self: center;
-  }
-  .tk .journey__content {
-    grid-column: 1;
-    justify-self: end;
-    max-width: 440px;
-    padding-right: 32px;
-  }
+  .tk .journey__marker { grid-column: 2; justify-self: center; }
+  .tk .journey__content { grid-column: 1; justify-self: end; max-width: 440px; padding-right: var(--space-7); }
   .tk .journey__item:nth-child(even) .journey__content {
     grid-column: 3;
     justify-self: start;
     padding-right: 0;
-    padding-left: 32px;
+    padding-left: var(--space-7);
   }
-  .tk .journey__item--reveal {
-    transform: translateY(20px);
-  }
+  .tk .journey__item--reveal { transform: translateY(20px); }
   .tk .journey__item--reveal.is-visible { transform: translateY(0); }
 }
 
@@ -474,79 +307,45 @@ html {
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
     padding-bottom: 4px;
     margin-left: -16px;
     margin-right: -16px;
     padding-left: 16px;
     padding-right: 16px;
   }
-  .tk .year-tabs::-webkit-scrollbar { display: none; } /* Chrome/Safari */
-  .tk .year-tab {
-    flex-shrink: 0;
-  }
+  .tk .year-tabs::-webkit-scrollbar { display: none; }
+  .tk .year-tab { flex-shrink: 0; }
   .tk .journey__logo { width: 60px; height: 60px; }
 }
 
 /* =========================================================
    PROFIL KEPENGURUSAN
    ========================================================= */
-.tk .pengurus-group { margin-bottom: 56px; }
-.tk .pengurus-group__title {
-  text-align: center;
-  font-weight: 500;
-  font-size: 1rem;
-  color: var(--text-dark);
-  margin-bottom: 20px;
-}
-.tk .pengurus-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 32px;
-  max-width: 900px;
-  margin: 0 auto;
-}
+.tk .pengurus-group { margin-bottom: var(--space-9); }
+.tk .pengurus-group__title { text-align: center; font-weight: var(--fw-medium); font-size: var(--fs-base); color: var(--text-dark); margin-bottom: var(--space-5); }
+.tk .pengurus-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-8); max-width: 900px; margin: 0 auto; }
 .tk .pengurus-card { width: 160px; text-align: center; }
-.tk .pengurus-card img {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  margin-bottom: 12px;
-}
-.tk .pengurus-card__name { font-size: 0.875rem; font-weight: 700; color: var(--text-dark); line-height: 1.4; }
-.tk .pengurus-card__role { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+.tk .pengurus-card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; margin-bottom: var(--space-3); }
+.tk .pengurus-card__name { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--text-dark); line-height: 1.4; }
+.tk .pengurus-card__role { font-size: var(--fs-xs); color: var(--text-muted); margin-top: 2px; }
 
-/* FIX: foto & gap kepengurusan diperbesar/direnggangkan khusus untuk
-   desktop (>= 861px, breakpoint sama dengan section journey). Mobile
-   (<= 640px) tetap memakai ukuran lama (140px) agar tidak overflow. */
+/* Foto & gap kepengurusan diperbesar/direnggangkan khusus desktop
+   (>= 861px, breakpoint sama dengan section journey). Mobile (<= 640px)
+   tetap memakai ukuran lebih kecil agar tidak overflow. */
 @media (min-width: 861px) {
-  .tk .pengurus-grid {
-    gap: 48px;
-    max-width: 1100px;
-  }
+  .tk .pengurus-grid { gap: var(--space-9); max-width: 1100px; }
   .tk .pengurus-card { width: 210px; }
 }
 
 /* =========================================================
    PENGHARGAAN
-   Diramping-kan: kartu kecil (bukan kartu berat dengan org/tanggal),
-   grid lebih rapat, thumbnail rasio potret ala sertifikat.
-
-   FIX: ditambahkan justify-content: flex-start agar posisi kartu
-   pertama selalu menempel rata kiri, tidak peduli jumlah kartu yang
-   ditampilkan (1 kartu vs banyak kartu). Sebelumnya tanpa
-   justify-content eksplisit, jarak ke kiri bisa terlihat berbeda
-   antar tahun tergantung berapa banyak penghargaan yang ada.
+   Kartu kecil, grid rapat, thumbnail rasio potret ala sertifikat.
+   justify-content: flex-start memastikan kartu pertama selalu rata
+   kiri berapa pun jumlah kartunya.
    ========================================================= */
 .tk .pgh-panel.is-hidden { display: none; }
-.tk .pgh-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 16px;
-}
+.tk .pgh-grid { display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; gap: var(--space-4); }
 .tk .pgh-card {
   flex: 0 1 220px;
   max-width: 240px;
@@ -555,10 +354,10 @@ html {
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-card);
-  transition: box-shadow .25s ease, transform .25s ease;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 .tk .pgh-card__thumb { position: relative; aspect-ratio: 1 / 1; background: var(--bg-soft); overflow: hidden; }
-.tk .pgh-card__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.tk .pgh-card__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
 .tk .pgh-card:hover .pgh-card__thumb img { transform: scale(1.05); }
 .tk .pgh-card__year {
   position: absolute;
@@ -567,7 +366,7 @@ html {
   background: var(--bg-white);
   color: var(--text-brand);
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   padding: 3px 10px;
   border-radius: var(--radius-full);
   box-shadow: var(--shadow-card);
@@ -576,7 +375,7 @@ html {
 .tk .pgh-card__body { padding: 12px 14px; }
 .tk .pgh-card__title {
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--text-dark);
   line-height: 1.4;
   display: -webkit-box;
@@ -584,17 +383,13 @@ html {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.tk .pgh-card__date {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
+.tk .pgh-card__date { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
 
 /* Navbar & footer TIDAK didefinisikan di sini — sepenuhnya mengikuti
    navbar.css & footer.css yang dipakai bersama di seluruh situs. */
 
 /* =========================================================
-   RESPONSIVE — disamakan dengan breakpoint landing.css
+   RESPONSIVE (breakpoint acuan: lihat komentar di global.css)
    ========================================================= */
 @media (max-width: 1024px) {
   .tk .legalitas-grid { grid-template-columns: repeat(3, 1fr); }
@@ -602,116 +397,59 @@ html {
 }
 
 @media (max-width: 900px) {
-  .tk .hero__grid, .tk .visi-misi { gap: 28px; }
+  .tk .hero__grid, .tk .visi-misi { gap: var(--space-7); }
 }
 
 @media (max-width: 860px) {
   .tk .hero__grid, .tk .visi-misi { grid-template-columns: 1fr; }
-  .tk .hero__mark { margin-top: 24px; }
+  .tk .hero__mark { margin-top: var(--space-6); }
 }
 
 @media (max-width: 640px) {
-  .tk .container { padding: 0 16px; }
-  .tk .section, .tk .section--soft { padding: 32px 0; }
-  .tk .hero__grid { padding: 32px 0; }
+  .tk .container { padding: 0 var(--page-padding-mobile); }
+  .tk .section, .tk .section--soft { padding: var(--section-space-mobile) 0; }
+  .tk .hero__grid { padding: var(--section-space-mobile) 0; }
   .tk .hero__title { font-size: clamp(1.5rem, 5vw, 1.8rem); }
 
-  /* FIX: sebelumnya legalitas-grid di mobile pakai repeat(2, 1fr),
-     sehingga 5 kartu tersusun 2-2-1 (baris terakhir cuma 1 kartu,
-     timpang). Sekarang diubah dari grid ke flexbox dengan
-     justify-content: center, supaya jadi 3-2 (3 kartu di baris atas,
-     2 di baris bawah) DAN baris terakhir yang tidak penuh (2 kartu)
-     otomatis berada di tengah, bukan menempel ke kiri seperti default
-     perilaku CSS grid. Kartunya sendiri diperkecil (padding, badge,
-     dan font dikecilkan) supaya 3 kartu tetap muat berdampingan di
-     layar sempit tanpa penuh sesak. */
-  .tk .legalitas-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-  .tk .legalitas-card {
-    flex: 0 0 calc(33.333% - 7px);
-    max-width: calc(33.333% - 7px);
-    padding: 14px 8px;
-  }
-  .tk .legalitas-card__badge {
-    width: 56px;
-    height: 56px;
-    padding: 8px;
-    margin-bottom: 10px;
-  }
-  .tk .legalitas-card__label {
-    font-size: 0.7rem;
-    line-height: 1.3;
-    margin-bottom: 10px;
-  }
+  /* Legalitas: flexbox + justify-content:center supaya baris terakhir
+     yang tidak penuh otomatis di tengah (bukan mentok kiri seperti
+     default grid). Kartu diperkecil agar 3 kartu tetap muat sejajar. */
+  .tk .legalitas-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .tk .legalitas-card { flex: 0 0 calc(33.333% - 7px); max-width: calc(33.333% - 7px); padding: 14px 8px; }
+  .tk .legalitas-card__badge { width: 56px; height: 56px; padding: 8px; margin-bottom: var(--space-3); }
+  .tk .legalitas-card__label { font-size: 0.7rem; line-height: 1.3; margin-bottom: var(--space-3); }
   .tk .legalitas-card__link { font-size: 0.68rem; }
   .tk .legalitas-card__link svg { width: 10px; height: 10px; }
 
   .tk .lk-grid { grid-template-columns: 1fr; }
 
-  /* Kepengurusan mobile: ketua (pengurus-card--ketua) ditempatkan di
-     baris atas sendiri (full width, foto sedikit lebih besar), anggota
-     lain di bawahnya sejajar dalam satu baris. Untuk grup tanpa ketua
-     (mis. Penasehat, Direktur), tetap tampil rapi sejajar seperti biasa. */
-  .tk .pengurus-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
-    max-width: 100%;
-  }
-  .tk .pengurus-card {
-    flex: 1 1 0;
-    min-width: 0;
-    max-width: 150px;
-  }
+  /* Kepengurusan mobile: ketua (.pengurus-card--ketua) di baris atas
+     sendiri (full width), anggota lain sejajar di bawahnya. Grup tanpa
+     ketua tetap tampil rapi sejajar seperti biasa. */
+  .tk .pengurus-grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: var(--space-5); max-width: 100%; }
+  .tk .pengurus-card { flex: 1 1 0; min-width: 0; max-width: 150px; }
 
-  /* FIX: sebelumnya flex-basis:100% dipasang BERSAMA max-width:190px di
-     elemen yang sama — browser memakai ukuran ter-clamp (190px) untuk
-     perhitungan wrap, sehingga anggota pertama malah nyempil di
-     sebelah ketua alih-alih baris baru. Sekarang kartu ketua dibiarkan
-     benar-benar 100% lebar (tanpa max-width di kartunya) supaya pasti
-     memutus baris, dan ukuran foto dibatasi lewat elemen <img> di
-     dalamnya, bukan di kartu itu sendiri. */
-  .tk .pengurus-card--ketua {
-    order: -1;
-    flex: 1 1 100%;
-    width: 100%;
-    max-width: none;
-    margin-bottom: 8px;
-  }
-  .tk .pengurus-card--ketua img {
-    max-width: 150px;
-    aspect-ratio: 4 / 5;
-    margin: 0 auto 12px;
-  }
+  /* Kartu ketua dibuat 100% lebar (tanpa max-width) supaya pasti
+     memutus baris; ukuran foto dibatasi lewat elemen <img>, bukan
+     di kartu itu sendiri, supaya perhitungan wrap browser konsisten. */
+  .tk .pengurus-card--ketua { order: -1; flex: 1 1 100%; width: 100%; max-width: none; margin-bottom: var(--space-2); }
+  .tk .pengurus-card--ketua img { max-width: 150px; aspect-ratio: 4 / 5; margin: 0 auto var(--space-3); }
   .tk .pengurus-card__name { font-size: 0.72rem; }
   .tk .pengurus-card__role { font-size: 0.65rem; }
 
-  /* Penghargaan jadi slider horizontal di mobile. FIX: sebelumnya pakai
-     trik margin-left:-16px + padding-left:16px supaya slider "bleed"
-     sampai tepi layar, tapi ini membuat posisi card pertama bergantung
-     pada dua nilai yang saling membatalkan — rawan meleset dan sulit
-     didiagnosis. Sekarang disederhanakan: grid mengikuti padding
-     container apa adanya, sehingga card pertama DIJAMIN selalu rata
-     kiri persis sejajar dengan heading/teks di atasnya. */
+  /* Penghargaan jadi slider horizontal di mobile. Grid mengikuti padding
+     container apa adanya, jadi kartu pertama selalu rata kiri persis
+     sejajar dengan heading/teks di atasnya. */
   .tk .pgh-grid {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
     padding-bottom: 4px;
     justify-content: flex-start;
   }
-  .tk .pgh-grid::-webkit-scrollbar { display: none; } /* Chrome/Safari */
-  .tk .pgh-card {
-    flex: 0 0 200px;
-    scroll-snap-align: start;
-  }
+  .tk .pgh-grid::-webkit-scrollbar { display: none; }
+  .tk .pgh-card { flex: 0 0 200px; scroll-snap-align: start; }
 }

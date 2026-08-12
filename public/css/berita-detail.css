@@ -1,20 +1,20 @@
 /* ==========================================================================
    Dompet Al-Qur'an Indonesia — Detail Berita
-   Dipakai bersama landing.css (variabel warna) + navbar.css + footer.css.
+   Wajib dimuat SETELAH global.css. Dipakai bersama navbar.css + footer.css.
    ========================================================================== */
 
-.article-page {
-  padding: 40px 0 40px;
-}
+.article-page { padding: var(--section-space) 0; }
 
 .article-layout {
   display: grid;
-  gap: 40px;
+  gap: var(--space-8);
   align-items: start;
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 960px) {
+/* Disamakan ke breakpoint acuan 900px (lihat komentar di global.css),
+   sebelumnya 960px */
+@media (min-width: 900px) {
   .article-layout { grid-template-columns: 2fr 1fr; }
 }
 
@@ -26,46 +26,35 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-card);
-  margin-bottom: 28px;
+  margin-bottom: var(--space-7);
 }
 
-.article-cover img {
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-}
+.article-cover img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
 
 .article-title {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   font-size: 26px;
   line-height: 1.35;
   color: var(--text-dark);
-  margin: 0 0 16px;
+  margin: 0 0 var(--space-4);
 }
 
 .article-byline {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 20px;
-  margin-bottom: 24px;
+  gap: var(--space-4);
+  padding-bottom: var(--space-5);
+  margin-bottom: var(--space-6);
   border-bottom: 1px solid var(--border-soft);
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
   color: var(--text-muted);
 }
 
-.article-byline-author { 
-    font-weight: 500; 
-    color: var(--text-muted); 
-}
+.article-byline-author { font-weight: var(--fw-medium); color: var(--text-muted); }
 
-.article-body {
-  color: var(--text-muted);
-  font-size: 15px;
-  line-height: 1.5;
-}
+.article-body { color: var(--text-muted); font-size: var(--fs-sm); line-height: 1.5; }
 
 .article-body p { margin: 0 0 22px; }
 .article-body p:last-child { margin-bottom: 0; }
@@ -74,10 +63,11 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-6);
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--text-brand);
+  transition: color var(--transition-fast);
 }
 
 .article-back:hover { color: var(--text-brand-dark); }
@@ -87,7 +77,7 @@
    -------------------------------------------------------------------- */
 
 .article-sidebar {
-  padding: 20px;
+  padding: var(--space-5);
   background: var(--bg-white);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-soft);
@@ -96,28 +86,21 @@
 
 .sidebar-title {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
   color: var(--text-dark);
-  margin: 0 0 20px;
+  margin: 0 0 var(--space-5);
 }
 
-.sidebar-empty {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
+.sidebar-empty { color: var(--text-muted); font-size: 0.9rem; }
 
-.sidebar-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+.sidebar-list { display: flex; flex-direction: column; gap: var(--space-4); }
 
 .sidebar-card {
   display: block;
   background: var(--bg-white);
-  padding: 10px;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  padding: var(--space-3);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
   border: 1.2px solid var(--border-soft);
   border-radius: var(--radius-sm);
 }
@@ -131,16 +114,14 @@
   display: block;
 }
 
-.sidebar-body {
-  padding: 12px 4px 2px;
-}
+.sidebar-body { padding: var(--space-3) 4px 2px; }
 
 .sidebar-card-title {
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text-dark);
   line-height: 1.4;
-  margin: 0 0 8px;
+  margin: 0 0 var(--space-2);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -150,40 +131,30 @@
 .sidebar-category {
   display: block;
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text-brand);
   margin-bottom: 3px;
 }
 
-.sidebar-date {
-  display: block;
-  font-size: 0.68rem;
-  color: var(--text-muted);
-}
+.sidebar-date { display: block; font-size: 0.68rem; color: var(--text-muted); }
 
+/* Gambar & elemen di dalam konten artikel (hasil rich-text editor) */
 .article-body img {
-    max-width: 80%;
-    height: auto;
-    border-radius: 5px;
-    margin: 10px auto;   /* diubah dari "10px 0" */
-    display: block;
-}
-.article-body p {
-    margin-bottom: 0px;
-    line-height: 1.5;
+  max-width: 80%;
+  height: auto;
+  border-radius: 5px;
+  margin: var(--space-3) auto;
+  display: block;
 }
 .article-body h2,
-.article-body h3 {
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
+.article-body h3 { margin-top: 0; margin-bottom: 0; }
 
 /* --------------------------------------------------------------------
-   Responsive
+   Responsive (breakpoint acuan: lihat komentar di global.css)
    -------------------------------------------------------------------- */
 
 @media (max-width: 640px) {
-  .article-page { padding: 24px 0 48px; }
+  .article-page { padding: var(--section-space-mobile) 0 var(--space-9); }
   .article-cover img { aspect-ratio: 4 / 3; }
   .article-byline { flex-direction: column; align-items: flex-start; gap: 4px; }
 }
