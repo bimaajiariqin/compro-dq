@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\IklanController;
 use App\Http\Controllers\Admin\VideoKebaikanController;
 use App\Http\Controllers\Admin\ProgramPokokController;
+use App\Http\Controllers\Admin\MitraKebaikanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,6 +70,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('videokebaikan', VideoKebaikanController::class); // hapus ->names('admin.videokebaikan');
         Route::resource('program-pokok', ProgramPokokController::class)
             ->parameters(['program-pokok' => 'programPokok']);
+        Route::resource('mitra', MitraKebaikanController::class)->except(['show']);
     });
 
 });

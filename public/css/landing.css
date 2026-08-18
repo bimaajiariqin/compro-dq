@@ -23,7 +23,7 @@
 
 .hero-eyebrow {
   color: var(--text-muted);
-  font-size: var(--fs-md);
+  font-size: var(--fs-base);
   margin-bottom: var(--space-2);
 }
 
@@ -729,7 +729,7 @@
 .cta-title {
   font-family: var(--font-display);
   font-size: var(--fs-display);
-  font-weight: var(--fw-bold);
+  font-weight: var(--fw-semibold);
   line-height: 1.15;
   color: var(--text-dark);
   margin: 0;
@@ -826,13 +826,13 @@
 .qr-donasi-heading {
   font-family: var(--font-display);
   font-size: var(--fs-display);
-  font-weight: var(--fw-bold);
+  font-weight: var(--fw-medium);
   line-height: 1.2;
   color: var(--text-dark);
   margin: 0 0 var(--space-3);
 }
 
-.qr-donasi-heading span { color: var(--text-brand); }
+.qr-donasi-heading span { color: var(--text-brand);  font-weight: var(--fw-semibold); }
 
 .qr-donasi-desc {
   font-size: var(--fs-base);

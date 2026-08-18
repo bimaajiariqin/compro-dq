@@ -69,27 +69,32 @@
 
         <div class="program-pokok__grid">
             @forelse ($programPokok as $item)
-                @if ($item->link)
-                    <a href="{{ $item->link }}" target="_blank" rel="noopener" class="program-pokok__card">
-                        <span class="program-pokok__icon">
-                            @if ($item->icon)
-                                <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
-                            @endif
+                <{{ $item->link ? 'a' : 'div' }}
+                    class="program-pokok__card @if(!$item->link) program-pokok__card--static @endif"
+                    @if ($item->link)
+                        href="{{ $item->link }}" target="_blank" rel="noopener"
+                    @endif
+                >
+                    <span class="program-pokok__icon">
+                        @if ($item->icon)
+                            <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
+                        @else
+                            <i class="fa-solid fa-mosque"></i>
+                        @endif
+                    </span>
+
+                    <h3 class="program-pokok__title">{{ $item->judul }}</h3>
+                    <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
+
+                    @if ($item->link)
+                        <span class="program-pokok__link-hint">
+                            Selengkapnya
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
                         </span>
-                        <h3 class="program-pokok__title">{{ $item->judul }}</h3>
-                        <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
-                    </a>
-                @else
-                    <div class="program-pokok__card">
-                        <span class="program-pokok__icon">
-                            @if ($item->icon)
-                                <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
-                            @endif
-                        </span>
-                        <h3 class="program-pokok__title">{{ $item->judul }}</h3>
-                        <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
-                    </div>
-                @endif
+                    @endif
+                </{{ $item->link ? 'a' : 'div' }}>
             @empty
                 <p class="program-pokok__empty">Belum ada program pokok untuk kategori ini.</p>
             @endforelse

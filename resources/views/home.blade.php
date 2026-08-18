@@ -197,13 +197,22 @@
 
     <div class="mitra-marquee reveal">
         @php
-            $mitraLogos = ['mitra-1.png', 'mitra-2.png', 'mitra-3.png', 'mitra-4.png', 'mitra-5.png', 'mitra-6.png', 'mitra-7.png'];
+            // Ambil data mitra dari database, urut sesuai kolom `urutan`
+            $mitraList = \App\Models\MitraKebaikan::orderBy('urutan')->orderBy('id')->get();
         @endphp
         <div class="mitra-track">
             {{-- Daftar dirender dua kali berurutan supaya animasi scroll terlihat menyambung tanpa putus --}}
             @for ($i = 0; $i < 2; $i++)
-                @foreach ($mitraLogos as $logo)
-                    <img src="{{ asset('assets/' . $logo) }}" alt="Logo mitra" class="mitra-logo">
+                @foreach ($mitraList as $mitra)
+                    @if ($mitra->link)
+                        {{-- Mitra dengan link: logo bisa diklik --}}
+                        <a href="{{ $mitra->link }}" target="_blank" rel="noopener noreferrer" class="mitra-logo-link">
+                            <img src="{{ Storage::url($mitra->logo) }}" alt="{{ $mitra->nama_mitra ?? 'Logo mitra' }}" class="mitra-logo">
+                        </a>
+                    @else
+                        {{-- Mitra tanpa link: tampil sebagai gambar biasa --}}
+                        <img src="{{ Storage::url($mitra->logo) }}" alt="{{ $mitra->nama_mitra ?? 'Logo mitra' }}" class="mitra-logo">
+                    @endif
                 @endforeach
             @endfor
         </div>

@@ -48,16 +48,27 @@
   padding-bottom: var(--space-5);
   margin-bottom: var(--space-6);
   border-bottom: 1px solid var(--border-soft);
-  font-size: var(--fs-md);
+  font-size: var(--fs-base);
   color: var(--text-muted);
 }
 
-.article-byline-author { font-weight: var(--fw-medium); color: var(--text-muted); }
+.article-byline-author { font-weight: var(--fw-medium); color: var(--text-dark); }
 
 .article-body { color: var(--text-muted); font-size: var(--fs-sm); line-height: 1.5; }
 
-.article-body p { margin: 0 0 22px; }
+.article-body p { margin: 0 0 -2px; }
 .article-body p:last-child { margin-bottom: 0; }
+
+/* Gambar & elemen di dalam konten artikel (hasil rich-text editor) */
+.article-body img {
+  max-width: 70%;
+  height: auto;
+  border-radius: 5px;
+  margin: var(--space-3) auto;
+  display: block;
+}
+.article-body h2,
+.article-body h3 { margin-top: 0; margin-bottom: 0; }
 
 .article-back {
   display: inline-flex;
@@ -138,16 +149,6 @@
 
 .sidebar-date { display: block; font-size: 0.68rem; color: var(--text-muted); }
 
-/* Gambar & elemen di dalam konten artikel (hasil rich-text editor) */
-.article-body img {
-  max-width: 80%;
-  height: auto;
-  border-radius: 5px;
-  margin: var(--space-3) auto;
-  display: block;
-}
-.article-body h2,
-.article-body h3 { margin-top: 0; margin-bottom: 0; }
 
 /* --------------------------------------------------------------------
    Responsive (breakpoint acuan: lihat komentar di global.css)

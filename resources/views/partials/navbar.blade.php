@@ -235,7 +235,7 @@
     font-weight: 500;
     font-size: 13px;
     border: none;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    transition: box-shadow 0.15s ease, background 0.15s ease;
     white-space: nowrap;
     flex-shrink: 0;
   }
@@ -245,6 +245,15 @@
     color: #fff;
     box-shadow: 0 12px 24px -10px var(--text-brand-tint-strong);
     margin-left: auto;
+  }
+
+  /* Tombol "Donasi Sekarang" tidak boleh bergerak/berpindah posisi
+     saat di-hover atau ditekan — hanya boleh warna/shadow yang bereaksi. */
+  .btn-primary,
+  .btn-primary:hover,
+  .btn-primary:active,
+  .btn-primary:focus {
+    transform: none;
   }
 
   .btn-outline {
@@ -384,7 +393,7 @@
 <header class="navbar">
     <div class="navbar-inner">
         <a href="{{ route('home') }}" class="navbar-brand">
-            <img src="{{ asset('assets/Logo-DQ.png') }}" alt="Dompet Al-Qur'an" class="brand-mark">
+            <img src="{{ asset('assets/logo-1.png') }}" alt="Dompet Al-Qur'an" class="brand-mark">
         </a>
 
         <nav class="navbar-menu">
