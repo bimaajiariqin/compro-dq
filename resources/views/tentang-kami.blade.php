@@ -182,8 +182,6 @@
 </section>
 
 {{-- ============ AWAL PERJALANAN KAMI ============ --}}
-{{-- FIX: didesain ulang mengikuti referensi desain (jalur zig-zag melengkung
-     dengan kartu berselang-seling solid/outline dan logo opsional). --}}
 <section class="section section--soft">
     <div class="container">
         <h2 class="section-title">Awal <span class="eyebrow">Perjalanan Kami</span></h2>
@@ -199,13 +197,13 @@
                         <span class="journey__dot"></span>
                     </div>
                     <div class="journey__content">
-                        <span class="journey__date">{{ $r['tanggal'] }}</span>
-                        <h3 class="journey__title">{{ $r['judul'] }}</h3>
+                        <span class="journey__date">{{ $r->tanggal }}</span>
+                        <h3 class="journey__title">{{ $r->judul }}</h3>
                         <div class="journey__body">
-                            @if(!empty($r['logo']))
-                                <img class="journey__logo" src="{{ asset('assets/' . $r['logo'] . '.png') }}" alt="{{ $r['judul'] }}">
+                            @if($r->logo)
+                                <img class="journey__logo" src="{{ asset('storage/' . $r->logo) }}" alt="{{ $r->judul }}">
                             @endif
-                            <p class="journey__desc">{{ $r['desc'] }}</p>
+                            <p class="journey__desc">{{ $r->deskripsi }}</p>
                         </div>
                     </div>
                 </div>

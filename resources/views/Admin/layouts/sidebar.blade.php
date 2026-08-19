@@ -84,6 +84,15 @@
             Legalitas Lembaga
         </a>
 
+        <a href="{{ route('admin.riwayat.index') }}"
+           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition
+                  {{ request()->routeIs('admin.riwayat.*') ? 'bg-white/10 text-white font-medium' : 'hover:bg-white/5 hover:text-white' }}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>
+            </svg>
+            Awal Perjalanan Kami
+        </a>
+
         <a href="{{ route('admin.laporan-keuangan.index') }}"
            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition
                   {{ request()->routeIs('admin.laporan-keuangan.*') ? 'bg-white/10 text-white font-medium' : 'hover:bg-white/5 hover:text-white' }}">

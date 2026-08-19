@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Legalitas;
+use App\Models\Riwayat;
 use App\Models\LaporanKeuangan;
 use App\Models\Penghargaan;
 use App\Models\WebsiteVisit;
@@ -26,51 +27,8 @@ class TentangKamiController extends Controller
         // Legalitas Lembaga sekarang dikelola lewat admin panel
         $legalitas = Legalitas::orderBy('urutan')->orderBy('id')->get();
 
-        // Riwayat perjalanan lembaga. 'logo' opsional -> file di
-        // public/images/riwayat/{logo}.png, dikosongkan jika tidak perlu logo.
-        $riwayat = [
-            [
-                'tanggal' => '11 November 2011',
-                'judul'   => 'Berdirinya Dompet Al-Qur\'an Indonesia',
-                'desc'    => 'Pada 11 November 2007, 5 orang tokoh sepakat mendirikan lembaga sosial menunjang perkembangan Pondok Pesantren Tahfizh Al-Qur\'an Darul Fikri.',
-                'logo'    => null,
-            ],
-
-            [
-                'tanggal' => '19 Maret 2013',
-                'judul'   => 'Berdirinya Yayasan',
-                'desc'    => 'Yayasan Dompet Al-Qur\'an Indonesia berdiri secara resmi. Akta notaris nomor 181 menjadi landasan sah berdirinya Dompet Al-Qur\'an Indonesia.',
-                'logo'    => 'dq-1',
-            ],
-
-            [
-                'tanggal' => '30 Maret 2016',
-                'judul'   => 'Teraudit Wajar Tanpa Pengecualian (WTP)',
-                'desc'    => 'Laporan Keuangan Dompet Al-Qur\'an Indonesia teraudit WTP oleh Akuntan Publik, mencerminkan pengelolaan dana yang transparan dan profesional.',
-                'logo'    => null,
-            ],
-
-            [
-                'tanggal' => '05 April 2017',
-                'judul'   => 'Menjadi Lembaga Sosial Kemanusiaan',
-                'desc'    => 'Dompet Al-Qur\'an Indonesia terdaftar di Dinas Sosial Kabupaten Sidoarjo sebagai lembaga sosial kemanusiaan.',
-                'logo'    => 'dq-2',
-            ],
-
-            [
-                'tanggal' => '25 Januari 2021',
-                'judul'   => 'Resmi Sebagai Lembaga Amil Zakat',
-                'desc'    => 'Dompet Al-Qur\'an Indonesia resmi ditetapkan sebagai Lembaga Amil Zakat tingkat Provinsi oleh Kementerian Agama Republik Indonesia.',
-                'logo'    => null,
-            ],
-
-            [
-                'tanggal' => '14 Maret 2023',
-                'judul'   => 'Mendapat Izin Wakaf',
-                'desc'    => 'Telah memperoleh izin resmi sebagai Nazhir Wakaf dari Badan Wakaf Indonesia, sebagai bentuk legalitas dalam pengelolaan wakaf.',
-                'logo'    => null,
-            ],
-        ];
+        // Riwayat perjalanan lembaga sekarang dikelola lewat admin panel
+        $riwayat = Riwayat::orderBy('urutan')->orderBy('id')->get();
 
         // Profil kepengurusan. 'foto' merujuk ke file di public/images/pengurus/{foto}.
         // 'is_ketua' menandai anggota yang merupakan ketua/pimpinan kelompok tsb —

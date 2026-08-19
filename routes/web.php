@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\MitraKebaikanController;
 use App\Http\Controllers\Admin\HeroSettingController;
 use App\Http\Controllers\Admin\HeroStatController;
 use App\Http\Controllers\Admin\LegalitasController;
+use App\Http\Controllers\Admin\RiwayatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -83,6 +84,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('legalitas', LegalitasController::class)
             ->except(['show'])
             ->parameters(['legalitas' => 'legalitas']);
+
+        Route::resource('riwayat', RiwayatController::class)
+            ->except(['show'])
+            ->parameters(['riwayat' => 'riwayat']);
 
     });
 
