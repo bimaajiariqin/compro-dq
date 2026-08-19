@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\ProgramPokokController;
 use App\Http\Controllers\Admin\MitraKebaikanController;
 use App\Http\Controllers\Admin\HeroSettingController;
 use App\Http\Controllers\Admin\HeroStatController;
+use App\Http\Controllers\Admin\LegalitasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -76,10 +77,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/hero-setting', [HeroSettingController::class, 'edit'])->name('hero-setting.edit');
         Route::put('/hero-setting/{heroSetting}', [HeroSettingController::class, 'update'])->name('hero-setting.update');
-
         Route::resource('hero-stat', HeroStatController::class)
             ->except(['show'])
             ->names('hero-stat');
+        Route::resource('legalitas', LegalitasController::class)
+            ->except(['show'])
+            ->parameters(['legalitas' => 'legalitas']);
+
     });
 
 });

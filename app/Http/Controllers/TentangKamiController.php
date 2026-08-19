@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Legalitas;
 use App\Models\LaporanKeuangan;
 use App\Models\Penghargaan;
 use App\Models\WebsiteVisit;
@@ -22,40 +23,8 @@ class TentangKamiController extends Controller
             ->groupBy('tahun')
             ->sortKeysDesc();
 
-        // Legalitas Lembaga bersifat statis. 'icon' merujuk ke file gambar
-        // yang disimpan di public/images/legalitas/{icon}.png
-        $legalitas = [
-            [
-                'nama'  => 'Yayasan',
-                'label' => 'Akta Yayasan',
-                'icon'  => 'kemenkumham',
-                'link'  => 'https://ahu.go.id/pencarian/detail-yayasan/XXXXXXX',
-            ],
-            [
-                'nama'  => 'Kemenag',
-                'label' => 'Izin Lembaga Amil Zakat',
-                'icon'  => 'kemenag',
-                'link'  => 'https://simbi.kemenag.go.id/laz/XXXXXXX',
-            ],
-            [
-                'nama'  => 'BWI',
-                'label' => 'Izin Nazhir Wakaf',
-                'icon'  => 'bwi',
-                'link'  => 'https://bwi.go.id/nazhir/XXXXXXX',
-            ],
-            [
-                'nama'  => 'Kemensos',
-                'label' => 'Izin Lembaga Sosial',
-                'icon'  => 'kemensos',
-                'link'  => 'https://kemensos.go.id/XXXXXXX',
-            ],
-            [
-                'nama'  => 'BAZNAS',
-                'label' => 'Rekomendasi BAZNAS',
-                'icon'  => 'baznas',
-                'link'  => 'https://baznas.go.id/XXXXXXX',
-            ],
-        ];
+        // Legalitas Lembaga sekarang dikelola lewat admin panel
+        $legalitas = Legalitas::orderBy('urutan')->orderBy('id')->get();
 
         // Riwayat perjalanan lembaga. 'logo' opsional -> file di
         // public/images/riwayat/{logo}.png, dikosongkan jika tidak perlu logo.

@@ -97,7 +97,6 @@
 </section>
 
 {{-- ============ LEGALITAS LEMBAGA ============ --}}
-{{-- FIX: badge huruf diganti dengan foto/logo asli dari public/images/legalitas --}}
 <section class="section section--soft">
     <div class="container">
         <h2 class="section-title">Legalitas <span class="eyebrow">Lembaga</span></h2>
@@ -110,15 +109,21 @@
             @foreach ($legalitas as $item)
                 <div class="legalitas-card">
                     <span class="legalitas-card__badge">
-                        <img src="{{ asset('assets/' . $item['icon'] . '.png') }}"
-                             alt="{{ $item['nama'] }}"
-                             loading="lazy">
+                        @if ($item->icon)
+                            <img src="{{ asset('storage/' . $item->icon) }}"
+                                 alt="{{ $item->nama }}"
+                                 loading="lazy">
+                        @else
+                            <span class="legalitas-card__badge-fallback">{{ Str::substr($item->nama, 0, 1) }}</span>
+                        @endif
                     </span>
-                    <p class="legalitas-card__label">{{ $item['label'] }}</p>
-                    <a href="{{ $item['link'] }}" target="_blank" rel="noopener" class="legalitas-card__link">
-                        Lihat Izin
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M7 7h10v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                    </a>
+                    <p class="legalitas-card__label">{{ $item->label }}</p>
+                    @if ($item->link)
+                        <a href="{{ $item->link }}" target="_blank" rel="noopener" class="legalitas-card__link">
+                            Lihat Izin
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M7 7h10v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                        </a>
+                    @endif
                 </div>
             @endforeach
         </div>
