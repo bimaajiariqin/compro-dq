@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\IklanController;
 use App\Http\Controllers\Admin\VideoKebaikanController;
 use App\Http\Controllers\Admin\ProgramPokokController;
 use App\Http\Controllers\Admin\MitraKebaikanController;
+use App\Http\Controllers\Admin\HeroSettingController;
+use App\Http\Controllers\Admin\HeroStatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,6 +73,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('program-pokok', ProgramPokokController::class)
             ->parameters(['program-pokok' => 'programPokok']);
         Route::resource('mitra', MitraKebaikanController::class)->except(['show']);
+
+        Route::get('/hero-setting', [HeroSettingController::class, 'edit'])->name('hero-setting.edit');
+        Route::put('/hero-setting/{heroSetting}', [HeroSettingController::class, 'update'])->name('hero-setting.update');
+
+        Route::resource('hero-stat', HeroStatController::class)
+            ->except(['show'])
+            ->names('hero-stat');
     });
 
 });

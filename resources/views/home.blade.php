@@ -27,18 +27,21 @@
     <div class="container">
         <div class="hero-heading">
             <p class="hero-eyebrow">
-                Selamat Datang di <span>Dompet Al-Qur'an Indonesia</span>
+                <span data-id="{{ $heroSetting->eyebrow_id ?? '' }}" data-en="{{ $heroSetting->eyebrow_en ?? '' }}">
+                    {{ $heroSetting->eyebrow_id ?? '' }}
+                </span>
             </p>
-            <h1 class="hero-title" data-id="Banyak Jalan Menuju Kebaikan, Mari Berbagi Bersama." data-en="Many Paths to Goodness, Let's Share Together.">
-                Banyak Jalan Menuju Kebaikan, Mari Berbagi Bersama.
+            <h1 class="hero-title" data-id="{{ $heroSetting->judul_id ?? '' }}" data-en="{{ $heroSetting->judul_en ?? '' }}">
+                {{ $heroSetting->judul_id ?? '' }}
             </h1>
-            <p class="hero-subtitle" data-id="Salurkan amanah Anda melalui lembaga yang profesional, transparan, dan terpercaya untuk menciptakan perubahan yang berkelanjutan." data-en="Channel your trust through a professional, transparent, and reliable institution to create sustainable change.">
-                Salurkan amanah Anda melalui lembaga yang profesional, transparan, dan terpercaya untuk menciptakan perubahan yang berkelanjutan.
+            <p class="hero-subtitle" data-id="{{ $heroSetting->subjudul_id ?? '' }}" data-en="{{ $heroSetting->subjudul_en ?? '' }}">
+                {{ $heroSetting->subjudul_id ?? '' }}
             </p>
         </div>
 
         <div class="hero-photo-wrap reveal">
-            <img src="{{ asset('assets/hero.png') }}" alt="Relawan Dompet Al-Qur'an Indonesia" class="hero-photo">
+            <img src="{{ $heroSetting && $heroSetting->foto ? asset('storage/' . $heroSetting->foto) : asset('assets/hero.png') }}"
+                 alt="Relawan Dompet Al-Qur'an Indonesia" class="hero-photo">
 
             <svg class="hero-sparkle hero-sparkle-1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3z"/></svg>
             <svg class="hero-sparkle hero-sparkle-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3z"/></svg>

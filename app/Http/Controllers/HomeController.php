@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\HeroSetting;
+use App\Models\HeroStat;
 use App\Models\Iklan;
 use App\Models\Testimoni;
 use App\Models\VideoKebaikan;
@@ -25,17 +27,17 @@ class HomeController extends Controller
 
         $iklan = Iklan::orderByDesc('created_at')->get();
 
-        // Title/channel/thumbnail sudah tersimpan di database (diisi otomatis
-        // saat data dibuat/diedit lewat model VideoKebaikan), jadi di sini
-        // tinggal query biasa — gak ada panggilan ke API YouTube lagi.
         $videoKebaikan = VideoKebaikan::orderByDesc('created_at')->get();
 
-        $impactStats = [
-            ['label' => 'Pilar Program', 'value' => 4, 'suffix' => ''],
-            ['label' => 'Donatur', 'value' => 1000, 'suffix' => '+'],
-            ['label' => 'Penerima Manfaat', 'value' => 10000, 'suffix' => '+'],
-            ['label' => 'Dana Tersalurkan', 'value' => 700, 'suffix' => 'JT+'],
-        ];
+        $heroSetting = HeroSetting::first();
+
+        $impactStats = HeroStat::orderBy('urutan')->orderBy('id')->get()
+            ->map(fn ($stat) => [
+                'label'  => $stat->label,
+                'value'  => $stat->value,
+                'suffix' => $stat->suffix,
+            ])
+            ->toArray();
 
         $visitorStats = [
             'hari_ini'  => (int) (WebsiteVisit::whereDate('visit_date', today())->value('count') ?? 0),
@@ -46,14 +48,15 @@ class HomeController extends Controller
         ];
 
         return view('home', [
-            'testimoni'          => $testimoni,
-            'berita'             => $berita,
-            'iklan'              => $iklan,
-            'videoKebaikan'      => $videoKebaikan,
-            'kategoriOptions'    => self::KATEGORI,
+            'testimoni'            => $testimoni,
+            'berita'               => $berita,
+            'iklan'                => $iklan,
+            'videoKebaikan'        => $videoKebaikan,
+            'kategoriOptions'      => self::KATEGORI,
             'filterProgramOptions' => self::FILTER_PROGRAM,
-            'impactStats'        => $impactStats,
-            'visitorStats'       => $visitorStats,
+            'heroSetting'          => $heroSetting,
+            'impactStats'          => $impactStats,
+            'visitorStats'         => $visitorStats,
         ]);
     }
 
