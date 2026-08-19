@@ -213,10 +213,6 @@
 </section>
 
 {{-- ============ PROFIL KEPENGURUSAN ============ --}}
-{{-- FIX: foto asli dari public/images/pengurus, grid dipusatkan (flex + center).
-     Ketua/pimpinan kelompok (is_ketua) diberi class tambahan
-     "pengurus-card--ketua" supaya di mobile bisa ditata terpisah
-     di baris atas, dengan anggota lain di bawahnya. --}}
 <section class="section">
     <div class="container">
         <h2 class="section-title">Profil <span class="eyebrow">Kepengurusan</span></h2>
@@ -230,10 +226,12 @@
                 <h3 class="pengurus-group__title">{{ $kelompok }}</h3>
                 <div class="pengurus-grid">
                     @foreach ($anggota as $orang)
-                        <div class="pengurus-card {{ !empty($orang['is_ketua']) ? 'pengurus-card--ketua' : '' }}">
-                            <img src="{{ asset('assets/' . $orang['foto']) }}" alt="{{ $orang['nama'] }}" loading="lazy">
-                            <p class="pengurus-card__name">{{ $orang['nama'] }}</p>
-                            <p class="pengurus-card__role">{{ $orang['jabatan'] }}</p>
+                        <div class="pengurus-card {{ $orang->is_ketua ? 'pengurus-card--ketua' : '' }}">
+                            @if ($orang->foto)
+                                <img src="{{ asset('storage/' . $orang->foto) }}" alt="{{ $orang->nama }}" loading="lazy">
+                            @endif
+                            <p class="pengurus-card__name">{{ $orang->nama }}</p>
+                            <p class="pengurus-card__role">{{ $orang->jabatan }}</p>
                         </div>
                     @endforeach
                 </div>

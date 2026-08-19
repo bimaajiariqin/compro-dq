@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Legalitas;
 use App\Models\Riwayat;
+use App\Models\Pengurus;
 use App\Models\LaporanKeuangan;
 use App\Models\Penghargaan;
 use App\Models\WebsiteVisit;
@@ -30,34 +31,12 @@ class TentangKamiController extends Controller
         // Riwayat perjalanan lembaga sekarang dikelola lewat admin panel
         $riwayat = Riwayat::orderBy('urutan')->orderBy('id')->get();
 
-        // Profil kepengurusan. 'foto' merujuk ke file di public/images/pengurus/{foto}.
-        // 'is_ketua' menandai anggota yang merupakan ketua/pimpinan kelompok tsb —
-        // dipakai di Blade & CSS mobile untuk menempatkan ketua di baris atas,
-        // terpisah dari anggota lain di bawahnya.
-        $kepengurusan = [
-            'Penasehat' => [
-                ['nama' => null, 'jabatan' => null, 'foto' => 'penasehat-1.png', 'is_ketua' => false],
-            ],
-            'Dewan Pembina' => [
-                ['nama' => null, 'jabatan' => null, 'foto' => 'pembina-1.png', 'is_ketua' => false],
-                ['nama' => null, 'jabatan' => null, 'foto' => 'ketua-pembina.png', 'is_ketua' => true],
-                ['nama' => null, 'jabatan' => null, 'foto' => 'pembina-2.png', 'is_ketua' => false],
-            ],
-            'Dewan Pengawas Syariah' => [
-                ['nama' => null, 'jabatan' => null, 'foto' => 'pengawas-1.png', 'is_ketua' => false],
-                ['nama' => null, 'jabatan' => null, 'foto' => 'ketua-pengawas.png', 'is_ketua' => true],
-                ['nama' => null, 'jabatan' => null, 'foto' => 'pengawas-2.png', 'is_ketua' => false],
-            ],
-            'Dewan Pengurus' => [
-                ['nama' => null, 'jabatan' => null, 'foto' => 'pengurus-1.png', 'is_ketua' => false],
-                ['nama' => null, 'jabatan' => null, 'foto' => 'ketua-pengurus.png', 'is_ketua' => true],
-                ['nama' => null, 'jabatan' => null, 'foto' => 'pengurus-2.png', 'is_ketua' => false],
-            ],
-            'Direktur LAZ & Wakaf' => [
-                ['nama' => null, 'jabatan' => null, 'foto' => 'direktur-laz.png', 'is_ketua' => false],
-                ['nama' => null, 'jabatan' => null, 'foto' => 'direktur-wakaf.png', 'is_ketua' => false],
-            ],
-        ];
+        // Profil kepengurusan sekarang dikelola lewat admin panel
+        $kepengurusan = Pengurus::orderBy('urutan_grup')
+            ->orderBy('urutan')
+            ->orderBy('id')
+            ->get()
+            ->groupBy('kelompok');
 
         $visitorStats = $this->visitorStats();
 
