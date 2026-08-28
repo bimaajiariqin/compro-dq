@@ -38,55 +38,28 @@
 
             <hr class="border-black/5">
 
-            <div class="grid sm:grid-cols-2 gap-5">
-                <div>
-                    <label for="eyebrow_id" class="block text-sm font-medium text-ink/70 mb-1.5">Eyebrow (ID)</label>
-                    <input id="eyebrow_id" name="eyebrow_id" type="text" value="{{ old('eyebrow_id', $hero->eyebrow_id) }}"
-                           class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm
-                                  focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">
-                    @error('eyebrow_id') <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p> @enderror
-                </div>
-                <div>
-                    <label for="eyebrow_en" class="block text-sm font-medium text-ink/70 mb-1.5">Eyebrow (EN)</label>
-                    <input id="eyebrow_en" name="eyebrow_en" type="text" value="{{ old('eyebrow_en', $hero->eyebrow_en) }}"
-                           class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm
-                                  focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">
-                    @error('eyebrow_en') <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p> @enderror
-                </div>
+            <div>
+                <label for="eyebrow_id" class="block text-sm font-medium text-ink/70 mb-1.5">Eyebrow</label>
+                <input id="eyebrow_id" name="eyebrow_id" type="text" value="{{ old('eyebrow_id', $hero->eyebrow_id) }}"
+                       class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm
+                              focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">
+                @error('eyebrow_id') <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p> @enderror
             </div>
 
-            <div class="grid sm:grid-cols-2 gap-5">
-                <div>
-                    <label for="judul_id" class="block text-sm font-medium text-ink/70 mb-1.5">Judul (ID)</label>
-                    <input id="judul_id" name="judul_id" type="text" value="{{ old('judul_id', $hero->judul_id) }}"
-                           class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm
-                                  focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">
-                    @error('judul_id') <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p> @enderror
-                </div>
-                <div>
-                    <label for="judul_en" class="block text-sm font-medium text-ink/70 mb-1.5">Judul (EN)</label>
-                    <input id="judul_en" name="judul_en" type="text" value="{{ old('judul_en', $hero->judul_en) }}"
-                           class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm
-                                  focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">
-                    @error('judul_en') <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p> @enderror
-                </div>
+            <div>
+                <label for="judul_id" class="block text-sm font-medium text-ink/70 mb-1.5">Judul</label>
+                <input id="judul_id" name="judul_id" type="text" value="{{ old('judul_id', $hero->judul_id) }}"
+                       class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm
+                              focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">
+                @error('judul_id') <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p> @enderror
             </div>
 
-            <div class="grid sm:grid-cols-2 gap-5">
-                <div>
-                    <label for="subjudul_id" class="block text-sm font-medium text-ink/70 mb-1.5">Subjudul (ID)</label>
-                    <textarea id="subjudul_id" name="subjudul_id" rows="3"
-                              class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm
-                                     focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">{{ old('subjudul_id', $hero->subjudul_id) }}</textarea>
-                    @error('subjudul_id') <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p> @enderror
-                </div>
-                <div>
-                    <label for="subjudul_en" class="block text-sm font-medium text-ink/70 mb-1.5">Subjudul (EN)</label>
-                    <textarea id="subjudul_en" name="subjudul_en" rows="3"
-                              class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm
-                                     focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">{{ old('subjudul_en', $hero->subjudul_en) }}</textarea>
-                    @error('subjudul_en') <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p> @enderror
-                </div>
+            <div>
+                <label for="subjudul_id" class="block text-sm font-medium text-ink/70 mb-1.5">Subjudul</label>
+                <textarea id="subjudul_id" name="subjudul_id" rows="3"
+                          class="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm
+                                 focus:outline-none focus:ring-2 focus:ring-emerald-700/30 focus:border-emerald-700">{{ old('subjudul_id', $hero->subjudul_id) }}</textarea>
+                @error('subjudul_id') <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div class="flex items-center gap-3 pt-2">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\CeritaPenerimaManfaat;
 use App\Models\ProgramPokok;
 use Illuminate\View\View;
 
@@ -21,9 +22,15 @@ class ProgramController extends Controller
             ->latest()
             ->get();
 
+        $ceritaPenerimaManfaat = CeritaPenerimaManfaat::aktif()
+            ->kategori('Pendidikan')
+            ->terurut()
+            ->get();
+
         return view('Program.pendidikan', [
             'berita' => $berita,
             'programPokok' => $programPokok,
+            'ceritaPenerimaManfaat' => $ceritaPenerimaManfaat,
         ]);
     }
 
@@ -40,9 +47,15 @@ class ProgramController extends Controller
             ->latest()
             ->get();
 
+        $ceritaPenerimaManfaat = CeritaPenerimaManfaat::aktif()
+            ->kategori('Ekonomi')
+            ->terurut()
+            ->get();
+
         return view('Program.ekonomi', [
             'berita' => $berita,
             'programPokok' => $programPokok,
+            'ceritaPenerimaManfaat' => $ceritaPenerimaManfaat,
         ]);
     }
 
@@ -59,9 +72,15 @@ class ProgramController extends Controller
             ->latest()
             ->get();
 
+        $ceritaPenerimaManfaat = CeritaPenerimaManfaat::aktif()
+            ->kategori('Dakwah')
+            ->terurut()
+            ->get();
+
         return view('Program.dakwah', [
             'berita' => $berita,
             'programPokok' => $programPokok,
+            'ceritaPenerimaManfaat' => $ceritaPenerimaManfaat,
         ]);
     }
 
@@ -78,9 +97,15 @@ class ProgramController extends Controller
             ->latest()
             ->get();
 
+        $ceritaPenerimaManfaat = CeritaPenerimaManfaat::aktif()
+            ->kategori('Kemanusiaan')
+            ->terurut()
+            ->get();
+
         return view('Program.kemanusiaan', [
             'berita' => $berita,
             'programPokok' => $programPokok,
+            'ceritaPenerimaManfaat' => $ceritaPenerimaManfaat,
         ]);
     }
 }

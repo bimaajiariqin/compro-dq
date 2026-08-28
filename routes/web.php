@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\HeroStatController;
 use App\Http\Controllers\Admin\LegalitasController;
 use App\Http\Controllers\Admin\RiwayatController;
 use App\Http\Controllers\Admin\PengurusController;
+use App\Http\Controllers\Admin\CeritaPenerimaManfaatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -93,6 +94,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('pengurus', PengurusController::class)
             ->except(['show'])
             ->parameters(['pengurus' => 'pengurus']);
+        
+        Route::resource('cerita-penerima-manfaat', CeritaPenerimaManfaatController::class)
+            ->parameters(['cerita-penerima-manfaat' => 'cerita_penerima_manfaat']);
+
+
     });
 
 });

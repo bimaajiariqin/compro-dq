@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     {{-- CSS khusus 4 halaman Program (Pendidikan, Ekonomi, Dakwah, Kemanusiaan) --}}
     <link rel="stylesheet" href="{{ asset('css/program.css') }}">
+    {{-- CSS section "Cerita Penerima Manfaat" --}}
+    <link rel="stylesheet" href="{{ asset('css/cerita-penerima-manfaat.css') }}">
 </head>
 <body>
 
@@ -144,8 +146,85 @@
     </div>
 </section>
 
+{{-- ==================== Cerita Penerima Manfaat ==================== --}}
+<section class="cpm">
+    <div class="container">
+
+        <h2 class="cpm__heading">
+            Cerita sederhana,
+            <strong>menjadi bagian program kami</strong>
+        </h2>
+
+        <div class="cpm__inner">
+
+            {{-- Kolom intro --}}
+            <div class="cpm__intro">
+                <span class="cpm__quote-icon">
+                    <svg viewBox="0 0 44 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 34V20.4C0 14.2 1.6 9 4.8 4.8 8 1.6 12 0 16.8 0v6.4c-2.8 0-5 .9-6.6 2.7-1.6 1.7-2.4 4-2.4 6.9h9v18h-16.8Z" fill="currentColor"/>
+                        <path d="M22.8 34V20.4c0-6.2 1.6-11.4 4.8-15.6C30.8 1.6 34.8 0 39.6 0V6.4c-2.8 0-5 .9-6.6 2.7-1.6 1.7-2.4 4-2.4 6.9h9v18H22.8Z" fill="currentColor"/>
+                    </svg>
+                </span>
+
+                <h3 class="cpm__title">Suara penerima manfaat program kami</h3>
+
+                <div class="cpm__nav">
+                    <button type="button" class="cpm__arrow" data-cpm-prev aria-label="Sebelumnya">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5"/><path d="m12 19-7-7 7-7"/>
+                        </svg>
+                    </button>
+                    <span class="cpm__nav-line"></span>
+                    <button type="button" class="cpm__arrow" data-cpm-next aria-label="Berikutnya">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            {{-- Slider card --}}
+            <div class="cpm__slider" data-cpm-slider>
+                <div class="cpm__track" data-cpm-track>
+                    @forelse ($ceritaPenerimaManfaat as $cerita)
+                        <div class="cpm__card" data-cpm-item>
+                            <span class="cpm__card-quote">
+                                <svg viewBox="0 0 44 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 34V20.4C0 14.2 1.6 9 4.8 4.8 8 1.6 12 0 16.8 0v6.4c-2.8 0-5 .9-6.6 2.7-1.6 1.7-2.4 4-2.4 6.9h9v18H0Z" fill="currentColor"/>
+                                    <path d="M22.8 34V20.4c0-6.2 1.6-11.4 4.8-15.6C30.8 1.6 34.8 0 39.6 0V6.4c-2.8 0-5 .9-6.6 2.7-1.6 1.7-2.4 4-2.4 6.9h9v18H22.8Z" fill="currentColor"/>
+                                </svg>
+                            </span>
+
+                            <p class="cpm__card-text">&ldquo;{{ $cerita->isi_cerita }}&rdquo;</p>
+
+                            <div class="cpm__card-person">
+                                <span class="cpm__card-name">{{ $cerita->nama }}</span>
+                                @if ($cerita->jabatan)
+                                    <span class="cpm__card-role">{{ $cerita->jabatan }}</span>
+                                @endif
+                            </div>
+
+                            @if ($cerita->foto)
+                                <img src="{{ asset('storage/' . $cerita->foto) }}" alt="{{ $cerita->nama }}" class="cpm__card-avatar">
+                            @else
+                                <span class="cpm__card-avatar cpm__card-avatar--placeholder">
+                                    {{ strtoupper(substr($cerita->nama, 0, 1)) }}
+                                </span>
+                            @endif
+                        </div>
+                    @empty
+                        <p class="berita-empty">Belum ada cerita penerima manfaat.</p>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{{-- ==================== /Cerita Penerima Manfaat ==================== --}}
+
 @include('partials.footer')
 
 <script src="{{ asset('js/program-berita-slider.js') }}"></script>
+<script src="{{ asset('js/cerita-penerima-manfaat-slider.js') }}"></script>
 </body>
 </html>
