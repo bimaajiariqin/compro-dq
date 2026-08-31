@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{ asset('css/program.css') }}">
     {{-- CSS section "Cerita Penerima Manfaat" --}}
     <link rel="stylesheet" href="{{ asset('css/cerita-penerima-manfaat.css') }}">
+    {{-- CSS section "FAQ" --}}
+    <link rel="stylesheet" href="{{ asset('css/faq.css') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -229,9 +231,56 @@
     </div> {{-- /.container --}}
 </section>
 
+{{-- ==================== FAQ ====================
+     $faqs dikirim dari ProgramController::dakwah(), sudah difilter
+     Faq::aktif()->kategori('Dakwah')->terurut()->get()
+     ===================================================================== --}}
+<section class="section faq" id="faq">
+    <div class="container">
+
+        <h2 class="faq__title">Pertanyaan Yang Sering Diajukan</h2>
+
+        <div class="faq__list" data-faq-list>
+            @forelse ($faqs as $item)
+                <div class="faq__item" data-faq-item>
+                    <button
+                        type="button"
+                        class="faq__question"
+                        data-faq-toggle
+                        aria-expanded="false"
+                        aria-controls="faq-answer-{{ $item->id }}"
+                    >
+                        <span>{{ $item->pertanyaan }}</span>
+                        <span class="faq__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </button>
+
+                    <div
+                        class="faq__answer"
+                        id="faq-answer-{{ $item->id }}"
+                        data-faq-answer
+                    >
+                        <div class="faq__answer-inner">
+                            {{ $item->jawaban }}
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <p class="faq__empty">Belum ada pertanyaan untuk kategori ini.</p>
+            @endforelse
+        </div>
+
+    </div>
+</section>
+
 @include('partials.footer')
 
 <script src="{{ asset('js/program-berita-slider.js') }}"></script>
 <script src="{{ asset('js/cerita-penerima-manfaat-slider.js') }}"></script>
+<script src="{{ asset('js/faq-accordion.js') }}"></script>
 </body>
 </html>

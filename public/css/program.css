@@ -42,8 +42,8 @@
   border-radius: var(--radius-lg);
 }
 
-.program-hero__content { 
-  padding-right: var(--space-2); 
+.program-hero__content {
+  padding-right: var(--space-2);
 }
 
 .program-hero__title {
@@ -55,8 +55,8 @@
   margin: 0 0 15px;
 }
 
-.program-hero__title span { 
-  color: var(--text-brand); 
+.program-hero__title span {
+  color: var(--text-brand);
 }
 
 .program-hero__desc {
@@ -126,8 +126,8 @@
   transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
 }
 
-.program-pokok__card[href] { 
-  cursor: pointer; 
+.program-pokok__card[href] {
+  cursor: pointer;
 }
 
 .program-pokok__card::after {
@@ -219,8 +219,8 @@
 /* Berita Terkait                                                       */
 /* -------------------------------------------------------------------- */
 
-.program-berita { 
-  padding: 48px 0; 
+.program-berita {
+  padding: 48px 0;
 }
 
 .program-berita__lead {
@@ -231,8 +231,8 @@
   margin: 0 0 var(--space-6);
 }
 
-.program-berita__slider { 
-  overflow: hidden; 
+.program-berita__slider {
+  overflow: hidden;
 }
 
 .program-berita__track {
@@ -243,12 +243,12 @@
   transition: transform 0.45s ease;
 }
 
-.program-berita__card { 
-  min-width: 0; 
+.program-berita__card {
+  min-width: 0;
 }
 
-.program-berita__track:has(.berita-empty) { 
-  display: block; 
+.program-berita__track:has(.berita-empty) {
+  display: block;
 }
 
 .program-berita__track .berita-empty {
@@ -266,7 +266,7 @@
   background: var(--bg-blue-tint);
   padding: 48px 0;
   width: 100%;
-  overflow: hidden; /* Menahan scrollbar horizontal browser */
+  overflow: hidden;
 }
 
 .cpm__heading {
@@ -293,8 +293,7 @@
   position: relative;
 }
 
-/* Kiri: Tetap diam & tidak terpengaruh slider */
-.cpm__intro { 
+.cpm__intro {
   min-width: 240px;
   flex-shrink: 0;
   z-index: 10;
@@ -307,9 +306,9 @@
   height: 104px;
   margin-bottom: var(--space-4);
 }
-.cpm__quote-icon svg { 
-  width: 100%; 
-  height: 100%; 
+.cpm__quote-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 .cpm__title {
@@ -344,20 +343,20 @@
   padding: 0;
   transition: transform var(--transition-fast), opacity var(--transition-fast);
 }
-.cpm__arrow svg { 
-  width: 20px; 
-  height: 20px; 
+.cpm__arrow svg {
+  width: 20px;
+  height: 20px;
 }
-.cpm__arrow:hover { 
-  transform: scale(1.15); 
+.cpm__arrow:hover {
+  transform: scale(1.15);
 }
-.cpm__arrow:active { 
-  transform: scale(0.95); 
+.cpm__arrow:active {
+  transform: scale(0.95);
 }
-.cpm__arrow:disabled { 
-  opacity: 0.3; 
-  cursor: not-allowed; 
-  transform: none; 
+.cpm__arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .cpm__nav-line {
@@ -381,13 +380,12 @@
   border-radius: 2px;
 }
 
-/* Kanan: Mengembang ke tepi layar kanan, dipotong HANYA di batas kiri */
-.cpm__slider { 
+.cpm__slider {
   position: relative;
   width: 100%;
   overflow: visible !important;
-  margin-right: -50vw; 
-  padding-right: 50vw; 
+  margin-right: -50vw;
+  padding-right: 50vw;
   padding-top: 28px;
   padding-bottom: 28px;
   clip-path: inset(-50px -200vw -50px 0px);
@@ -427,9 +425,9 @@
   padding: 0;
   z-index: 2;
 }
-.cpm__card-quote svg { 
-  width: 100%; 
-  height: 100%; 
+.cpm__card-quote svg {
+  width: 100%;
+  height: 100%;
 }
 
 .cpm__card-text {
@@ -495,6 +493,143 @@
 }
 
 /* -------------------------------------------------------------------- */
+/* FAQ Section                                                          */
+/* -------------------------------------------------------------------- */
+
+.faq {
+  padding: 64px 0;
+}
+
+.faq__title {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-h2);
+  color: var(--text-dark);
+  text-align: center;
+  margin: 0 0 var(--space-8);
+}
+
+.faq__list {
+  display: flex;
+  flex-direction: column;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.faq__item:first-child {
+  border-top: 1px solid var(--border-soft);
+}
+
+.faq__question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 18px 2px;
+  font-family: inherit;
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-md);
+  color: var(--text-dark);
+  line-height: 1.5;
+  transition: color var(--transition-base);
+}
+
+.faq__item.is-open .faq__question {
+  font-weight: var(--fw-semibold);
+}
+
+.faq__icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
+  color: var(--text-dark);
+}
+
+.faq__icon::before,
+.faq__icon::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  border-radius: 1px;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.faq__icon::before {
+  width: 100%;
+  height: 2px;
+}
+
+.faq__icon::after {
+  width: 2px;
+  height: 100%;
+}
+
+.faq__item.is-open .faq__icon {
+  color: var(--text-brand);
+}
+
+.faq__item.is-open .faq__icon::after {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+.faq__icon svg {
+  display: none;
+}
+
+.faq__answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-base);
+}
+
+.faq__item.is-open .faq__answer {
+  grid-template-rows: 1fr;
+}
+
+.faq__answer-inner {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: var(--fs-base);
+  line-height: 1.7;
+  margin: 0;
+  padding: 0 26px 0 2px;
+}
+
+.faq__answer-inner,
+.faq__answer-inner * {
+  margin: 0 !important;
+}
+
+.faq__answer-inner p + p {
+  margin-top: 12px !important;
+}
+
+.faq__item.is-open .faq__answer-inner {
+  padding-bottom: 18px;
+}
+
+.faq__empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  padding: var(--space-5) 0;
+}
+
+/* -------------------------------------------------------------------- */
 /* Responsive Adaptation                                                */
 /* -------------------------------------------------------------------- */
 
@@ -530,24 +665,18 @@
   .program-berita .section-title--left { text-align: center; }
   .program-berita__lead { margin-left: auto; margin-right: auto; }
 
-  .cpm__inner { 
-    grid-template-columns: 1fr; 
+  .cpm__inner {
+    grid-template-columns: 1fr;
     gap: var(--space-5);
   }
-  .cpm__intro { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    text-align: center; 
+  .cpm__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  .cpm__nav { 
-    margin: 0 auto; 
-  }
-  .cpm__slider {
-    margin: 0;
-    padding: 20px 0;
-    overflow-x: auto;
-    clip-path: none;
+  .cpm__nav {
+    margin: 0 auto;
   }
 
   .program-berita__slider {
@@ -585,52 +714,80 @@
     height: 74px;
   }
 
+  /* Slider Container Mobile (Horizontal Scroll Native) */
   .cpm__slider {
-    overflow-x: auto;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 20px 0;
+    overflow-x: auto !important;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
     scrollbar-width: none;
-    margin: 0;
-    padding: 16px 0;
-    clip-path: none;
+    clip-path: none !important;
   }
-  .cpm__slider::-webkit-scrollbar { 
-    display: none; 
+  .cpm__slider::-webkit-scrollbar {
+    display: none;
   }
 
+  /* Track Mobile */
   .cpm__track {
     display: flex !important;
     transform: none !important;
     width: max-content;
-    gap: 60px;
-    padding: 0 65px 0 15px;
+    gap: 75px;
+    padding: 0 60px 0 15px;
   }
 
+  /* Card Item Mobile */
   .cpm__card {
-    flex: 0 0 300px;
-    scroll-snap-align: start;
-    padding: 40px 85px 24px 24px;
+    flex: 0 0 calc(100vw - 120px);
+    max-width: 320px;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    padding: 40px 80px 24px 20px;
   }
 
-  .cpm__card-avatar { 
-    width: 90px; 
-    height: 90px; 
-    right: -45px; 
+  .cpm__card-avatar {
+    width: 85px;
+    height: 85px;
+    right: -42px;
   }
 
   .cpm__card-quote {
-    width: 44px;
-    height: 38px;
-    top: -18px;
+    width: 40px;
+    height: 34px;
+    top: -16px;
     left: 16px;
   }
 
   .cpm__card-text {
     padding: 0;
+    font-size: var(--fs-sm);
   }
 
-  .cpm__nav { 
-    display: none; 
+  .faq {
+    padding: 40px 0;
+  }
+
+  .faq__title {
+    margin-bottom: var(--space-6);
+  }
+
+  .faq__question {
+    gap: var(--space-3);
+    font-size: var(--fs-base);
+    padding: 18px 2px;
+  }
+
+  .faq__answer-inner {
+    font-size: var(--fs-base);
+    padding: 0 2px;
+  }
+
+  .faq__item.is-open .faq__answer-inner {
+    padding-bottom: 18px;
   }
 }
 

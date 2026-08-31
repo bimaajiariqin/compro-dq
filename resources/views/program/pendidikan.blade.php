@@ -222,6 +222,52 @@
 </section>
 {{-- ==================== /Cerita Penerima Manfaat ==================== --}}
 
+{{-- ==================== FAQ ====================
+     $faqs dikirim dari ProgramController::dakwah(), sudah difilter
+     Faq::aktif()->kategori('Dakwah')->terurut()->get()
+     ===================================================================== --}}
+<section class="section faq" id="faq">
+    <div class="container">
+
+        <h2 class="faq__title">Pertanyaan Yang Sering Diajukan</h2>
+
+        <div class="faq__list" data-faq-list>
+            @forelse ($faqs as $item)
+                <div class="faq__item" data-faq-item>
+                    <button
+                        type="button"
+                        class="faq__question"
+                        data-faq-toggle
+                        aria-expanded="false"
+                        aria-controls="faq-answer-{{ $item->id }}"
+                    >
+                        <span>{{ $item->pertanyaan }}</span>
+                        <span class="faq__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </button>
+
+                    <div
+                        class="faq__answer"
+                        id="faq-answer-{{ $item->id }}"
+                        data-faq-answer
+                    >
+                        <div class="faq__answer-inner">
+                            {{ $item->jawaban }}
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <p class="faq__empty">Belum ada pertanyaan untuk kategori ini.</p>
+            @endforelse
+        </div>
+
+    </div>
+</section>
+
 @include('partials.footer')
 
 <script src="{{ asset('js/program-berita-slider.js') }}"></script>

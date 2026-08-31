@@ -1,7 +1,6 @@
 /* ==========================================================================
    cerita-penerima-manfaat-slider.js
-   Menggerakkan slider "Cerita Penerima Manfaat" lewat tombol panah
-   prev/next serta memperbarui garis indikator progress bar secara dinamis.
+   Slider manual (swipe/drag & tombol navigasi) tanpa autoplay otomatis.
    ========================================================================== */
 (function () {
   document.querySelectorAll('[data-cpm-slider]').forEach(initCpmSlider);
@@ -19,50 +18,123 @@
 
     var index = 0;
     var totalSlides = items.length;
+    var isProgrammaticScrolling = false;
+    var scrollEndTimer = null;
 
     function isMobileLayout() {
       return window.matchMedia('(max-width: 640px)').matches;
     }
 
-    function update() {
-      // Update variabel garis progress di CSS
+    function updateNavLine() {
       if (navLine) {
         navLine.style.setProperty('--total-slides', totalSlides);
         navLine.style.setProperty('--active-index', index);
       }
-
-      if (isMobileLayout()) {
-        track.style.transform = 'none';
-        prevBtn.disabled = false;
-        nextBtn.disabled = false;
-        return;
-      }
-
-      var styles = getComputedStyle(track);
-      var gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
-      var cardWidth = items[0].getBoundingClientRect().width;
-      var offset = index * (cardWidth + gap);
-
-      track.style.transform = 'translateX(-' + offset + 'px)';
-      prevBtn.disabled = index === 0;
-      nextBtn.disabled = index >= items.length - 1;
     }
 
-    prevBtn.addEventListener('click', function () {
-      if (index > 0) {
-        index -= 1;
-        update();
+    function updateButtonsState() {
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index >= totalSlides - 1;
+    }
+
+    // Mendapatkan indeks item terdekat dari tengah container (untuk mobile scroll sync)
+    function getClosestIndexToScroll() {
+      var sliderRect = root.getBoundingClientRect();
+      var sliderCenter = sliderRect.left + sliderRect.width / 2;
+
+      var closestIndex = 0;
+      var minDistance = Infinity;
+
+      items.forEach(function (item, i) {
+        var box = item.getBoundingClientRect();
+        var itemCenter = box.left + box.width / 2;
+        var distance = Math.abs(itemCenter - sliderCenter);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIndex = i;
+        }
+      });
+
+      return closestIndex;
+    }
+
+    function update() {
+      updateNavLine();
+      updateButtonsState();
+
+      if (!isMobileLayout()) {
+        // Desktop Mode: Transform TranslateX
+        var styles = getComputedStyle(track);
+        var gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+        var cardWidth = items[0].getBoundingClientRect().width;
+        var offset = index * (cardWidth + gap);
+
+        track.style.transform = 'translateX(-' + offset + 'px)';
       }
+    }
+
+    function goToIndex(newIndex) {
+      var resolvedIndex = newIndex;
+
+      if (newIndex < 0) resolvedIndex = 0;
+      if (newIndex >= totalSlides) resolvedIndex = totalSlides - 1;
+
+      index = resolvedIndex;
+
+      if (isMobileLayout()) {
+        isProgrammaticScrolling = true;
+
+        items[index].scrollIntoView({
+          behavior: 'smooth',
+          inline: 'center',
+          block: 'nearest'
+        });
+
+        window.setTimeout(function () {
+          isProgrammaticScrolling = false;
+        }, 500);
+      }
+
+      update();
+    }
+
+    // ---------------------------------------------------------------- //
+    // Event Listeners
+    // ---------------------------------------------------------------- //
+
+    prevBtn.addEventListener('click', function () {
+      goToIndex(index - 1);
     });
 
     nextBtn.addEventListener('click', function () {
-      if (index < items.length - 1) {
-        index += 1;
-        update();
-      }
+      goToIndex(index + 1);
     });
 
-    window.addEventListener('resize', update);
+    // Sync indikator garis & tombol saat pengguna melakukan swipe manual di Mobile
+    root.addEventListener('scroll', function () {
+      if (!isMobileLayout() || isProgrammaticScrolling) return;
+
+      window.clearTimeout(scrollEndTimer);
+      scrollEndTimer = window.setTimeout(function () {
+        var closest = getClosestIndexToScroll();
+        if (index !== closest) {
+          index = closest;
+          updateNavLine();
+          updateButtonsState();
+        }
+      }, 60);
+    }, { passive: true });
+
+    // Handle Window Resize
+    window.addEventListener('resize', function () {
+      if (isMobileLayout()) {
+        track.style.transform = 'none';
+      }
+      update();
+    });
+
+    // Inisialisasi awal
     update();
   }
 })();

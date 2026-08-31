@@ -6,20 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
+            $table->enum('kategori_program', ['Dakwah', 'Pendidikan', 'Ekonomi', 'Kemanusiaan']);
+            $table->string('pertanyaan');
+            $table->text('jawaban');
+            $table->unsignedInteger('urutan')->default(0);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
+
+            $table->index(['kategori_program', 'is_active', 'urutan']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('faqs');
