@@ -155,42 +155,9 @@
 </section>
 
 {{-- ==========================================================
-     TESTIMONI
-     ========================================================== --}}
-<section class="section" id="testimoni">
-    <div class="container">
-        <div class="testimoni-card reveal">
-            <h2 class="section-title testimoni-title">Apa <span>Kata Mereka?</span></h2>
-
-            @if ($testimoni->isEmpty())
-                <p class="testimoni-empty">Belum ada testimoni yang ditambahkan.</p>
-            @else
-                <button type="button" class="testimoni-arrow testimoni-arrow-prev" id="testimoniPrev" aria-label="Sebelumnya">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                </button>
-                <button type="button" class="testimoni-arrow testimoni-arrow-next" id="testimoniNext" aria-label="Berikutnya">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                </button>
-
-                <div class="testimoni-track">
-                    @foreach ($testimoni as $item)
-                        <div class="testimoni-slide">
-                            <p class="testimoni-quote">&ldquo;{{ $item->isi_testimoni }}&rdquo;</p>
-                            <img src="{{ asset('storage/' . $item->foto_profil) }}" alt="{{ $item->nama }}" class="testimoni-avatar">
-                            <p class="testimoni-name">{{ $item->nama }}</p>
-                            <p class="testimoni-role">{{ $item->jabatan }}</p>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
-        </div>
-    </div>
-</section>
-
-{{-- ==========================================================
      MITRA KEBAIKAN KAMI
      ========================================================== --}}
-<section class="section-soft">
+<section class="section">
     <div class="container">
         <div class="text-center reveal" style="margin-bottom: 32px;">
             <h2 class="section-title">Mitra <span>Kebaikan Kami</span></h2>

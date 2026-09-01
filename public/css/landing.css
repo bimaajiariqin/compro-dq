@@ -341,7 +341,7 @@
   align-items: center;
   gap: 56px;
   width: max-content;
-  animation: mitra-scroll 28s linear infinite;
+  animation: mitra-scroll 140s linear infinite;
 }
 
 .mitra-marquee:hover .mitra-track { animation-play-state: paused; }

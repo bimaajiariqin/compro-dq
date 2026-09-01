@@ -54,7 +54,7 @@
 
 .article-byline-author { font-weight: var(--fw-medium); color: var(--text-dark); }
 
-.article-body { color: var(--text-muted); font-size: var(--fs-sm); line-height: 1.5; }
+.article-body { color: var(--text-muted); font-size: var(--fs-base); line-height: 1.5; }
 
 .article-body p { margin: 0 0 -2px; }
 .article-body p:last-child { margin-bottom: 0; }
@@ -82,6 +82,89 @@
 }
 
 .article-back:hover { color: var(--text-brand-dark); }
+
+/* --------------------------------------------------------------------
+   Share
+   -------------------------------------------------------------------- */
+
+.article-share {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-7);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-soft);
+}
+
+.article-share-label {
+  font-size: 0.85rem;
+  font-weight: var(--fw-semibold);
+  color: var(--text-dark);
+  margin-right: 2px;
+}
+
+.article-share-list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.article-share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-white);
+  color: var(--text-muted);
+  transition: transform var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.article-share-btn svg { width: 17px; height: 17px; }
+
+.article-share-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--text-brand);
+  color: var(--text-brand);
+}
+
+.article-share-btn--whatsapp:hover { color: #25D366; border-color: #25D366; }
+.article-share-btn--facebook:hover { color: #1877F2; border-color: #1877F2; }
+.article-share-btn--twitter:hover { color: #111111; border-color: #111111; }
+.article-share-btn--telegram:hover { color: #26A5E4; border-color: #26A5E4; }
+
+.article-share-btn--copy.is-copied {
+  color: #fff;
+  background: var(--text-brand);
+  border-color: var(--text-brand);
+}
+
+/* Tooltip kecil untuk status copy */
+.article-share-btn--copy { position: relative; }
+.article-share-btn--copy::after {
+  content: 'Tersalin!';
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--text-dark);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: var(--fw-medium);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+.article-share-btn--copy.is-copied::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 
 /* --------------------------------------------------------------------
    Sidebar — Berita Lainnya
@@ -158,4 +241,6 @@
   .article-page { padding: var(--section-space-mobile) 0 var(--space-9); }
   .article-cover img { aspect-ratio: 4 / 3; }
   .article-byline { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .article-share { gap: var(--space-2); }
+  .article-share-label { width: 100%; margin-bottom: 2px; }
 }

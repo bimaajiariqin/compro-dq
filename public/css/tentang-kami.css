@@ -66,8 +66,6 @@
 
 /* =========================================================
    HERO / PROFIL LEMBAGA
-   Pola grid sama seperti .about di landing.css (align-items:
-   center, gap besar).
    ========================================================= */
 .tk .hero { background: var(--bg-white); overflow: hidden; }
 
@@ -98,7 +96,7 @@
 .tk .hero__mark img { width: 100%; max-width: 260px; aspect-ratio: 4 / 3; object-fit: contain; }
 
 /* =========================================================
-   VISI & MISI — grid sama persis dengan .hero__grid di atas.
+   VISI & MISI
    ========================================================= */
 .tk .visi-misi {
   display: grid;
@@ -136,7 +134,6 @@
 
 /* =========================================================
    LEGALITAS LEMBAGA
-   Badge 96px agar logo lembaga (Kemenag, BWI, dsb.) lebih jelas.
    ========================================================= */
 .tk .legalitas-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-5); }
 .tk .legalitas-card {
@@ -178,10 +175,6 @@
 
 /* =========================================================
    TABS (Laporan Keuangan & Penghargaan)
-   Gaya dasar pill-tab (termasuk .year-tab) sudah didefinisikan
-   sekali untuk seluruh situs di global.css. Border ditambahkan
-   di sini (scoped .tk) supaya tab non-aktif juga kelihatan
-   sebagai pill, bukan cuma teks polos.
    ========================================================= */
 .tk .year-tabs { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6); }
 
@@ -191,7 +184,7 @@
 }
 
 /* =========================================================
-   LAPORAN KEUANGAN — grid kartu 3-kolom, ikon dokumen 48px.
+   LAPORAN KEUANGAN
    ========================================================= */
 .tk .lk-panel.is-hidden { display: none; }
 .tk .lk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
@@ -233,97 +226,267 @@
 .tk .lk-empty, .tk .pgh-empty { color: var(--text-muted); font-size: var(--fs-sm); }
 
 /* =========================================================
-   AWAL PERJALANAN KAMI (journey)
-   Timeline satu kolom minimalis: garis tipis di kiri, titik
-   penanda kecil, tanpa kartu berbayang/berbingkai.
+   AWAL PERJALANAN KAMI — "Company Milestones" mountain timeline
+   Meniru gaya template referensi: garis zigzag lancip (bukan
+   bulat) naik-turun menghubungkan titik, meluncur sampai ke
+   tepi kiri/kanan chart, label bergantian di atas (puncak) dan
+   di bawah (lembah), tag tahun berbentuk pita (ribbon), ikon
+   kecil netral di setiap label, dot berwarna solid tepat di atas
+   garis. Garis SVG digambar oleh JS berdasarkan posisi asli tiap
+   .journey__dot supaya presisi untuk jumlah data apa pun.
+
+   CATATAN PERBAIKAN: padding horizontal .journey__chart diperbesar
+   (70px -> 120px, dan turunannya di breakpoint mobile/tablet) supaya
+   label titik pertama & terakhir (lebar 200px, menjorok 100px dari
+   pusat titik) tidak terpotong tepi jendela scroll. scroll-snap juga
+   ditambahkan di .journey & .journey__point supaya hasil scroll/panah
+   selalu berhenti pas di satu titik, tidak berhenti di posisi tanggung
+   yang membuat titik ujung terlihat separuh terpotong.
    ========================================================= */
-.tk .journey { max-width: 760px; position: relative; }
-.tk .journey::before {
-  content: '';
+.tk .journey-head { text-align: center; max-width: 640px; margin: 0 auto var(--space-8); }
+.tk .journey-head .section-lead { margin-left: auto; margin-right: auto; }
+
+.tk .journey-wrap { position: relative; }
+
+/* Tombol panah navigasi kiri/kanan — pengganti drag/scrollbar di desktop */
+.tk .journey-arrow {
   position: absolute;
-  left: 5px;
-  top: 6px;
-  bottom: 6px;
-  width: 1px;
-  background: var(--border-soft);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-white);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-brand);
+  z-index: 5;
+  transition: box-shadow var(--transition-base), transform var(--transition-base), opacity var(--transition-base);
 }
-.tk .journey__item { position: relative; display: flex; gap: var(--space-6); padding-bottom: var(--space-8); }
-.tk .journey__item:last-child { padding-bottom: 0; }
-.tk .journey__marker { flex-shrink: 0; width: 11px; padding-top: 4px; }
+.tk .journey-arrow:hover:not(:disabled) { box-shadow: var(--shadow-soft); transform: translateY(-50%) translateY(-2px); }
+.tk .journey-arrow:disabled { opacity: .35; cursor: default; }
+.tk .journey-arrow svg { width: 18px; height: 18px; }
+.tk .journey-arrow--prev { left: 8px; }
+.tk .journey-arrow--next { right: 8px; }
+
+@media (max-width: 900px) {
+  .tk .journey-arrow { width: 38px; height: 38px; }
+  .tk .journey-arrow--prev { left: 4px; }
+  .tk .journey-arrow--next { right: 4px; }
+}
+/* Di mobile tetap bisa swipe langsung dengan jari, panah disembunyikan */
+@media (max-width: 640px) {
+  .tk .journey-arrow { display: none; }
+}
+
+/* .journey adalah "jendela" yang di-scroll lewat tombol panah (atau swipe di
+   mobile). CATATAN PENTING: overflow-x:auto membuat browser otomatis
+   memperlakukan overflow-y sebagai auto/clip (aturan bawaan CSS, tidak bisa
+   di-override jadi "visible" begitu saja) — jadi solusinya BUKAN mengizinkan
+   overflow vertikal, tapi memastikan kontennya memang tidak pernah melebihi
+   tinggi kotak (lihat line-clamp pada judul/deskripsi + tinggi chart di bawah).
+   scroll-snap-type + scroll-padding ditambahkan supaya posisi scroll berhenti
+   center per titik, tidak nanggung. */
+.tk .journey {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 120px;
+}
+.tk .journey::-webkit-scrollbar { display: none; }
+
+.tk .journey__chart {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  height: 580px;
+  width: max-content;   /* lebar mengikuti jumlah titik, bukan dipaksa 100% */
+  min-width: 100%;
+  margin: 0 auto;        /* otomatis center kalau datanya sedikit & muat */
+  padding: 0 120px;      /* ruang napas kiri/kanan: cukup untuk setengah lebar label (100px) + jarak aman, supaya label/garis titik pertama & terakhir tidak terpotong */
+  --peak: 200px;    /* jarak titik puncak dari atas chart   */
+  --valley: 350px;  /* jarak titik lembah dari atas chart   */
+  --gap: 20px;      /* jarak stem antara dot & label        */
+}
+
+.tk .journey__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Garis dibuat lancip (miter join, butt cap) supaya puncak/lembah
+   tajam seperti pegunungan pada desain referensi, bukan bulat. */
+.tk .journey__line-shadow {
+  fill: none;
+  stroke: var(--border-soft);
+  stroke-width: 34;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  stroke-miterlimit: 2;
+  opacity: .5;
+  transform: translateY(14px);
+  filter: blur(6px);
+}
+.tk .journey__line {
+  fill: none;
+  stroke: #d7dbe3;
+  stroke-width: 26;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  stroke-miterlimit: 2;
+}
+
+.tk .journey__point {
+  position: relative;
+  flex: 0 0 240px;   /* lebar tetap: tidak menyusut walau data bertambah banyak */
+  width: 240px;
+  height: 100%;
+  z-index: 2;
+  opacity: 0;
+  animation: journeyFade .6s ease forwards;
+  animation-delay: var(--d, 0ms);
+  scroll-snap-align: center;   /* biar berhenti center per titik, tidak terpotong */
+}
+@keyframes journeyFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tk .journey__point { animation: none; opacity: 1; }
+}
+
+/* Dot solid berwarna (bukan lagi outline putih polos) supaya
+   tampak seperti penanda pada garis di desain referensi. */
 .tk .journey__dot {
-  display: block;
-  width: 11px;
-  height: 11px;
+  position: absolute;
+  left: 50%;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--text-brand);
-  box-shadow: 0 0 0 4px var(--bg-soft);
-  position: relative;
+  border: 4px solid var(--bg-white);
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  box-shadow: 0 0 0 1px var(--border-soft);
+}
+
+.tk .journey__stem {
+  position: absolute;
+  left: 50%;
+  width: 2px;
+  background: var(--border-soft);
+  transform: translateX(-50%);
   z-index: 2;
 }
-.tk .journey__content { flex: 1; min-width: 0; }
-.tk .journey__date {
-  display: block;
-  font-size: 13px;
+
+.tk .journey__label {
+  position: absolute;
+  left: 50%;
+  width: 200px;
+  transform: translateX(-50%);
+}
+
+.tk .journey__tag {
+  display: inline-block;
+  position: relative;
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  color: #fff;
+  background: var(--text-brand);
+  padding: 5px 14px 5px 12px;
+  margin-bottom: 12px;
+  clip-path: polygon(0 0, 100% 0, 100% 62%, 88% 100%, 0 100%);
+}
+
+/* Warna gantian teal → navy tiap 2 titik, dot ikut warna tag-nya,
+   supaya bergantian rapi seperti pada desain referensi. */
+.tk .journey__point:nth-child(4n+1) .journey__tag,
+.tk .journey__point:nth-child(4n+2) .journey__tag { background: var(--text-brand); }
+.tk .journey__point:nth-child(4n+3) .journey__tag,
+.tk .journey__point:nth-child(4n+4) .journey__tag { background: #2b3a55; }
+
+.tk .journey__point:nth-child(4n+1) .journey__dot,
+.tk .journey__point:nth-child(4n+2) .journey__dot { background: var(--text-brand); }
+.tk .journey__point:nth-child(4n+3) .journey__dot,
+.tk .journey__point:nth-child(4n+4) .journey__dot { background: #2b3a55; }
+
+.tk .journey__label-row { display: flex; align-items: flex-start; gap: 10px; }
+.tk .journey__icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4a5568; /* netral abu-navy, tidak ikut warna tag, seperti referensi */
+  margin-top: 2px;
+}
+.tk .journey__icon img { width: 100%; height: 100%; object-fit: contain; border-radius: 4px; }
+
+.tk .journey__title {
+  font-size: 13.5px;
   font-weight: var(--fw-semibold);
-  color: var(--text-brand);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 6px;
+  color: var(--text-dark);
+  line-height: 1.4;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-.tk .journey__title { font-weight: var(--fw-medium); font-size: var(--fs-base); color: var(--text-dark); margin-bottom: var(--space-2); }
-.tk .journey__body { display: flex; align-items: flex-start; gap: 18px; }
-.tk .journey__logo { width: 84px; height: 84px; object-fit: contain; border-radius: 12px; flex-shrink: 0; }
-.tk .journey__desc { font-size: var(--fs-sm); line-height: 1.5; color: var(--text-muted); margin: 0; }
+.tk .journey__desc {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
-.tk .journey__item--reveal {
-  opacity: 0;
-  transform: translateX(-16px);
-  transition: opacity var(--transition-slow), transform var(--transition-slow);
-}
-.tk .journey__item--reveal.is-visible { opacity: 1; transform: translateX(0); }
-@media (prefers-reduced-motion: reduce) {
-  .tk .journey__item--reveal { opacity: 1; transform: none; transition: none; }
+/* ---- Puncak (label & tag di atas garis) ---- */
+.tk .journey__point--top .journey__dot,
+.tk .journey__point--top .journey__stem { top: var(--peak); }
+.tk .journey__point--top .journey__stem { height: var(--gap); margin-top: calc(var(--gap) * -1); }
+.tk .journey__point--top .journey__label {
+  top: calc(var(--peak) - var(--gap));
+  transform: translate(-50%, -100%);
 }
 
-/* Desktop: zig-zag minimalis — garis & titik di tengah, konten
-   selang-seling kiri/kanan. Mobile tetap satu kolom (di atas). */
-@media (min-width: 861px) {
-  .tk .journey { max-width: 100%; }
-  .tk .journey::before { left: 50%; transform: translateX(-50%); }
-  .tk .journey__item {
-    display: grid;
-    grid-template-columns: 1fr 40px 1fr;
-    gap: 0;
-    align-items: start;
-    padding-bottom: var(--space-9);
-  }
-  .tk .journey__marker { grid-column: 2; justify-self: center; }
-  .tk .journey__content { grid-column: 1; justify-self: end; max-width: 440px; padding-right: var(--space-7); }
-  .tk .journey__item:nth-child(even) .journey__content {
-    grid-column: 3;
-    justify-self: start;
-    padding-right: 0;
-    padding-left: var(--space-7);
-  }
-  .tk .journey__item--reveal { transform: translateY(20px); }
-  .tk .journey__item--reveal.is-visible { transform: translateY(0); }
+/* ---- Lembah (label & tag di bawah garis) ---- */
+.tk .journey__point--bottom .journey__dot,
+.tk .journey__point--bottom .journey__stem { top: var(--valley); }
+.tk .journey__point--bottom .journey__stem { height: var(--gap); }
+.tk .journey__point--bottom .journey__label { top: calc(var(--valley) + var(--gap)); }
+
+/* =========================================================
+   RESPONSIVE — journey mountain
+   ========================================================= */
+@media (max-width: 900px) {
+  .tk .journey__chart { --peak: 180px; --valley: 320px; height: 520px; padding: 0 90px; }
+  .tk .journey__label { width: 170px; }
 }
 
 @media (max-width: 640px) {
-  .tk .year-tabs {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 4px;
-    margin-left: -16px;
-    margin-right: -16px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-  .tk .year-tabs::-webkit-scrollbar { display: none; }
-  .tk .year-tab { flex-shrink: 0; }
-  .tk .journey__logo { width: 60px; height: 60px; }
+  .tk .journey-wrap { margin: 0 calc(var(--page-padding-mobile) * -1); padding: 0 var(--page-padding-mobile); }
+  .tk .journey__chart { padding: 0 60px; --peak: 160px; --valley: 300px; height: 480px; }
+  .tk .journey__point { flex: 0 0 160px; width: 160px; }
+  .tk .journey__label { width: 150px; }
+  .tk .journey__title { font-size: 13px; }
+  .tk .journey__desc { font-size: 12px; }
 }
 
 /* =========================================================
@@ -337,9 +500,6 @@
 .tk .pengurus-card__name { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--text-dark); line-height: 1.4; }
 .tk .pengurus-card__role { font-size: var(--fs-xs); color: var(--text-muted); margin-top: 2px; }
 
-/* Foto & gap kepengurusan diperbesar/direnggangkan khusus desktop
-   (>= 861px, breakpoint sama dengan section journey). Mobile (<= 640px)
-   tetap memakai ukuran lebih kecil agar tidak overflow. */
 @media (min-width: 861px) {
   .tk .pengurus-grid { gap: var(--space-9); max-width: 1100px; }
   .tk .pengurus-card { width: 210px; }
@@ -347,9 +507,6 @@
 
 /* =========================================================
    PENGHARGAAN
-   Kartu kecil, grid rapat, thumbnail rasio potret ala sertifikat.
-   justify-content: flex-start memastikan kartu pertama selalu rata
-   kiri berapa pun jumlah kartunya.
    ========================================================= */
 .tk .pgh-panel.is-hidden { display: none; }
 .tk .pgh-grid { display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; gap: var(--space-4); }
@@ -418,9 +575,6 @@
   .tk .hero__grid { padding: var(--section-space-mobile) 0; }
   .tk .hero__title { font-size: clamp(1.5rem, 5vw, 1.8rem); }
 
-  /* Legalitas: flexbox + justify-content:center supaya baris terakhir
-     yang tidak penuh otomatis di tengah (bukan mentok kiri seperti
-     default grid). Kartu diperkecil agar 3 kartu tetap muat sejajar. */
   .tk .legalitas-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
   .tk .legalitas-card { flex: 0 0 calc(33.333% - 7px); max-width: calc(33.333% - 7px); padding: 14px 8px; }
   .tk .legalitas-card__badge { width: 56px; height: 56px; padding: 8px; margin-bottom: var(--space-3); }
@@ -430,23 +584,14 @@
 
   .tk .lk-grid { grid-template-columns: 1fr; }
 
-  /* Kepengurusan mobile: ketua (.pengurus-card--ketua) di baris atas
-     sendiri (full width), anggota lain sejajar di bawahnya. Grup tanpa
-     ketua tetap tampil rapi sejajar seperti biasa. */
   .tk .pengurus-grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: var(--space-5); max-width: 100%; }
   .tk .pengurus-card { flex: 1 1 0; min-width: 0; max-width: 150px; }
 
-  /* Kartu ketua dibuat 100% lebar (tanpa max-width) supaya pasti
-     memutus baris; ukuran foto dibatasi lewat elemen <img>, bukan
-     di kartu itu sendiri, supaya perhitungan wrap browser konsisten. */
   .tk .pengurus-card--ketua { order: -1; flex: 1 1 100%; width: 100%; max-width: none; margin-bottom: var(--space-2); }
   .tk .pengurus-card--ketua img { max-width: 150px; aspect-ratio: 4 / 5; margin: 0 auto var(--space-3); }
   .tk .pengurus-card__name { font-size: 0.72rem; }
   .tk .pengurus-card__role { font-size: 0.65rem; }
 
-  /* Penghargaan jadi slider horizontal di mobile. Grid mengikuti padding
-     container apa adanya, jadi kartu pertama selalu rata kiri persis
-     sejajar dengan heading/teks di atasnya. */
   .tk .pgh-grid {
     display: flex;
     flex-wrap: nowrap;

@@ -182,32 +182,62 @@
 </section>
 
 {{-- ============ AWAL PERJALANAN KAMI ============ --}}
-<section class="section section--soft">
+{{-- Timeline "gunung" zigzag: titik naik-turun bergantian dengan label
+     di atas (puncak) / di bawah (lembah), tag tahun berbentuk pita,
+     dan garis tebal yang menghubungkan tiap titik. Garis digambar via
+     SVG + JS supaya presisi mengikuti posisi titik meski jumlah item
+     dari database berbeda-beda (tidak hardcode 5 titik). --}}
+<section class="section journey-section">
     <div class="container">
-        <h2 class="section-title">Awal <span class="eyebrow">Perjalanan Kami</span></h2>
-        <p class="section-lead">
-            Sejak awal berdiri, Dompet Al-Qur'an Indonesia berkomitmen menjadi jembatan kebaikan yang amanah,
-            profesional, dan berdampak bagi masyarakat.
-        </p>
+        <div class="journey-head fade-in">
+            <h2 class="section-title">Awal <span class="eyebrow">Perjalanan Kami</span></h2>
+            <p class="section-lead">
+                Sejak awal berdiri, Dompet Al-Qur'an Indonesia berkomitmen menjadi jembatan kebaikan yang amanah,
+                profesional, dan berdampak bagi masyarakat.
+            </p>
+        </div>
 
-        <div class="journey" id="journey">
-            @foreach ($riwayat as $i => $r)
-                <div class="journey__item journey__item--reveal" style="transition-delay: {{ $i * 80 }}ms">
-                    <div class="journey__marker">
-                        <span class="journey__dot"></span>
-                    </div>
-                    <div class="journey__content">
-                        <span class="journey__date">{{ $r->tanggal }}</span>
-                        <h3 class="journey__title">{{ $r->judul }}</h3>
-                        <div class="journey__body">
-                            @if($r->logo)
-                                <img class="journey__logo" src="{{ asset('storage/' . $r->logo) }}" alt="{{ $r->judul }}">
-                            @endif
-                            <p class="journey__desc">{{ $r->deskripsi }}</p>
+        <div class="journey-wrap">
+            <button type="button" class="journey-arrow journey-arrow--prev" id="journeyPrev" aria-label="Sebelumnya">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+
+            <div class="journey" id="journey">
+                <div class="journey__chart" id="journeyChart">
+                    <svg class="journey__svg" id="journeySvg" preserveAspectRatio="none">
+                        <path id="journeyShadowPath" class="journey__line-shadow"></path>
+                        <path id="journeyLinePath" class="journey__line"></path>
+                    </svg>
+
+                    @foreach ($riwayat as $i => $r)
+                        @php $pos = $i % 2 === 0 ? 'top' : 'bottom'; @endphp
+                        <div class="journey__point journey__point--{{ $pos }}" style="--d: {{ $i * 90 }}ms">
+                            <div class="journey__label">
+                                <span class="journey__tag">{{ $r->tanggal }}</span>
+                                <div class="journey__label-row">
+                                    <span class="journey__icon">
+                                        @if($r->logo)
+                                            <img src="{{ asset('storage/' . $r->logo) }}" alt="{{ $r->judul }}">
+                                        @else
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                                        @endif
+                                    </span>
+                                    <div class="journey__text">
+                                        <h3 class="journey__title">{{ $r->judul }}</h3>
+                                        <p class="journey__desc">{{ $r->deskripsi }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="journey__stem"></span>
+                            <span class="journey__dot"></span>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-            @endforeach
+            </div>
+
+            <button type="button" class="journey-arrow journey-arrow--next" id="journeyNext" aria-label="Selanjutnya">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
         </div>
     </div>
 </section>
@@ -309,27 +339,107 @@
 
 
 <script>
-    // Animasi reveal untuk Awal Perjalanan Kami: setiap item muncul (fade + slide)
-    // saat scroll masuk viewport, dengan jeda bertahap antar item.
+    // ===================== JOURNEY MOUNTAIN LINE =====================
+    // Menggambar garis zigzag (SVG path) yang menghubungkan setiap titik
+    // (.journey__dot) di section "Awal Perjalanan Kami" / Company Milestones.
+    // Dihitung otomatis dari posisi asli tiap titik supaya tetap presisi
+    // berapa pun jumlah datanya (tidak hardcode jumlah/posisi).
     (function () {
-        const rows = document.querySelectorAll('.journey__item--reveal');
-        if (!rows.length) return;
+        const chart = document.getElementById('journeyChart');
+        const svg = document.getElementById('journeySvg');
+        const linePath = document.getElementById('journeyLinePath');
+        const shadowPath = document.getElementById('journeyShadowPath');
+        if (!chart || !svg || !linePath || !shadowPath) return;
 
-        if (!('IntersectionObserver' in window)) {
-            rows.forEach(row => row.classList.add('is-visible'));
-            return;
+        function drawLine() {
+            const dots = chart.querySelectorAll('.journey__dot');
+            if (!dots.length) return;
+
+            const chartRect = chart.getBoundingClientRect();
+            svg.setAttribute('viewBox', `0 0 ${chartRect.width} ${chartRect.height}`);
+
+            // Ambil posisi tiap titik (dot).
+            const pts = [];
+            dots.forEach(dot => {
+                const r = dot.getBoundingClientRect();
+                pts.push({
+                    x: r.left - chartRect.left + r.width / 2,
+                    y: r.top - chartRect.top + r.height / 2
+                });
+            });
+
+            // Tambahkan titik "landasan" di tepi kiri & kanan chart supaya
+            // garis meluncur turun ke sudut bawah sebelum titik pertama dan
+            // setelah titik terakhir — bentuk pegunungan seperti desain acuan,
+            // bukan berhenti tiba-tiba tepat di dot pertama/terakhir.
+            const lead  = { x: 0, y: chartRect.height };
+            const trail = { x: chartRect.width, y: chartRect.height };
+            const allPts = [lead, ...pts, trail];
+
+            const d = allPts
+                .map((p, i) => (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ' ' + p.y.toFixed(1))
+                .join(' ');
+
+            linePath.setAttribute('d', d);
+            shadowPath.setAttribute('d', d);
         }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.25, rootMargin: '0px 0px -60px 0px' });
+        function debounce(fn, wait) {
+            let t;
+            return function (...args) {
+                clearTimeout(t);
+                t = setTimeout(() => fn.apply(this, args), wait);
+            };
+        }
 
-        rows.forEach(row => observer.observe(row));
+        window.addEventListener('load', drawLine);
+        window.addEventListener('resize', debounce(drawLine, 150));
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(drawLine);
+        }
+        // Jalankan segera juga (jika load event sudah lewat saat script ini dieksekusi)
+        drawLine();
+        setTimeout(drawLine, 300);
+    })();
+
+    // ===================== JOURNEY ARROW NAVIGATION =====================
+    // Tombol panah kiri/kanan menggeser timeline sejauh lebar satu titik.
+    // Panah otomatis meredup/nonaktif saat sudah mentok di ujung kiri/kanan.
+    (function () {
+        const journeyEl = document.getElementById('journey');
+        const prevBtn = document.getElementById('journeyPrev');
+        const nextBtn = document.getElementById('journeyNext');
+        if (!journeyEl || !prevBtn || !nextBtn) return;
+
+        function debounce(fn, wait) {
+            let t;
+            return function (...args) {
+                clearTimeout(t);
+                t = setTimeout(() => fn.apply(this, args), wait);
+            };
+        }
+
+        function stepWidth() {
+            const point = journeyEl.querySelector('.journey__point');
+            return point ? point.getBoundingClientRect().width + 0 : 240;
+        }
+
+        function updateArrows() {
+            const maxScroll = journeyEl.scrollWidth - journeyEl.clientWidth - 1;
+            prevBtn.disabled = journeyEl.scrollLeft <= 0;
+            nextBtn.disabled = maxScroll <= 0 || journeyEl.scrollLeft >= maxScroll;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            journeyEl.scrollBy({ left: -stepWidth(), behavior: 'smooth' });
+        });
+        nextBtn.addEventListener('click', () => {
+            journeyEl.scrollBy({ left: stepWidth(), behavior: 'smooth' });
+        });
+
+        journeyEl.addEventListener('scroll', debounce(updateArrows, 80));
+        window.addEventListener('resize', debounce(updateArrows, 150));
+        updateArrows();
     })();
 
     // Tab switcher: Laporan Keuangan
