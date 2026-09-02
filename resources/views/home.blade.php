@@ -70,7 +70,7 @@
     <div class="container">
         <div class="about reveal">
             <div class="about-image">
-                <img src="{{ asset('assets/about.png') }}" alt="Kegiatan Dompet Al-Qur'an Indonesia">
+                <img src="{{ asset('assets/about(4).png') }}" alt="Kegiatan Dompet Al-Qur'an Indonesia">
             </div>
             <div class="about-text">
                 <h2 class="section-title">

@@ -25,11 +25,24 @@ class BeritaController extends Controller
      */
     private const KONTEN_FOLDER = 'berita-konten';
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $berita = Berita::orderByDesc('tanggal_terbit')->paginate(10);
+        $query = Berita::query();
 
-        return view('Admin.berita.index', compact('berita'));
+        if ($request->filled('kategori')) {
+            $query->where('kategori', $request->kategori);
+        }
+
+        if ($request->filled('filter_program')) {
+            $query->where('filter_program', $request->filter_program);
+        }
+
+        $berita = $query->orderByDesc('tanggal_terbit')->paginate(10);
+
+        $kategoriList = self::KATEGORI;
+        $filterProgramList = self::FILTER_PROGRAM;
+
+        return view('Admin.berita.index', compact('berita', 'kategoriList', 'filterProgramList'));
     }
 
     public function create(): View

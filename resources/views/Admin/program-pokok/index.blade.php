@@ -27,6 +27,23 @@
         </div>
     @endif
 
+    <div class="flex items-center gap-3">
+        <form method="GET" class="relative inline-block">
+            <select name="kategori_program" onchange="this.form.submit()"
+                    class="appearance-none rounded-xl border border-black/10 bg-white pl-4 pr-10 py-2.5 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-emerald-700/20 cursor-pointer">
+                <option value="">Semua Kategori Program</option>
+                @foreach ($kategoriList as $kategori)
+                    <option value="{{ $kategori }}" @selected(request('kategori_program') === $kategori)>
+                        {{ $kategori }}
+                    </option>
+                @endforeach
+            </select>
+            <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink/40" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m6 9 6 6 6-6"/>
+            </svg>
+        </form>
+    </div>
+
     <div class="rounded-2xl border border-black/5 bg-white overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full min-w-[680px] text-sm">
@@ -82,8 +99,12 @@
                     @empty
                         <tr>
                             <td colspan="5" class="px-6 py-10 text-center text-sm text-ink/40">
-                                Belum ada program pokok.
-                                <a href="{{ route('admin.program-pokok.create') }}" class="text-emerald-700 hover:underline">Tambah program pokok pertama →</a>
+                                @if (request('kategori_program'))
+                                    Tidak ada program pokok untuk kategori "{{ request('kategori_program') }}".
+                                @else
+                                    Belum ada program pokok.
+                                    <a href="{{ route('admin.program-pokok.create') }}" class="text-emerald-700 hover:underline">Tambah program pokok pertama →</a>
+                                @endif
                             </td>
                         </tr>
                     @endforelse

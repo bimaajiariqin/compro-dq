@@ -61,7 +61,7 @@
 
 /* Gambar & elemen di dalam konten artikel (hasil rich-text editor) */
 .article-body img {
-  max-width: 70%;
+  max-width: 80%;
   height: auto;
   border-radius: 5px;
   margin: var(--space-3) auto;

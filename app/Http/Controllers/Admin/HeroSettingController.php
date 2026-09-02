@@ -25,15 +25,23 @@ class HeroSettingController extends Controller
 
     public function update(Request $request, HeroSetting $heroSetting)
     {
+        // Field _en dibuat nullable karena form saat ini belum punya inputnya.
+        // Kalau nanti input _en ditambahkan ke form, validasi ini tetap jalan normal.
         $validated = $request->validate([
-            'foto'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'foto'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10048',
             'eyebrow_id'  => 'nullable|string|max:150',
             'eyebrow_en'  => 'nullable|string|max:150',
             'judul_id'    => 'required|string|max:255',
-            'judul_en'    => 'required|string|max:255',
+            'judul_en'    => 'nullable|string|max:255',
             'subjudul_id' => 'required|string',
-            'subjudul_en' => 'required|string',
+            'subjudul_en' => 'nullable|string',
         ]);
+
+        // Field _en yang tidak dikirim form dipertahankan nilai lamanya,
+        // supaya tidak ke-null-kan tanpa sengaja.
+        $validated['eyebrow_en']  = $validated['eyebrow_en']  ?? $heroSetting->eyebrow_en;
+        $validated['judul_en']    = $validated['judul_en']    ?? $heroSetting->judul_en;
+        $validated['subjudul_en'] = $validated['subjudul_en'] ?? $heroSetting->subjudul_en;
 
         if ($request->hasFile('foto')) {
             if ($heroSetting->foto) {

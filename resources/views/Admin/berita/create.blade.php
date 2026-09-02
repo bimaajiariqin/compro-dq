@@ -80,6 +80,12 @@
                 <label class="block text-sm font-medium text-ink/70 mb-1.5">Deskripsi</label>
 
                 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+                <style>
+                    #editor-deskripsi .ql-editor {
+                        max-height: 400px;
+                        overflow-y: auto;
+                    }
+                </style>
 
                 <div class="rounded-xl border border-black/10 overflow-hidden focus-within:ring-2 focus-within:ring-emerald-700/30 focus-within:border-emerald-700">
                     <div id="editor-deskripsi" style="min-height:280px;" class="bg-white text-sm">{!! old('deskripsi') !!}</div>

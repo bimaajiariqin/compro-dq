@@ -13,11 +13,19 @@ class ProgramPokokController extends Controller
 
     protected string $uploadFolder = 'program-pokok';
 
-    public function index()
+    public function index(Request $request)
     {
-        $programPokok = ProgramPokok::latest()->get();
+        $query = ProgramPokok::query();
 
-        return view('Admin.program-pokok.index', compact('programPokok'));
+        if ($request->filled('kategori_program')) {
+            $query->where('kategori_program', $request->kategori_program);
+        }
+
+        $programPokok = $query->latest()->get();
+
+        $kategoriList = $this->kategoriOptions;
+
+        return view('Admin.program-pokok.index', compact('programPokok', 'kategoriList'));
     }
 
     public function create()
@@ -81,7 +89,7 @@ class ProgramPokokController extends Controller
         $validated = $request->validate([
             'kategori_program' => 'required|in:' . implode(',', $this->kategoriOptions),
             'judul' => 'required|string|max:150',
-            'deskripsi' => 'required|string|max:100',
+            'deskripsi' => 'required|string|max:150',
             'link' => 'nullable|url|max:500',
             'icon' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ]);

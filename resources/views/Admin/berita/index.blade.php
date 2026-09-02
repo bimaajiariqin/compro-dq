@@ -27,6 +27,40 @@
         </div>
     @endif
 
+    <div class="flex items-center flex-wrap gap-3">
+        <form method="GET" class="relative inline-block">
+            <input type="hidden" name="filter_program" value="{{ request('filter_program') }}">
+            <select name="kategori" onchange="this.form.submit()"
+                    class="appearance-none rounded-xl border border-black/10 bg-white pl-4 pr-10 py-2.5 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-emerald-700/20 cursor-pointer">
+                <option value="">Semua Kategori</option>
+                @foreach ($kategoriList as $kategori)
+                    <option value="{{ $kategori }}" @selected(request('kategori') === $kategori)>
+                        {{ $kategori }}
+                    </option>
+                @endforeach
+            </select>
+            <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink/40" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m6 9 6 6 6-6"/>
+            </svg>
+        </form>
+
+        <form method="GET" class="relative inline-block">
+            <input type="hidden" name="kategori" value="{{ request('kategori') }}">
+            <select name="filter_program" onchange="this.form.submit()"
+                    class="appearance-none rounded-xl border border-black/10 bg-white pl-4 pr-10 py-2.5 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-emerald-700/20 cursor-pointer">
+                <option value="">Semua Program</option>
+                @foreach ($filterProgramList as $program)
+                    <option value="{{ $program }}" @selected(request('filter_program') === $program)>
+                        {{ $program }}
+                    </option>
+                @endforeach
+            </select>
+            <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink/40" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m6 9 6 6 6-6"/>
+            </svg>
+        </form>
+    </div>
+
     <div class="rounded-2xl border border-black/5 bg-white overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full min-w-[720px] text-sm">
@@ -94,8 +128,12 @@
                     @empty
                         <tr>
                             <td colspan="5" class="px-6 py-10 text-center text-sm text-ink/40">
-                                Belum ada berita.
-                                <a href="{{ route('admin.berita.create') }}" class="text-emerald-700 hover:underline">Tambah berita pertama →</a>
+                                @if (request('kategori') || request('filter_program'))
+                                    Tidak ada berita yang cocok dengan filter yang dipilih.
+                                @else
+                                    Belum ada berita.
+                                    <a href="{{ route('admin.berita.create') }}" class="text-emerald-700 hover:underline">Tambah berita pertama →</a>
+                                @endif
                             </td>
                         </tr>
                     @endforelse
@@ -105,7 +143,7 @@
     </div>
 
     @if ($berita->hasPages())
-        <div>{{ $berita->links() }}</div>
+        <div>{{ $berita->appends(request()->query())->links() }}</div>
     @endif
 
 </div>
