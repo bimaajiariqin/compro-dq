@@ -79,13 +79,11 @@
                         href="{{ $item->link }}" target="_blank" rel="noopener"
                     @endif
                 >
-                    <span class="program-pokok__icon">
-                        @if ($item->icon)
+                    @if ($item->icon)
+                        <span class="program-pokok__icon">
                             <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
-                        @else
-                            <i class="fa-solid fa-mosque"></i>
-                        @endif
-                    </span>
+                        </span>
+                    @endif
 
                     <h3 class="program-pokok__title">{{ $item->judul }}</h3>
                     <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
