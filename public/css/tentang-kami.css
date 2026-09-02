@@ -182,6 +182,7 @@
   background: var(--bg-white);
   border: 1px solid var(--border-soft);
 }
+.tk .year-tab { flex-shrink: 0; }
 
 /* =========================================================
    LAPORAN KEUANGAN
@@ -242,6 +243,18 @@
    ditambahkan di .journey & .journey__point supaya hasil scroll/panah
    selalu berhenti pas di satu titik, tidak berhenti di posisi tanggung
    yang membuat titik ujung terlihat separuh terpotong.
+
+   CATATAN PERBAIKAN #2: deskripsi (.journey__desc) sebelumnya dibatasi
+   -webkit-line-clamp: 3 sehingga teks panjang dari database terpotong
+   dan diberi "...". Clamp itu dihapus supaya deskripsi tampil penuh.
+   Karena tinggi teks jadi tidak tetap, --peak/--valley/height chart
+   diperbesar dan lebar label ditambah (200px -> 240px, dan turunannya
+   di breakpoint mobile/tablet) supaya ada ruang napas vertikal yang
+   cukup sebelum mentok ke tepi atas/bawah .journey (yang overflow-y-nya
+   otomatis clip karena overflow-x: auto). Ini bukan jaminan mutlak untuk
+   deskripsi yang SANGAT panjang (banyak kalimat) — kalau itu terjadi,
+   opsi paling aman adalah membatasi panjang teks di form admin, atau
+   memperbesar lagi --peak/--valley/height di bawah ini.
    ========================================================= */
 .tk .journey-head { text-align: center; max-width: 640px; margin: 0 auto var(--space-8); }
 .tk .journey-head .section-lead { margin-left: auto; margin-right: auto; }
@@ -287,7 +300,8 @@
    memperlakukan overflow-y sebagai auto/clip (aturan bawaan CSS, tidak bisa
    di-override jadi "visible" begitu saja) — jadi solusinya BUKAN mengizinkan
    overflow vertikal, tapi memastikan kontennya memang tidak pernah melebihi
-   tinggi kotak (lihat line-clamp pada judul/deskripsi + tinggi chart di bawah).
+   tinggi kotak (lihat --peak/--valley/height di bawah, yang sudah diperbesar
+   supaya deskripsi tanpa line-clamp tetap muat).
    scroll-snap-type + scroll-padding ditambahkan supaya posisi scroll berhenti
    center per titik, tidak nanggung. */
 .tk .journey {
@@ -299,6 +313,28 @@
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   scroll-padding: 0 120px;
+  /* CATATAN PERBAIKAN #3: sebelumnya teks kartu tetangga yang belum sampai
+     di tengah "mengintip" di tepi layar dan terpotong mentah di tengah kata
+     (terlihat seperti error saat responsive/mobile). Ditambahkan mask
+     gradient di tepi kiri-kanan supaya potongan itu memudar ke warna
+     background, bukan terpotong tegas — variabel --journey-fade diatur
+     ulang per breakpoint di bawah supaya proporsional dengan padding
+     chart yang juga berubah per breakpoint. */
+  --journey-fade: 90px;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--journey-fade),
+    #000 calc(100% - var(--journey-fade)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--journey-fade),
+    #000 calc(100% - var(--journey-fade)),
+    transparent 100%
+  );
 }
 .tk .journey::-webkit-scrollbar { display: none; }
 
@@ -306,14 +342,15 @@
   position: relative;
   display: flex;
   align-items: stretch;
-  height: 580px;
+  height: 760px;      /* fallback sebelum JS mengukur konten asli & menimpa nilai ini */
   width: max-content;   /* lebar mengikuti jumlah titik, bukan dipaksa 100% */
   min-width: 100%;
   margin: 0 auto;        /* otomatis center kalau datanya sedikit & muat */
-  padding: 0 120px;      /* ruang napas kiri/kanan: cukup untuk setengah lebar label (100px) + jarak aman, supaya label/garis titik pertama & terakhir tidak terpotong */
-  --peak: 200px;    /* jarak titik puncak dari atas chart   */
-  --valley: 350px;  /* jarak titik lembah dari atas chart   */
+  padding: 0 120px;      /* ruang napas kiri/kanan: cukup untuk setengah lebar label (120px) + jarak aman, supaya label/garis titik pertama & terakhir tidak terpotong */
+  --peak: 260px;    /* fallback — di-timpa inline oleh JS sesuai tinggi label asli */
+  --valley: 460px;  /* fallback — di-timpa inline oleh JS sesuai tinggi label asli */
   --gap: 20px;      /* jarak stem antara dot & label        */
+  --amplitude: 200px; /* jarak vertikal puncak↔lembah yang dipertahankan JS saat menghitung ulang --peak/--valley, supaya siluet "gunung" tetap konsisten walau tinggi total menyesuaikan panjang teks */
 }
 
 .tk .journey__svg {
@@ -350,8 +387,8 @@
 
 .tk .journey__point {
   position: relative;
-  flex: 0 0 240px;   /* lebar tetap: tidak menyusut walau data bertambah banyak */
-  width: 240px;
+  flex: 0 0 260px;   /* lebar tetap: tidak menyusut walau data bertambah banyak */
+  width: 260px;
   height: 100%;
   z-index: 2;
   opacity: 0;
@@ -394,7 +431,7 @@
 .tk .journey__label {
   position: absolute;
   left: 50%;
-  width: 200px;
+  width: 240px;
   transform: translateX(-50%);
 }
 
@@ -446,15 +483,14 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Deskripsi ditampilkan penuh (line-clamp dihapus) — lihat catatan
+   perbaikan #2 di atas untuk konteks ruang vertikal chart. */
 .tk .journey__desc {
   font-size: 12.5px;
   line-height: 1.55;
   color: var(--text-muted);
   margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 /* ---- Puncak (label & tag di atas garis) ---- */
@@ -476,17 +512,19 @@
    RESPONSIVE — journey mountain
    ========================================================= */
 @media (max-width: 900px) {
-  .tk .journey__chart { --peak: 180px; --valley: 320px; height: 520px; padding: 0 90px; }
-  .tk .journey__label { width: 170px; }
+  .tk .journey__chart { height: 660px; padding: 0 90px; --amplitude: 200px; }
+  .tk .journey__label { width: 210px; }
+  .tk .journey { --journey-fade: 60px; }
 }
 
 @media (max-width: 640px) {
   .tk .journey-wrap { margin: 0 calc(var(--page-padding-mobile) * -1); padding: 0 var(--page-padding-mobile); }
-  .tk .journey__chart { padding: 0 60px; --peak: 160px; --valley: 300px; height: 480px; }
-  .tk .journey__point { flex: 0 0 160px; width: 160px; }
-  .tk .journey__label { width: 150px; }
+  .tk .journey__chart { padding: 0 60px; height: 600px; --amplitude: 180px; }
+  .tk .journey__point { flex: 0 0 190px; width: 190px; }
+  .tk .journey__label { width: 180px; }
   .tk .journey__title { font-size: 13px; }
   .tk .journey__desc { font-size: 12px; }
+  .tk .journey { --journey-fade: 32px; }
 }
 
 /* =========================================================
@@ -583,6 +621,22 @@
   .tk .legalitas-card__link svg { width: 10px; height: 10px; }
 
   .tk .lk-grid { grid-template-columns: 1fr; }
+
+  /* Tab tahun (Laporan Keuangan & Penghargaan) jadi slider horizontal
+     di mobile, bukan wrap ke banyak baris — flex-nowrap + scroll-snap,
+     scrollbar disembunyikan supaya tetap terlihat rapi seperti pill-tab. */
+  .tk .year-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    scroll-padding: 0 var(--page-padding-mobile);
+    margin: 0 calc(var(--page-padding-mobile) * -1) var(--space-6);
+    padding: 0 var(--page-padding-mobile) 2px;
+  }
+  .tk .year-tabs::-webkit-scrollbar { display: none; }
+  .tk .year-tabs .year-tab { scroll-snap-align: start; white-space: nowrap; }
 
   .tk .pengurus-grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: var(--space-5); max-width: 100%; }
   .tk .pengurus-card { flex: 1 1 0; min-width: 0; max-width: 150px; }

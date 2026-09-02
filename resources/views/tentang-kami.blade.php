@@ -186,7 +186,10 @@
      di atas (puncak) / di bawah (lembah), tag tahun berbentuk pita,
      dan garis tebal yang menghubungkan tiap titik. Garis digambar via
      SVG + JS supaya presisi mengikuti posisi titik meski jumlah item
-     dari database berbeda-beda (tidak hardcode 5 titik). --}}
+     dari database berbeda-beda (tidak hardcode 5 titik). Tinggi chart
+     dan jarak puncak/lembah (--peak/--valley) JUGA dihitung via JS dari
+     tinggi label asli, supaya deskripsi panjang apa pun tidak kepotong
+     vertikal (lihat adjustJourneyHeight di bawah). --}}
 <section class="section journey-section">
     <div class="container">
         <div class="journey-head fade-in">
@@ -339,6 +342,53 @@
 
 
 <script>
+    // ===================== JOURNEY MOUNTAIN — TINGGI DINAMIS =====================
+    // Mengukur tinggi ASLI label puncak & lembah (setelah teks deskripsi
+    // ditampilkan penuh, tanpa line-clamp) lalu mengatur --peak, --valley,
+    // dan tinggi .journey__chart sesuai kebutuhan konten sebenarnya —
+    // bukan angka tebakan tetap. Ini mencegah judul/ikon/deskripsi kepotong
+    // di tepi atas/bawah container (yang overflow-y-nya otomatis clip
+    // karena overflow-x: auto pada .journey).
+    //
+    // --amplitude (diatur lewat CSS per breakpoint) dipertahankan sebagai
+    // jarak vertikal puncak↔lembah supaya siluet "gunung" tetap konsisten;
+    // hanya --peak/--valley/tinggi total yang menyesuaikan panjang teks.
+    (function () {
+        const chart = document.getElementById('journeyChart');
+        if (!chart) return;
+
+        function adjustJourneyHeight() {
+            const topLabels = chart.querySelectorAll('.journey__point--top .journey__label');
+            const bottomLabels = chart.querySelectorAll('.journey__point--bottom .journey__label');
+            if (!topLabels.length && !bottomLabels.length) return;
+
+            const styles = getComputedStyle(chart);
+            const gap = parseFloat(styles.getPropertyValue('--gap')) || 20;
+            const amplitude = parseFloat(styles.getPropertyValue('--amplitude')) || 200;
+            const buffer = 24;   // jarak aman ekstra supaya tidak mepet tepi
+            const minPeak = 160; // tinggi minimum, supaya siluet gunung tidak gepeng kalau semua teks pendek
+
+            let maxTop = 0;
+            topLabels.forEach(el => { maxTop = Math.max(maxTop, el.scrollHeight); });
+            let maxBottom = 0;
+            bottomLabels.forEach(el => { maxBottom = Math.max(maxBottom, el.scrollHeight); });
+
+            const peak = Math.max(minPeak, maxTop + gap + buffer);
+            const valley = peak + amplitude;
+            const height = valley + maxBottom + gap + buffer;
+
+            chart.style.setProperty('--peak', peak + 'px');
+            chart.style.setProperty('--valley', valley + 'px');
+            chart.style.height = height + 'px';
+        }
+
+        // Diekspos supaya IIFE garis SVG di bawah bisa memanggilnya
+        // sebelum menggambar ulang garis (posisi titik berubah begitu
+        // tinggi chart berubah).
+        window.__dqAdjustJourneyHeight = adjustJourneyHeight;
+        adjustJourneyHeight();
+    })();
+
     // ===================== JOURNEY MOUNTAIN LINE =====================
     // Menggambar garis zigzag (SVG path) yang menghubungkan setiap titik
     // (.journey__dot) di section "Awal Perjalanan Kami" / Company Milestones.
@@ -352,6 +402,10 @@
         if (!chart || !svg || !linePath || !shadowPath) return;
 
         function drawLine() {
+            // Pastikan tinggi chart sudah menyesuaikan konten asli sebelum
+            // mengambil posisi titik, supaya garis mengikuti posisi final.
+            if (window.__dqAdjustJourneyHeight) window.__dqAdjustJourneyHeight();
+
             const dots = chart.querySelectorAll('.journey__dot');
             if (!dots.length) return;
 
