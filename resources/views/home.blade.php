@@ -70,7 +70,7 @@
     <div class="container">
         <div class="about reveal">
             <div class="about-image">
-                <img src="{{ asset('assets/about(4) (1).png') }}" alt="Kegiatan Dompet Al-Qur'an Indonesia">
+                <img src="{{ asset('assets/about(20).png') }}" alt="Kegiatan Dompet Al-Qur'an Indonesia">
             </div>
             <div class="about-text">
                 <h2 class="section-title">
@@ -150,6 +150,39 @@
                 <h3>Inspirasi Kebaikan</h3>
                 <p>Ikuti cerita inspiratif serta perkembangan program-program Dompet Al-Qur'an Indonesia melalui majalah digital kami.</p>
             </a>
+        </div>
+    </div>
+</section>
+
+{{-- ==========================================================
+     TESTIMONI
+     ========================================================== --}}
+<section class="section" id="testimoni">
+    <div class="container">
+        <div class="testimoni-card reveal">
+            <h2 class="section-title testimoni-title">Apa <span>Kata Mereka?</span></h2>
+
+            @if ($testimoni->isEmpty())
+                <p class="testimoni-empty">Belum ada testimoni yang ditambahkan.</p>
+            @else
+                <button type="button" class="testimoni-arrow testimoni-arrow-prev" id="testimoniPrev" aria-label="Sebelumnya">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button type="button" class="testimoni-arrow testimoni-arrow-next" id="testimoniNext" aria-label="Berikutnya">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+
+                <div class="testimoni-track">
+                    @foreach ($testimoni as $item)
+                        <div class="testimoni-slide">
+                            <p class="testimoni-quote">&ldquo;{{ $item->isi_testimoni }}&rdquo;</p>
+                            <img src="{{ asset('storage/' . $item->foto_profil) }}" alt="{{ $item->nama }}" class="testimoni-avatar">
+                            <p class="testimoni-name">{{ $item->nama }}</p>
+                            <p class="testimoni-role">{{ $item->jabatan }}</p>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </div>
 </section>
@@ -254,10 +287,11 @@
     <div class="container">
         <div class="video-kebaikan-grid reveal">
             <div class="video-kebaikan-text">
-                <h2 class="video-kebaikan-title"> <span>Gerakan Nyata</span> untuk Indonesia</h2>
-                <p>Saksikan bagaimana setiap kegiatan dan penyaluran bantuan memberi manfaat bagi yatim dan dhuafa yang membutuhkan.
-                    Jadilah bagian dari kebaikan. Temukan inspirasi, bagikan kepedulian, dan ikut memberi dampak nyata bagi mereka.
-                Semua video kebaikan bisa kamu lihat langsung di channel YouTube {{ $videoKebaikan->first()->channel_name }}.</p>
+                <h2 class="video-kebaikan-title"> Cerita Kebaikan yang <span>Memberi Arti</span></h2>
+                <p>Lihat lebih dekat berbagai aksi dan program kebaikan yang kami hadirkan untuk membantu masyarakat yang membutuhkan. 
+                    Setiap langkah adalah wujud kepedulian, setiap bantuan menjadi harapan, dan setiap kontribusi membawa manfaat bagi 
+                    sesama. Ikuti dokumentasi perjalanan kebaikan kami dan temukan cerita di balik setiap program yang dijalankan 
+                    langsung di channel YouTube {{ $videoKebaikan->first()->channel_name }}.</p>
             </div>
 
             <div class="video-kebaikan-media">
@@ -315,7 +349,7 @@
 <section class="section" id="cta">
     <div class="container cta-container">
         <div class="cta-photo">
-            <img src="{{ asset('assets/cta.png') }}" alt="Bersama Dompet Al-Qur'an Indonesia" class="cta-photo-img">
+            <img src="{{ asset('assets/jk (1).png') }}" alt="Bersama Dompet Al-Qur'an Indonesia" class="cta-photo-img">
         </div>
 
         <div class="cta-content">

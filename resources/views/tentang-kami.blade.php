@@ -55,10 +55,14 @@
             <h2 class="section-title">Visi & Misi <span class="eyebrow">Lembaga</span></h2>
 
             <div class="vm-block">
-                <span class="vm-icon vm-icon--visi">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                <span class="vm-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+                        <path d="M15.5 8.5l-2.2 5.2-5.2 2.2 2.2-5.2 5.2-2.2z"
+                              stroke="currentColor" stroke-width="1.6"
+                              stroke-linejoin="round"
+                              fill="currentColor" fill-opacity="0.1"/>
+                        <circle cx="12" cy="12" r="1" fill="currentColor"/>
                     </svg>
                 </span>
                 <div>
@@ -71,9 +75,11 @@
             </div>
 
             <div class="vm-block">
-                <span class="vm-icon vm-icon--misi">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M4 22V4a1 1 0 011-1h13.5a.5.5 0 01.4.8l-3.4 4.2 3.4 4.2a.5.5 0 01-.4.8H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <span class="vm-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+                        <circle cx="12" cy="12" r="5.2" stroke="currentColor" stroke-width="1.6"/>
+                        <circle cx="12" cy="12" r="1.4" fill="currentColor"/>
                     </svg>
                 </span>
                 <div style="flex:1;">
@@ -91,7 +97,7 @@
         </div>
 
         <div class="visi-misi__image fade-in">
-            <img src="assets/visi-misi.png" alt="Amil Dompet Al-Qur'an">
+            <img src="assets/visi.png" alt="Amil Dompet Al-Qur'an">
         </div>
     </div>
 </section>
@@ -412,7 +418,6 @@
             const chartRect = chart.getBoundingClientRect();
             svg.setAttribute('viewBox', `0 0 ${chartRect.width} ${chartRect.height}`);
 
-            // Ambil posisi tiap titik (dot).
             const pts = [];
             dots.forEach(dot => {
                 const r = dot.getBoundingClientRect();
@@ -422,12 +427,20 @@
                 });
             });
 
-            // Tambahkan titik "landasan" di tepi kiri & kanan chart supaya
-            // garis meluncur turun ke sudut bawah sebelum titik pertama dan
-            // setelah titik terakhir — bentuk pegunungan seperti desain acuan,
-            // bukan berhenti tiba-tiba tepat di dot pertama/terakhir.
-            const lead  = { x: 0, y: chartRect.height };
-            const trail = { x: chartRect.width, y: chartRect.height };
+            // "Landasan" kiri/kanan ditarik ke level LEMBAH (--valley),
+            // bukan ke dasar container penuh (chartRect.height) — supaya
+            // garis tidak turun jauh sampai menembus area teks label di
+            // bawahnya saat datanya sedikit (1-2 item).
+            const styles = getComputedStyle(chart);
+            const valleyY = parseFloat(styles.getPropertyValue('--valley')) || chartRect.height;
+
+            const leadDistance = 110;
+            const first = pts[0];
+            const last = pts[pts.length - 1];
+
+            const lead  = { x: Math.max(0, first.x - leadDistance), y: valleyY };
+            const trail = { x: Math.min(chartRect.width, last.x + leadDistance), y: valleyY };
+
             const allPts = [lead, ...pts, trail];
 
             const d = allPts

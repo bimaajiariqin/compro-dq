@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{ asset('css/program.css') }}">
     {{-- CSS section "Cerita Penerima Manfaat" --}}
     <link rel="stylesheet" href="{{ asset('css/cerita-penerima-manfaat.css') }}">
+    {{-- CSS section "FAQ" --}}
+    <link rel="stylesheet" href="{{ asset('css/faq.css') }}">
 </head>
 <body>
 
@@ -272,5 +274,6 @@
 
 <script src="{{ asset('js/program-berita-slider.js') }}"></script>
 <script src="{{ asset('js/cerita-penerima-manfaat-slider.js') }}"></script>
+<script src="{{ asset('js/faq-accordion.js') }}"></script>
 </body>
 </html>

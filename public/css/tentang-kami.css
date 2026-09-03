@@ -130,7 +130,7 @@
 }
 .tk .vm-note { margin-top: var(--space-4); font-size: var(--fs-xs); font-style: italic; color: var(--text-muted); }
 .tk .visi-misi__image { display: flex; justify-content: center; }
-.tk .visi-misi__image img { width: 100%; max-width: 350px; aspect-ratio: 3 / 4; object-fit: contain; }
+.tk .visi-misi__image img { width: 100%; max-width: 600px; aspect-ratio: 4 / 4; object-fit: contain; }
 
 /* =========================================================
    LEGALITAS LEMBAGA
@@ -531,7 +531,7 @@
    PROFIL KEPENGURUSAN
    ========================================================= */
 .tk .pengurus-group { margin-bottom: var(--space-9); }
-.tk .pengurus-group__title { text-align: center; font-weight: var(--fw-medium); font-size: var(--fs-base); color: var(--text-dark); margin-bottom: var(--space-5); }
+.tk .pengurus-group__title { text-align: center; font-weight: var(--fw-semibold); font-size: var(--fs-lg); color: var(--text-dark); margin-bottom: var(--space-5); }
 .tk .pengurus-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-8); max-width: 900px; margin: 0 auto; }
 .tk .pengurus-card { width: 160px; text-align: center; }
 .tk .pengurus-card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; margin-bottom: var(--space-3); }

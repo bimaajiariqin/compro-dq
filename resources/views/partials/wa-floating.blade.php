@@ -1,6 +1,6 @@
 @php
     // Bisa di-override dari view yang meng-include, kalau tidak diisi pakai default
-    $waNumber = $waNumber ?? '628138500'; // format internasional tanpa +/spasi
+    $waNumber = $waNumber ?? '+6281385002300'; // format internasional tanpa +/spasi
     $waMessage = $waMessage ?? 'Halo, saya ingin bertanya seputar donasi.';
 @endphp
 
