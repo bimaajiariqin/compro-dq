@@ -4,7 +4,7 @@
       Butuh variabel $visitorStats (array: hari_ini, bulan_ini, tahun_ini)
       dari controller — lihat HomeController::index().
       ========================================================== --}}
-  <footer class="footer">
+  <footer class="footer" id="siteFooter">
       <div class="container">
           <div class="footer-grid">
               <div>
@@ -82,8 +82,12 @@
               <div>
                   <p class="footer-heading">Lokasi Lembaga</p>
                   <div class="footer-map">
+                      {{-- Embed resmi Google Maps (dengan Place ID) sudah interaktif secara
+                           native: bisa di-zoom in/out, digeser, dan dibuka fullscreen. --}}
                       <iframe
-                          src="https://www.google.com/maps?q=-7.4267403,112.6815088&output=embed"
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d238.9005240178056!2d112.68121272325516!3d-7.426772646978172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e3d98f3cd39b%3A0xf9ba86c029a86e32!2sLembaga%20Amil%20Zakat%20Dompet%20Alquran%20Indonesia!5e0!3m2!1sid!2sid!4v1788761458149!5m2!1sid!2sid"
+                          width="100%" height="100%" style="border:0;"
+                          allowfullscreen
                           loading="lazy"
                           referrerpolicy="no-referrer-when-downgrade"
                           title="Lokasi Dompet Al-Qur'an Indonesia">
@@ -143,7 +147,7 @@
   }
 
   @media (min-width: 860px) {
-    .footer-grid { grid-template-columns: 1.3fr 2fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1.5fr 1.3fr; }
   }
 
   .footer-links-grid {
@@ -241,10 +245,13 @@
   .footer-visits .value { color: var(--text-muted); font-weight: 500; }
 
   .footer-map {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    height: 260px;
     border-radius: var(--radius-md);
     overflow: hidden;
     border: 1px solid var(--border-soft);
-    aspect-ratio: 4 / 3;
   }
 
   .footer-map iframe { width: 100%; height: 100%; border: 0; }

@@ -39,7 +39,7 @@
   --fs-lg: 1.2rem;                          /* judul grup / card besar */
   --fs-h3: clamp(1.1rem, 2vw, 1.2rem);      /* testimoni quote, dsb */
   --fs-h2: clamp(1.6rem, 3vw, 2rem);        /* section-title */
-  --fs-h1: clamp(2rem, 5vw, 2.8rem);        /* hero-title */
+  --fs-h1: clamp(2rem, 5vw, 2.4rem);        /* hero-title */
   --fs-display: clamp(1.7rem, 3.6vw, 2.4rem); /* CTA / QR heading besar */
 
   /* Ketebalan */

@@ -89,7 +89,7 @@ class ProgramPokokController extends Controller
         $validated = $request->validate([
             'kategori_program' => 'required|in:' . implode(',', $this->kategoriOptions),
             'judul' => 'required|string|max:150',
-            'deskripsi' => 'required|string|max:150',
+            'deskripsi' => 'required|string|max:300',
             'link' => 'nullable|url|max:500',
             'icon' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ]);

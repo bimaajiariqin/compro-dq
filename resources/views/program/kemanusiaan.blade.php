@@ -37,7 +37,7 @@
     <div class="container program-hero__inner">
 
         <div class="program-hero__media">
-            <img src="{{ asset('assets/kemanusiaan.png') }}" alt="Program Peduli Kemanusiaan" class="program-hero__img">
+            <img src="{{ asset('assets/kemanusiaan (1).png') }}" alt="Program Peduli Kemanusiaan" class="program-hero__img">
         </div>
 
         <div class="program-hero__content">
@@ -73,27 +73,40 @@
 
         <div class="program-pokok__grid">
             @forelse ($programPokok as $item)
-                @if ($item->link)
-                    <a href="{{ $item->link }}" target="_blank" rel="noopener" class="program-pokok__card">
-                        @if ($item->icon)
-                            <span class="program-pokok__icon">
+                <div class="program-pokok__card">
+
+                    {{-- Panel foto + judul besar overlay. Kalau item punya link,
+                         seluruh panel foto ini yang jadi area klik-nya. --}}
+                    @if ($item->link)
+                        <a href="{{ $item->link }}" target="_blank" rel="noopener" class="program-pokok__icon">
+                            <span class="program-pokok__icon-title">{{ $item->judul }}</span>
+                            @if ($item->icon)
                                 <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
-                            </span>
-                        @endif
+                            @endif
+                        </a>
+                    @else
+                        <div class="program-pokok__icon">
+                            <span class="program-pokok__icon-title">{{ $item->judul }}</span>
+                            @if ($item->icon)
+                                <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
+                            @endif
+                        </div>
+                    @endif
+
+                    {{-- Judul, deskripsi, dan tombol donasi --}}
+                    <div class="program-pokok__content">
                         <h3 class="program-pokok__title">{{ $item->judul }}</h3>
                         <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
-                    </a>
-                @else
-                    <div class="program-pokok__card">
-                        @if ($item->icon)
-                            <span class="program-pokok__icon">
-                                <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
-                            </span>
-                        @endif
-                        <h3 class="program-pokok__title">{{ $item->judul }}</h3>
-                        <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
+                        <div class="program-pokok__actions">
+                            <a href="{{ $item->link ?: route('rekening.index') }}"
+                               @if ($item->link) target="_blank" rel="noopener" @endif
+                               class="program-pokok__btn program-pokok__btn--donasi">
+                                Donasi Sekarang
+                            </a>
+                        </div>
                     </div>
-                @endif
+
+                </div>
             @empty
                 <p class="program-pokok__empty">Belum ada program pokok untuk kategori ini.</p>
             @endforelse

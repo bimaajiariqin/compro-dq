@@ -426,133 +426,314 @@
 
 <script src="{{ asset('js/landing.js') }}"></script>
 
-{{-- Auto-slide carousel untuk section Iklan --}}
+{{-- ==========================================================
+     Script gabungan: iklan carousel, video player YouTube IFrame
+     API dengan tombol pause/play custom, dan drag-scroll slider
+     video kebaikan.
+     ========================================================== --}}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    /* ============================================================
+       A. Auto-slide carousel untuk section Iklan
+       ============================================================ */
     const track = document.getElementById('iklanTrack');
-    if (!track) return;
+    if (track) {
+        const originalSlides = Array.from(track.children);
+        const totalSlides = originalSlides.length;
 
-    const originalSlides = Array.from(track.children);
-    const totalSlides = originalSlides.length;
+        // Kalau iklan cuma 1-2, gak perlu digeser otomatis.
+        if (totalSlides > 2) {
+            // Gandakan slide biar transisi loop dari slide terakhir balik ke awal terlihat mulus.
+            originalSlides.forEach(function (slide) {
+                track.appendChild(slide.cloneNode(true));
+            });
 
-    // Kalau iklan cuma 1-2, gak perlu digeser otomatis.
-    if (totalSlides <= 2) return;
+            let currentIndex = 0;
+            let slideStep = 0;
 
-    // Gandakan slide biar transisi loop dari slide terakhir balik ke awal terlihat mulus.
-    originalSlides.forEach(function (slide) {
-        track.appendChild(slide.cloneNode(true));
-    });
+            function measure() {
+                const trackStyle = window.getComputedStyle(track);
+                const gap = parseFloat(trackStyle.columnGap || trackStyle.gap || 0);
+                slideStep = track.children[0].getBoundingClientRect().width + gap;
+            }
 
-    let currentIndex = 0;
-    let slideStep = 0;
+            function goTo(index, animate) {
+                track.style.transition = animate ? 'transform 0.6s ease' : 'none';
+                track.style.transform = 'translateX(' + (-index * slideStep) + 'px)';
+            }
 
-    function measure() {
-        const trackStyle = window.getComputedStyle(track);
-        const gap = parseFloat(trackStyle.columnGap || trackStyle.gap || 0);
-        slideStep = track.children[0].getBoundingClientRect().width + gap;
-    }
+            measure();
+            goTo(currentIndex, false);
 
-    function goTo(index, animate) {
-        track.style.transition = animate ? 'transform 0.6s ease' : 'none';
-        track.style.transform = 'translateX(' + (-index * slideStep) + 'px)';
-    }
-
-    measure();
-    goTo(currentIndex, false);
-
-    window.addEventListener('resize', function () {
-        measure();
-        goTo(currentIndex, false);
-    });
-
-    setInterval(function () {
-        currentIndex++;
-        goTo(currentIndex, true);
-
-        // Setelah nyampe slide duplikat pertama, lompat diam-diam balik ke index 0.
-        if (currentIndex >= totalSlides) {
-            setTimeout(function () {
-                currentIndex = 0;
+            window.addEventListener('resize', function () {
+                measure();
                 goTo(currentIndex, false);
-            }, 620);
+            });
+
+            setInterval(function () {
+                currentIndex++;
+                goTo(currentIndex, true);
+
+                // Setelah nyampe slide duplikat pertama, lompat diam-diam balik ke index 0.
+                if (currentIndex >= totalSlides) {
+                    setTimeout(function () {
+                        currentIndex = 0;
+                        goTo(currentIndex, false);
+                    }, 620);
+                }
+            }, 5000);
         }
-    }, 5000);
-});
+    }
 
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.video-play-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            const wrapper = btn.closest('[data-video-id]');
-            const frame = btn.closest('.video-frame');
-            if (!wrapper || !frame) return;
+    /* ============================================================
+       B. Video Kebaikan — pakai YouTube IFrame Player API supaya
+       tombol pause/play custom kita yang pegang kendali penuh,
+       bukan bergantung tap ke kontrol native di dalam iframe
+       (yang sering gagal di layar sempit / touch device).
+       ============================================================ */
+    var ytPlayers = {};      // mountId -> instance YT.Player
+    var ytApiReady = false;
+    var ytPendingQueue = [];
 
-            const videoId = wrapper.dataset.videoId;
-            const iframe = document.createElement('iframe');
-            iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
-            iframe.title = 'YouTube video player';
-            iframe.className = 'video-iframe';
-            iframe.setAttribute('frameborder', '0');
-            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-            iframe.setAttribute('allowfullscreen', '');
+    var videoButtons = document.querySelectorAll('.video-play-btn');
+
+    if (videoButtons.length) {
+        // 1. Muat script YouTube IFrame API sekali saja
+        var ytTag = document.createElement('script');
+        ytTag.src = 'https://www.youtube.com/iframe_api';
+        document.head.appendChild(ytTag);
+
+        window.onYouTubeIframeAPIReady = function () {
+            ytApiReady = true;
+            ytPendingQueue.forEach(function (fn) { fn(); });
+            ytPendingQueue = [];
+        };
+
+        var whenYtApiReady = function (fn) {
+            if (ytApiReady) fn();
+            else ytPendingQueue.push(fn);
+        };
+
+        // 2. Bikin player + tombol toggle custom di dalam .video-frame tertentu.
+        // PENTING: semua ukuran & posisi di-set langsung lewat inline style JS
+        // (bukan mengandalkan class CSS di file terpisah), supaya player selalu
+        // full-size dan tombol selalu terlihat, apa pun kondisi file CSS-nya.
+        var initYtPlayer = function (frame, wrapper) {
+            var videoId = wrapper.dataset.videoId;
 
             frame.style.backgroundImage = 'none';
+            frame.style.position = frame.style.position || 'relative';
             frame.innerHTML = '';
-            frame.appendChild(iframe);
+
+            var mount = document.createElement('div');
+            mount.id = 'yt-player-' + videoId + '-' + Math.random().toString(36).slice(2, 7);
+            // Mount ini akan DIGANTI oleh YT jadi <iframe>. Style di bawah tetap
+            // dipakai sebagai acuan lewat onReady (lihat getIframe() di bawah).
+            mount.style.position = 'absolute';
+            mount.style.inset = '0';
+            mount.style.width = '100%';
+            mount.style.height = '100%';
+            frame.appendChild(mount);
+
+            // Tombol play/pause milik kita sendiri. Visual (warna, blur, shadow,
+            // hover) diatur lewat class CSS ".video-toggle-btn" di landing.css.
+            // Posisi & ukuran dasar tetap di-inline sebagai jaring pengaman,
+            // supaya tombol tidak pernah hilang walau CSS telat/gagal ke-load.
+            var toggleBtn = document.createElement('button');
+            toggleBtn.type = 'button';
+            toggleBtn.className = 'video-toggle-btn';
+            toggleBtn.setAttribute('aria-label', 'Play/Pause video');
+            toggleBtn.style.position = 'absolute';
+            toggleBtn.style.zIndex = '5';
+            toggleBtn.style.top = '50%';
+            toggleBtn.style.left = '50%';
+            toggleBtn.style.transform = 'translate(-50%, -50%)';
+            toggleBtn.style.width = '56px';
+            toggleBtn.style.height = '56px';
+            toggleBtn.style.display = 'flex';
+            toggleBtn.style.alignItems = 'center';
+            toggleBtn.style.justifyContent = 'center';
+            toggleBtn.style.cursor = 'pointer';
+            toggleBtn.innerHTML =
+                '<svg class="icon-pause" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>' +
+                '<svg class="icon-play" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M8 5v14l11-7z"/></svg>';
+            frame.appendChild(toggleBtn);
+
+            // --- Auto-hide: tombol otomatis menghilang beberapa detik setelah
+            // video playing (biar nggak nutupin gambar terus), dan muncul lagi
+            // kalau video di-tap/klik atau lagi di-pause. -------------------
+            var hideTimer = null;
+
+            function showToggleBtn() {
+                toggleBtn.style.opacity = '1';
+                toggleBtn.style.pointerEvents = 'auto';
+            }
+
+            function hideToggleBtn() {
+                toggleBtn.style.opacity = '0';
+                toggleBtn.style.pointerEvents = 'none';
+            }
+
+            function scheduleAutoHide() {
+                clearTimeout(hideTimer);
+                hideTimer = setTimeout(function () {
+                    var p = ytPlayers[mount.id];
+                    if (p && typeof p.getPlayerState === 'function' && p.getPlayerState() === YT.PlayerState.PLAYING) {
+                        hideToggleBtn();
+                    }
+                }, 1800);
+            }
+
+            toggleBtn.style.opacity = '1';
+            toggleBtn.style.pointerEvents = 'auto';
+            toggleBtn.style.transition = (toggleBtn.style.transition ? toggleBtn.style.transition + ', ' : '') + 'opacity 0.25s ease';
+
+            // Tap di mana pun pada frame (bukan cuma tombolnya) memunculkan
+            // kembali tombol & reset timer auto-hide — mirip kontrol video pada umumnya.
+            frame.addEventListener('click', function (e) {
+                if (e.target === toggleBtn || toggleBtn.contains(e.target)) return;
+                showToggleBtn();
+                scheduleAutoHide();
+            });
+            // -------------------------------------------------------------
+
+            whenYtApiReady(function () {
+                var player = new YT.Player(mount.id, {
+                    videoId: videoId,
+                    width: '100%',
+                    height: '100%',
+                    playerVars: {
+                        autoplay: 1,
+                        rel: 0,
+                        playsinline: 1, // cegah iOS Safari maksa fullscreen
+                        controls: 1     // seek bar native tetap ada, tombol kita cuma jaminan pause/play
+                    },
+                    events: {
+                        onReady: function (e) {
+                            // Paksa iframe hasil YT full-size, terlepas dari CSS eksternal.
+                            var iframeEl = e.target.getIframe();
+                            if (iframeEl) {
+                                iframeEl.style.position = 'absolute';
+                                iframeEl.style.inset = '0';
+                                iframeEl.style.width = '100%';
+                                iframeEl.style.height = '100%';
+                            }
+                            e.target.playVideo();
+                        },
+                        onStateChange: function (e) {
+                            var playing = e.data === YT.PlayerState.PLAYING;
+                            toggleBtn.querySelector('.icon-pause').style.display = playing ? '' : 'none';
+                            toggleBtn.querySelector('.icon-play').style.display = playing ? 'none' : '';
+
+                            if (playing) {
+                                // Video baru mulai/lanjut jalan -> tombol tampil dulu,
+                                // lalu dijadwalkan menghilang.
+                                showToggleBtn();
+                                scheduleAutoHide();
+                            } else {
+                                // Paused, ended, buffering, dll -> tombol selalu tampil.
+                                clearTimeout(hideTimer);
+                                showToggleBtn();
+                            }
+                        }
+                    }
+                });
+                ytPlayers[mount.id] = player;
+
+                toggleBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    var p = ytPlayers[mount.id];
+                    if (!p || typeof p.getPlayerState !== 'function') return;
+                    var state = p.getPlayerState();
+                    if (state === YT.PlayerState.PLAYING) {
+                        p.pauseVideo();
+                    } else {
+                        p.playVideo();
+                        showToggleBtn();
+                        scheduleAutoHide();
+                    }
+                });
+            });
+        };
+
+        // 3. Sambungkan ke tombol "play" poster yang sudah ada
+        videoButtons.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var wrapper = btn.closest('[data-video-id]');
+                var frame = btn.closest('.video-frame');
+                if (!wrapper || !frame) return;
+                initYtPlayer(frame, wrapper);
+            });
         });
-    });
-});
+    }
 
-{{-- Bikin slider video kebaikan bisa digeser pakai mouse (klik-tahan-geser)
-     dan roda mouse vertikal (khusus saat kursor di atas slider), supaya
-     tetap bisa "di-slide" walau pengguna pakai mouse biasa di desktop --}}
-document.addEventListener('DOMContentLoaded', function () {
-    const list = document.getElementById('videoKebaikanList');
-    if (!list) return;
+    /* ============================================================
+       C. Bikin slider video kebaikan bisa digeser pakai mouse
+       (klik-tahan-geser) dan roda mouse vertikal (khusus saat
+       kursor di atas slider), supaya tetap bisa "di-slide" walau
+       pengguna pakai mouse biasa di desktop.
 
-    let isDown = false;
-    let startX = 0;
-    let scrollStart = 0;
-    let moved = false;
+       FIX: drag-scroll manual ini HANYA untuk perangkat dengan
+       mouse/pointer halus (desktop). Di touch device (HP/tablet),
+       event mousedown/mousemove/click "kompatibilitas" dari
+       sentuhan jari membuat `moved` selalu true, lalu listener
+       click di sini memanggil stopPropagation() dan membatalkan
+       tap ke tombol play/pause. Karena scroll native + tap native
+       sudah jalan baik di touch device (lihat CSS: overflow-x:auto
+       + -webkit-overflow-scrolling: touch), kita skip semua logic
+       drag-scroll manual ini kalau pointer-nya coarse (jari).
+       ============================================================ */
+    var list = document.getElementById('videoKebaikanList');
+    if (list) {
+        var isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
-    list.classList.add('is-draggable');
+        if (!isCoarsePointer) {
+            let isDown = false;
+            let startX = 0;
+            let scrollStart = 0;
+            let moved = false;
 
-    list.addEventListener('mousedown', function (e) {
-        isDown = true;
-        moved = false;
-        list.classList.add('is-dragging');
-        startX = e.pageX;
-        scrollStart = list.scrollLeft;
-    });
+            list.classList.add('is-draggable');
 
-    window.addEventListener('mouseup', function () {
-        isDown = false;
-        list.classList.remove('is-dragging');
-    });
+            list.addEventListener('mousedown', function (e) {
+                isDown = true;
+                moved = false;
+                list.classList.add('is-dragging');
+                startX = e.pageX;
+                scrollStart = list.scrollLeft;
+            });
 
-    window.addEventListener('mousemove', function (e) {
-        if (!isDown) return;
-        e.preventDefault();
-        const delta = e.pageX - startX;
-        if (Math.abs(delta) > 3) moved = true;
-        list.scrollLeft = scrollStart - delta;
-    });
+            window.addEventListener('mouseup', function () {
+                isDown = false;
+                list.classList.remove('is-dragging');
+            });
 
-    // Cegah link/video ke-klik kalau ternyata itu drag, bukan klik biasa.
-    list.addEventListener('click', function (e) {
-        if (moved) {
-            e.preventDefault();
-            e.stopPropagation();
+            window.addEventListener('mousemove', function (e) {
+                if (!isDown) return;
+                e.preventDefault();
+                const delta = e.pageX - startX;
+                if (Math.abs(delta) > 3) moved = true;
+                list.scrollLeft = scrollStart - delta;
+            });
+
+            // Cegah link/video ke-klik kalau ternyata itu drag, bukan klik biasa.
+            list.addEventListener('click', function (e) {
+                if (moved) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }, true);
+
+            // Roda mouse vertikal -> geser horizontal, hanya saat memang ada overflow.
+            list.addEventListener('wheel', function (e) {
+                if (list.scrollWidth <= list.clientWidth) return;
+                if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                    e.preventDefault();
+                    list.scrollLeft += e.deltaY;
+                }
+            }, { passive: false });
         }
-    }, true);
-
-    // Roda mouse vertikal -> geser horizontal, hanya saat memang ada overflow.
-    list.addEventListener('wheel', function (e) {
-        if (list.scrollWidth <= list.clientWidth) return;
-        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-            e.preventDefault();
-            list.scrollLeft += e.deltaY;
-        }
-    }, { passive: false });
+    }
 });
 </script>
 </body>

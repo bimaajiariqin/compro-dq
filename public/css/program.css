@@ -16,7 +16,7 @@
 
 .program-hero__inner {
   display: grid;
-  grid-template-columns: 0.85fr 1fr;
+  grid-template-columns: 1.05fr 1fr;
   align-items: center;
   gap: var(--space-9);
   width: 100%;
@@ -28,16 +28,16 @@
   justify-content: center;
   align-items: center;
   padding: var(--space-6) var(--space-2) var(--space-2) var(--space-7);
-  min-height: 480px;
+  min-height: 560px;
 }
 
 .program-hero__img {
   position: relative;
-  z-index: 1;
-  width: 70%;
-  max-width: 340px;
+  z-index: 3;
+  width: 100%;
+  max-width: 680px;
   height: auto;
-  max-height: 400px;
+  max-height: 720px;
   object-fit: contain;
   border-radius: var(--radius-lg);
 }
@@ -79,10 +79,9 @@
 }
 
 /* -------------------------------------------------------------------- */
-/* Section Title                                                        */
+/* Section Title (shared default — Berita keeps this)                   */
 /* -------------------------------------------------------------------- */
 
-.program-pokok .section-title,
 .program-berita .section-title {
   text-align: center;
   font-size: var(--fs-h2);
@@ -95,116 +94,167 @@
 }
 
 /* -------------------------------------------------------------------- */
-/* Program Pokok                                                        */
+/* Program Pokok — redesigned as a program index/listing                */
 /* -------------------------------------------------------------------- */
 
 .program-pokok {
-  background: var(--bg-soft);
-  padding: 48px 0;
+  background: var(--bg-white);
+  padding: 88px 0;
+}
+
+.program-pokok .section-title {
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-h2);
+  color: var(--text-dark);
+  margin: 0 0 var(--space-8);
+  position: relative;
+}
+
+.program-pokok .section-title::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 2px;
+  background: var(--text-brand);
+  margin: 18px auto 0;
 }
 
 .program-pokok__grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--card-gap);
+  display: flex;
+  flex-direction: column;
+  max-width: 1160px;
+  margin: 0 auto;
+  gap: 88px;
   counter-reset: pokok;
 }
 
 .program-pokok__card {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  padding: 30px 26px 10px;
-  background: var(--bg-white);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-lg);
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.05fr);
+  grid-template-rows: auto auto auto;
+  align-items: center;
+  column-gap: 64px;
   color: inherit;
-  text-decoration: none;
-  overflow: hidden;
-  counter-increment: pokok;
-  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
 }
 
-.program-pokok__card[href] {
-  cursor: pointer;
-}
-
-.program-pokok__card::after {
-  content: counter(pokok, decimal-leading-zero);
-  position: absolute;
-  top: 22px;
-  right: 22px;
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: var(--fw-semibold);
-  letter-spacing: 0.02em;
-  color: var(--border-soft);
-}
-
-.program-pokok__card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-soft);
-}
-
+/* Icon/media block — now a full-bleed photo card with the title
+   overlaid on top (matches the reference layout), instead of a
+   split box with a small 42%-width zoomed thumbnail. */
 .program-pokok__icon {
-  display: inline-flex;
+  grid-column: 2;
+  grid-row: 1 / 4;
+  position: relative;
+  isolation: isolate;
+  color: var(--text-brand);
+  background: linear-gradient(155deg, var(--bg-soft), var(--bg-white));
+  border-radius: 14px;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.program-pokok__icon img {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center;
+  border-radius: 0;
+}
+
+/* The source photos already carry their own title/branding baked into the
+   image itself, so we don't overlay a duplicate text label on top of them.
+   Cards without a photo also stay plain (no fallback text label). */
+.program-pokok__icon-title {
+  display: none;
+}
+
+.program-pokok__icon:not(:has(img)) {
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
-  margin-bottom: var(--space-5);
-  overflow: hidden;
 }
 
-.program-pokok__icon svg { width: 22px; height: 22px; }
-.program-pokok__icon img { width: 40px; height: 40px; object-fit: contain; }
+.program-pokok__content {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-content: center;
+}
 
 .program-pokok__title {
-  font-size: var(--fs-base);
-  font-weight: var(--fw-semibold);
+  grid-row: 1;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-bold);
   color: var(--text-dark);
-  margin: 0 0 8px;
-  padding-right: 34px;
+  margin: 0;
   overflow-wrap: break-word;
   word-break: break-word;
 }
 
 .program-pokok__desc {
+  grid-row: 2;
   font-size: var(--fs-sm);
-  line-height: 1.65;
+  line-height: 1.5;
   color: var(--text-muted);
-  margin: 0 0 var(--space-4);
+  margin: 8px 0 0;
+  max-width: 52ch;
   overflow-wrap: break-word;
   word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.program-pokok__link-hint {
-  margin-top: auto;
+.program-pokok__actions {
+  grid-row: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.program-pokok__btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  padding: 12px 26px;
+  border-radius: 999px;
   font-size: var(--fs-xs);
   font-weight: var(--fw-semibold);
+  text-decoration: none;
+  transition: background var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+  border: 1px solid var(--text-brand);
+}
+
+.program-pokok__btn--donasi {
+  background: transparent;
   color: var(--text-brand);
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: opacity var(--transition-base), transform var(--transition-base);
 }
 
-.program-pokok__card:hover .program-pokok__link-hint {
-  opacity: 1;
-  transform: translateX(0);
+.program-pokok__btn--donasi:hover {
+  background: var(--text-brand);
+  color: var(--bg-white);
 }
 
-.program-pokok__link-hint svg {
-  width: 14px;
-  height: 14px;
-  transition: transform var(--transition-base);
+.program-pokok__card:nth-child(even) .program-pokok__icon {
+  grid-column: 1;
 }
 
-.program-pokok__card:hover .program-pokok__link-hint svg {
-  transform: translate(2px, -2px);
+.program-pokok__card:nth-child(even) .program-pokok__content {
+  grid-column: 2;
 }
 
 .program-pokok__empty {
@@ -650,10 +700,21 @@
   .faq__list {
     max-width: 100%;
   }
+
+  .program-pokok__grid {
+    max-width: 900px;
+  }
+
+  .program-pokok__card {
+    column-gap: 40px;
+  }
+
+  .program-pokok__icon-title {
+    font-size: clamp(24px, 3vw, 32px);
+  }
 }
 
 @media (max-width: 1024px) {
-  .program-pokok__grid { grid-template-columns: repeat(2, 1fr); }
   .program-berita__track { grid-auto-columns: calc((100% - 20px) / 2); }
 }
 
@@ -710,6 +771,47 @@
   }
 
   .program-berita__dots { display: none; }
+
+  .program-pokok {
+    padding: 64px 0;
+  }
+
+  .program-pokok__grid {
+    gap: 56px;
+  }
+
+  .program-pokok__card {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    text-align: center;
+    row-gap: 24px;
+  }
+
+  .program-pokok__icon,
+  .program-pokok__card:nth-child(even) .program-pokok__icon {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    height: auto;
+  }
+
+  .program-pokok__content,
+  .program-pokok__card:nth-child(even) .program-pokok__content {
+    grid-column: 1;
+    grid-row: 2;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .program-pokok__desc {
+    justify-self: center;
+    max-width: 42ch;
+  }
+
+  .program-pokok__actions {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 640px) {
@@ -793,8 +895,27 @@
   .faq__item.is-open .faq__answer-inner {
     padding-bottom: 18px;
   }
-}
 
-@media (max-width: 560px) {
-  .program-pokok__grid { grid-template-columns: 1fr; }
+  .program-pokok {
+    padding: 48px 0;
+  }
+
+  .program-pokok .section-title {
+    font-size: var(--fs-h3);
+    margin-bottom: var(--space-6);
+  }
+
+  .program-pokok__icon {
+    height: auto;
+    padding: 0;
+  }
+
+  .program-pokok__icon-title {
+    font-size: clamp(20px, 6vw, 26px);
+    padding: 20px;
+  }
+
+  .program-pokok__btn {
+    padding: 10px 22px;
+  }
 }

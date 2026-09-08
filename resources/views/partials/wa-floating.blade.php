@@ -23,11 +23,17 @@
         align-items: center;
         justify-content: center;
         z-index: 999;
-        transition: transform 0.2s ease;
+        transition: transform 0.2s ease, opacity 0.25s ease, visibility 0.25s ease;
     }
 
     .wa-floating-btn:hover {
         transform: scale(1.05);
+    }
+
+    .wa-floating-btn.is-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
     }
 
     .wa-floating-icon {
@@ -50,3 +56,19 @@
         }
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const waBtn = document.querySelector('.wa-floating-btn');
+        const footer = document.getElementById('siteFooter');
+        if (!waBtn || !footer) return;
+
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                waBtn.classList.toggle('is-hidden', entry.isIntersecting);
+            });
+        }, { threshold: 0.05 });
+
+        observer.observe(footer);
+    });
+</script>
