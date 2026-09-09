@@ -63,8 +63,8 @@
 
 {{-- =====================================================================
      PROGRAM POKOK
-     $programPokok dikirim dari ProgramController::dakwah(), sudah
-     difilter where kategori_program = 'Dakwah' (tabel program_pokok).
+     $programPokok dikirim dari ProgramController::kemanusiaan(), sudah
+     difilter where kategori_program = 'Kemanusiaan' (tabel program_pokok).
      ===================================================================== --}}
 <section class="section program-pokok" id="program-pokok">
     <div class="container">
@@ -73,30 +73,40 @@
 
         <div class="program-pokok__grid">
             @forelse ($programPokok as $item)
-                <{{ $item->link ? 'a' : 'div' }}
-                    class="program-pokok__card @if(!$item->link) program-pokok__card--static @endif"
+                <div class="program-pokok__card">
+
+                    {{-- Panel foto + judul besar overlay. Kalau item punya link,
+                         seluruh panel foto ini yang jadi area klik-nya. --}}
                     @if ($item->link)
-                        href="{{ $item->link }}" target="_blank" rel="noopener"
-                    @endif
-                >
-                    @if ($item->icon)
-                        <span class="program-pokok__icon">
-                            <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
-                        </span>
+                        <a href="{{ $item->link }}" target="_blank" rel="noopener" class="program-pokok__icon">
+                            <span class="program-pokok__icon-title">{{ $item->judul }}</span>
+                            @if ($item->icon)
+                                <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
+                            @endif
+                        </a>
+                    @else
+                        <div class="program-pokok__icon">
+                            <span class="program-pokok__icon-title">{{ $item->judul }}</span>
+                            @if ($item->icon)
+                                <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->judul }}">
+                            @endif
+                        </div>
                     @endif
 
-                    <h3 class="program-pokok__title">{{ $item->judul }}</h3>
-                    <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
+                    {{-- Judul, deskripsi, dan tombol donasi --}}
+                    <div class="program-pokok__content">
+                        <h3 class="program-pokok__title">{{ $item->judul }}</h3>
+                        <p class="program-pokok__desc">{{ $item->deskripsi }}</p>
+                        <div class="program-pokok__actions">
+                            <a href="{{ $item->link ?: route('rekening.index') }}"
+                               @if ($item->link) target="_blank" rel="noopener" @endif
+                               class="program-pokok__btn program-pokok__btn--donasi">
+                                Donasi Sekarang
+                            </a>
+                        </div>
+                    </div>
 
-                    @if ($item->link)
-                        <span class="program-pokok__link-hint">
-                            Selengkapnya
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
-                    @endif
-                </{{ $item->link ? 'a' : 'div' }}>
+                </div>
             @empty
                 <p class="program-pokok__empty">Belum ada program pokok untuk kategori ini.</p>
             @endforelse

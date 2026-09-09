@@ -133,7 +133,7 @@
 .program-pokok__card {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.05fr);
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto;
   align-items: center;
   column-gap: 64px;
@@ -205,8 +205,8 @@
 
 .program-pokok__desc {
   grid-row: 2;
-  font-size: var(--fs-sm);
-  line-height: 1.5;
+  font-size: var(--fs-base);
+  line-height: 1.6;
   color: var(--text-muted);
   margin: 8px 0 0;
   max-width: 52ch;
