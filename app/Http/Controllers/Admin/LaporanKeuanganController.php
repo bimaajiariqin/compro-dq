@@ -21,12 +21,12 @@ class LaporanKeuanganController extends Controller
     {
         $laporan = LaporanKeuangan::orderByDesc('tahun')->paginate(10);
 
-        return view('Admin.laporan-keuangan.index', compact('laporan'));
+        return view('admin.laporan-keuangan.index', compact('laporan'));
     }
 
     public function create(): View
     {
-        return view('Admin.laporan-keuangan.create');
+        return view('admin.laporan-keuangan.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -51,7 +51,7 @@ class LaporanKeuanganController extends Controller
 
     public function edit(LaporanKeuangan $laporan_keuangan): View
     {
-        return view('Admin.laporan-keuangan.edit', ['laporan' => $laporan_keuangan]);
+        return view('admin.laporan-keuangan.edit', ['laporan' => $laporan_keuangan]);
     }
 
     public function update(Request $request, LaporanKeuangan $laporan_keuangan): RedirectResponse

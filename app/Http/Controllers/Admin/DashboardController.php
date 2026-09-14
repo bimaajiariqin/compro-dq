@@ -24,6 +24,6 @@ class DashboardController extends Controller
 
         $beritaTerbaru = Berita::orderByDesc('tanggal_terbit')->take(5)->get();
 
-        return view('Admin.dashboard.index', compact('stats', 'beritaTerbaru'));
+        return view('admin.dashboard.index', compact('stats', 'beritaTerbaru'));
     }
 }

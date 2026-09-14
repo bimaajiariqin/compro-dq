@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/berita-mobile.css') }}">
 </head>
 <body>
 
@@ -34,6 +35,10 @@
             @endforeach
         </div>
 
+        {{-- ============================================================
+             GRID DESKTOP (tetap seperti sebelumnya, otomatis disembunyikan
+             lewat CSS di berita-mobile.css saat layar <=640px)
+             ============================================================ --}}
         <div class="berita-grid reveal" id="beritaGrid" data-page-size="16">
             @forelse ($berita as $item)
                 <div class="berita-card is-visible"
@@ -67,11 +72,47 @@
 
         <div class="berita-pagination" id="beritaPagination"></div>
 
+        {{-- ============================================================
+             LIST MOBILE — editorial minimalis, satu kolom, tanpa pagination.
+             Independen total dari .berita-card / .berita-grid desktop.
+             ============================================================ --}}
+        <div class="berita-mobile-list" id="beritaMobileList">
+            @forelse ($berita as $item)
+                <a href="{{ route('berita.show', $item) }}"
+                   class="berita-mobile-item {{ $item->thumbnail ? 'has-thumb' : '' }}"
+                   data-kategori="{{ strtolower($item->kategori) }}"
+                   data-program="{{ strtolower($item->filter_program) }}">
+
+                    @if ($item->thumbnail)
+                        <span class="berita-mobile-thumb-wrap">
+                            <img src="{{ asset('storage/' . $item->thumbnail) }}" alt="{{ $item->judul }}" class="berita-mobile-thumb" loading="lazy">
+                        </span>
+                    @endif
+
+                    <span class="berita-mobile-content">
+                        <span class="berita-mobile-category">{{ $item->filter_program }}</span>
+                        <span class="berita-mobile-title">{{ $item->judul }}</span>
+                        <span class="berita-mobile-meta">{{ $item->nama_penerbit }} · {{ $item->tanggal_terbit->translatedFormat('d M Y') }}</span>
+                    </span>
+
+                    <span class="berita-mobile-arrow" aria-hidden="true"></span>
+                </a>
+            @empty
+            @endforelse
+        </div>
+
+        @if ($berita->isNotEmpty())
+            <p class="berita-mobile-empty" id="beritaMobileEmpty" style="display: none;">Tidak ada berita untuk kategori ini.</p>
+        @else
+            <p class="berita-mobile-empty">Belum ada berita yang dipublikasikan.</p>
+        @endif
+
     </div>
 </section>
 
 @include('partials.footer')
 
 <script src="{{ asset('js/berita.js') }}"></script>
+<script src="{{ asset('js/berita-mobile.js') }}"></script>
 </body>
 </html>

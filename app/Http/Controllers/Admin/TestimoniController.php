@@ -22,12 +22,12 @@ class TestimoniController extends Controller
     {
         $testimoni = Testimoni::orderByDesc('created_at')->paginate(10);
 
-        return view('Admin.testimoni.index', compact('testimoni'));
+        return view('admin.testimoni.index', compact('testimoni'));
     }
 
     public function create(): View
     {
-        return view('Admin.testimoni.create');
+        return view('admin.testimoni.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -52,7 +52,7 @@ class TestimoniController extends Controller
 
     public function edit(Testimoni $testimoni): View
     {
-        return view('Admin.testimoni.edit', compact('testimoni'));
+        return view('admin.testimoni.edit', compact('testimoni'));
     }
 
     public function update(Request $request, Testimoni $testimoni): RedirectResponse

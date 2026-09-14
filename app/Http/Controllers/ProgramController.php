@@ -33,7 +33,7 @@ class ProgramController extends Controller
             ->terurut()
             ->get();
 
-        return view('Program.pendidikan', [
+        return view('program.pendidikan', [
             'berita' => $berita,
             'programPokok' => $programPokok,
             'ceritaPenerimaManfaat' => $ceritaPenerimaManfaat,
@@ -64,7 +64,7 @@ class ProgramController extends Controller
             ->terurut()
             ->get();
 
-        return view('Program.ekonomi', [
+        return view('program.ekonomi', [
             'berita' => $berita,
             'programPokok' => $programPokok,
             'ceritaPenerimaManfaat' => $ceritaPenerimaManfaat,
@@ -95,7 +95,7 @@ class ProgramController extends Controller
             ->terurut()
             ->get();
 
-        return view('Program.dakwah', [
+        return view('program.dakwah', [
             'berita' => $berita,
             'programPokok' => $programPokok,
             'ceritaPenerimaManfaat' => $ceritaPenerimaManfaat,
@@ -126,7 +126,7 @@ class ProgramController extends Controller
             ->terurut()
             ->get();
 
-        return view('Program.kemanusiaan', [
+        return view('program.kemanusiaan', [
             'berita' => $berita,
             'programPokok' => $programPokok,
             'ceritaPenerimaManfaat' => $ceritaPenerimaManfaat,

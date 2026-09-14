@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ asset('css/berita.css') }}">
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
     <link rel="stylesheet" href="{{ asset('css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
@@ -31,21 +32,40 @@
                     {{ $heroSetting->eyebrow_id ?? '' }}
                 </span>
             </p>
-            <h1 class="hero-title" data-id="{{ $heroSetting->judul_id ?? '' }}" data-en="{{ $heroSetting->judul_en ?? '' }}">
+
+            <h1 class="hero-title"
+                data-id="{{ $heroSetting->judul_id ?? '' }}"
+                data-en="{{ $heroSetting->judul_en ?? '' }}">
                 {{ $heroSetting->judul_id ?? '' }}
             </h1>
-            <p class="hero-subtitle" data-id="{{ $heroSetting->subjudul_id ?? '' }}" data-en="{{ $heroSetting->subjudul_en ?? '' }}">
+
+            <p class="hero-subtitle"
+               data-id="{{ $heroSetting->subjudul_id ?? '' }}"
+               data-en="{{ $heroSetting->subjudul_en ?? '' }}">
                 {{ $heroSetting->subjudul_id ?? '' }}
             </p>
         </div>
 
         <div class="hero-photo-wrap reveal">
-            <img src="{{ $heroSetting && $heroSetting->foto ? asset('storage/' . $heroSetting->foto) : asset('assets/hero.png') }}"
-                 alt="Relawan Dompet Al-Qur'an Indonesia" class="hero-photo">
+            <img
+                src="{{ $heroSetting && $heroSetting->foto ? asset('storage/' . $heroSetting->foto) : asset('assets/hero.png') }}"
+                alt="Relawan Dompet Al-Qur'an Indonesia"
+                class="hero-photo"
+                fetchpriority="high"
+                decoding="async"
+            >
 
-            <svg class="hero-sparkle hero-sparkle-1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3z"/></svg>
-            <svg class="hero-sparkle hero-sparkle-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3z"/></svg>
-            <svg class="hero-sparkle hero-sparkle-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3z"/></svg>
+            <svg class="hero-sparkle hero-sparkle-1" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3z"/>
+            </svg>
+
+            <svg class="hero-sparkle hero-sparkle-2" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3z"/>
+            </svg>
+
+            <svg class="hero-sparkle hero-sparkle-3" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3z"/>
+            </svg>
         </div>
 
         <div class="hero-stats reveal">
@@ -70,12 +90,19 @@
     <div class="container">
         <div class="about reveal">
             <div class="about-image">
-                <img src="{{ asset('assets/about(20).png') }}" alt="Kegiatan Dompet Al-Qur'an Indonesia">
+                <img
+                    src="{{ asset('assets/about(20).png') }}"
+                    alt="Kegiatan Dompet Al-Qur'an Indonesia"
+                    loading="lazy"
+                    decoding="async"
+                >
             </div>
+
             <div class="about-text">
                 <h2 class="section-title">
                     Kenapa Harus <span>Dompet Al-Qur'an Indonesia?</span>
                 </h2>
+
                 <p>
                     Di tengah banyaknya pilihan, kami percaya bahwa menunaikan amanah kebaikan harus
                     dilakukan dengan penuh tanggung jawab. Karena itu, Dompet Al-Qur'an Indonesia hadir
@@ -94,15 +121,31 @@
 <section class="section" id="iklan">
     <div class="container">
         <div class="text-center reveal" style="margin-bottom: 32px;">
-            <h2 class="section-title">Yuk, Jadi <span>Orang Baik</span> Hari Ini!</h2>
-            <p class="section-subtitle mx-auto text-center">Temukan berbagai campaign terpercaya dan salurkan donasi dengan mudah, aman, dan penuh makna.</p>
+            <h2 class="section-title">
+                Yuk, Jadi <span>Orang Baik</span> Hari Ini!
+            </h2>
+
+            <p class="section-subtitle mx-auto text-center">
+                Temukan berbagai campaign terpercaya dan salurkan donasi dengan mudah, aman, dan penuh makna.
+            </p>
         </div>
 
         <div class="iklan-carousel reveal">
             <div class="iklan-track" id="iklanTrack">
                 @foreach ($iklan as $item)
-                    <a href="{{ $item->link }}" target="_blank" rel="noopener noreferrer" class="iklan-slide">
-                        <img src="{{ asset('storage/' . $item->thumbnail) }}" alt="Campaign Dompet Al-Qur'an Indonesia" class="iklan-img" loading="lazy">
+                    <a
+                        href="{{ $item->link }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="iklan-slide"
+                    >
+                        <img
+                            src="{{ asset('storage/' . $item->thumbnail) }}"
+                            alt="Campaign Dompet Al-Qur'an Indonesia"
+                            class="iklan-img"
+                            loading="lazy"
+                            decoding="async"
+                        >
                     </a>
                 @endforeach
             </div>
@@ -116,39 +159,98 @@
      ========================================================== --}}
 <section class="section" id="layanan">
     <div class="container">
-        <h2 class="section-title">Layanan <span>Kebaikan Kami</span></h2>
+        <h2 class="section-title">
+            Layanan <span>Kebaikan Kami</span>
+        </h2>
 
         <div class="layanan-grid reveal">
-            <a href="https://api.whatsapp.com/send/?phone=6281385002300&text&type=phone_number&app_absent=0" class="layanan-card">
+            <a
+                href="https://api.whatsapp.com/send/?phone=6281385002300&text&type=phone_number&app_absent=0"
+                class="layanan-card"
+            >
                 <span class="layanan-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/>
+                    </svg>
                 </span>
+
                 <h3>Konsultasi ZISWAF</h3>
-                <p>Punya pertanyaan tentang zakat, infak, sedekah, atau wakaf? Tim kami siap membantu hingga Anda paham.</p>
+
+                <p>
+                    Punya pertanyaan tentang zakat, infak, sedekah, atau wakaf?
+                    Tim kami siap membantu hingga Anda paham.
+                </p>
             </a>
 
-            <a href="https://orangbaik.id" class="layanan-card is-highlight">
+            <a
+                href="https://orangbaik.id"
+                class="layanan-card is-highlight"
+            >
                 <span class="layanan-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.6c0-2.6-2.1-4.6-4.6-4.6-1.7 0-3.2.9-4.2 2.3-1-1.4-2.5-2.3-4.2-2.3-2.5 0-4.6 2-4.6 4.6 0 4.8 8.8 10.4 8.8 10.4s8.8-5.6 8.8-10.4Z"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.8 8.6c0-2.6-2.1-4.6-4.6-4.6-1.7 0-3.2.9-4.2 2.3-1-1.4-2.5-2.3-4.2-2.3-2.5 0-4.6 2-4.6 4.6 0 4.8 8.8 10.4 8.8 10.4s8.8-5.6 8.8-10.4Z"/>
+                    </svg>
                 </span>
+
                 <h3>Donasi Online</h3>
-                <p>Salurkan donasi Anda kapan pun, di mana pun. Pilih program, transfer dengan mudah, kebaikan pun tersampaikan.</p>
+
+                <p>
+                    Salurkan donasi Anda kapan pun, di mana pun. Pilih program,
+                    transfer dengan mudah, kebaikan pun tersampaikan.
+                </p>
             </a>
 
-            <a href="https://orangbaik.id/kalkulator-banget/" class="layanan-card">
+            <a
+                href="https://orangbaik.id/kalkulator-banget/"
+                class="layanan-card"
+            >
                 <span class="layanan-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="18" x2="16" y2="14"/><circle cx="8.5" cy="10.5" r="0.6" fill="currentColor" stroke="none"/><circle cx="12" cy="10.5" r="0.6" fill="currentColor" stroke="none"/><circle cx="8.5" cy="14.5" r="0.6" fill="currentColor" stroke="none"/><circle cx="12" cy="14.5" r="0.6" fill="currentColor" stroke="none"/><circle cx="8.5" cy="18" r="0.6" fill="currentColor" stroke="none"/><circle cx="12" cy="18" r="0.6" fill="currentColor" stroke="none"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="2" width="16" height="20" rx="2"/>
+                        <line x1="8" y1="6" x2="16" y2="6"/>
+                        <line x1="16" y1="18" x2="16" y2="14"/>
+                        <circle cx="8.5" cy="10.5" r="0.6" fill="currentColor" stroke="none"/>
+                        <circle cx="12" cy="10.5" r="0.6" fill="currentColor" stroke="none"/>
+                        <circle cx="8.5" cy="14.5" r="0.6" fill="currentColor" stroke="none"/>
+                        <circle cx="12" cy="14.5" r="0.6" fill="currentColor" stroke="none"/>
+                        <circle cx="8.5" cy="18" r="0.6" fill="currentColor" stroke="none"/>
+                        <circle cx="12" cy="18" r="0.6" fill="currentColor" stroke="none"/>
+                    </svg>
                 </span>
+
                 <h3>Kalkulator Zakat</h3>
-                <p>Hitung kewajiban zakat Anda secara mudah dan cepat. Masukkan datanya, dan kami bantu menghitungnya secara akurat.</p>
+
+                <p>
+                    Hitung kewajiban zakat Anda secara mudah dan cepat.
+                    Masukkan datanya, dan kami bantu menghitungnya secara akurat.
+                </p>
             </a>
 
-            <a href="https://fliphtml5.com/bookcase/ytxkr/" class="layanan-card is-highlight">
+            <a
+                href="https://fliphtml5.com/bookcase/ytxkr/"
+                class="layanan-card is-highlight"
+            >
                 <span class="layanan-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                    </svg>
                 </span>
+
                 <h3>Inspirasi Kebaikan</h3>
-                <p>Ikuti cerita inspiratif serta perkembangan program-program Dompet Al-Qur'an Indonesia melalui majalah digital kami.</p>
+
+                <p>
+                    Ikuti cerita inspiratif serta perkembangan program-program
+                    Dompet Al-Qur'an Indonesia melalui majalah digital kami.
+                </p>
             </a>
         </div>
     </div>
@@ -160,25 +262,63 @@
 <section class="section" id="testimoni">
     <div class="container">
         <div class="testimoni-card reveal">
-            <h2 class="section-title testimoni-title">Apa <span>Kata Mereka?</span></h2>
+            <h2 class="section-title testimoni-title">
+                Apa <span>Kata Mereka?</span>
+            </h2>
 
             @if ($testimoni->isEmpty())
-                <p class="testimoni-empty">Belum ada testimoni yang ditambahkan.</p>
+                <p class="testimoni-empty">
+                    Belum ada testimoni yang ditambahkan.
+                </p>
             @else
-                <button type="button" class="testimoni-arrow testimoni-arrow-prev" id="testimoniPrev" aria-label="Sebelumnya">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <button
+                    type="button"
+                    class="testimoni-arrow testimoni-arrow-prev"
+                    id="testimoniPrev"
+                    aria-label="Sebelumnya"
+                >
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m15 18-6-6 6-6"/>
+                    </svg>
                 </button>
-                <button type="button" class="testimoni-arrow testimoni-arrow-next" id="testimoniNext" aria-label="Berikutnya">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+
+                <button
+                    type="button"
+                    class="testimoni-arrow testimoni-arrow-next"
+                    id="testimoniNext"
+                    aria-label="Berikutnya"
+                >
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m9 18 6-6-6-6"/>
+                    </svg>
                 </button>
 
                 <div class="testimoni-track">
                     @foreach ($testimoni as $item)
                         <div class="testimoni-slide">
-                            <p class="testimoni-quote">&ldquo;{{ $item->isi_testimoni }}&rdquo;</p>
-                            <img src="{{ asset('storage/' . $item->foto_profil) }}" alt="{{ $item->nama }}" class="testimoni-avatar">
-                            <p class="testimoni-name">{{ $item->nama }}</p>
-                            <p class="testimoni-role">{{ $item->jabatan }}</p>
+                            <p class="testimoni-quote">
+                                &ldquo;{{ $item->isi_testimoni }}&rdquo;
+                            </p>
+
+                            <img
+                                src="{{ asset('storage/' . $item->foto_profil) }}"
+                                alt="{{ $item->nama }}"
+                                class="testimoni-avatar"
+                                loading="lazy"
+                                decoding="async"
+                            >
+
+                            <p class="testimoni-name">
+                                {{ $item->nama }}
+                            </p>
+
+                            <p class="testimoni-role">
+                                {{ $item->jabatan }}
+                            </p>
                         </div>
                     @endforeach
                 </div>
@@ -193,31 +333,66 @@
 <section class="section">
     <div class="container">
         <div class="text-center reveal" style="margin-bottom: 32px;">
-            <h2 class="section-title">Mitra <span>Kebaikan Kami</span></h2>
-            <p class="section-subtitle mx-auto text-center">Kolaborasi kebaikan, bersinergi dalam menebar manfaat</p>
+            <h2 class="section-title">
+                Mitra <span>Kebaikan Kami</span>
+            </h2>
+
+            <p class="section-subtitle mx-auto text-center">
+                Kolaborasi kebaikan, bersinergi dalam menebar manfaat
+            </p>
         </div>
     </div>
 
     <div class="mitra-marquee reveal">
         @php
             // Ambil data mitra dari database, urut sesuai kolom `urutan`
-            $mitraList = \App\Models\MitraKebaikan::orderBy('urutan')->orderBy('id')->get();
+            $mitraList = \App\Models\MitraKebaikan::orderBy('urutan')
+                ->orderBy('id')
+                ->get();
         @endphp
+
         <div class="mitra-track">
+
             {{-- Daftar dirender dua kali berurutan supaya animasi scroll terlihat menyambung tanpa putus --}}
             @for ($i = 0; $i < 2; $i++)
+
                 @foreach ($mitraList as $mitra)
+
                     @if ($mitra->link)
+
                         {{-- Mitra dengan link: logo bisa diklik --}}
-                        <a href="{{ $mitra->link }}" target="_blank" rel="noopener noreferrer" class="mitra-logo-link">
-                            <img src="{{ Storage::url($mitra->logo) }}" alt="{{ $mitra->nama_mitra ?? 'Logo mitra' }}" class="mitra-logo">
+                        <a
+                            href="{{ $mitra->link }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="mitra-logo-link"
+                        >
+                            <img
+                                src="{{ Storage::url($mitra->logo) }}"
+                                alt="{{ $mitra->nama_mitra ?? 'Logo mitra' }}"
+                                class="mitra-logo"
+                                loading="lazy"
+                                decoding="async"
+                            >
                         </a>
+
                     @else
+
                         {{-- Mitra tanpa link: tampil sebagai gambar biasa --}}
-                        <img src="{{ Storage::url($mitra->logo) }}" alt="{{ $mitra->nama_mitra ?? 'Logo mitra' }}" class="mitra-logo">
+                        <img
+                            src="{{ Storage::url($mitra->logo) }}"
+                            alt="{{ $mitra->nama_mitra ?? 'Logo mitra' }}"
+                            class="mitra-logo"
+                            loading="lazy"
+                            decoding="async"
+                        >
+
                     @endif
+
                 @endforeach
+
             @endfor
+
         </div>
     </div>
 </section>
@@ -227,7 +402,11 @@
      ========================================================== --}}
 <section class="section-soft" id="berita">
     <div class="container">
-        <h2 class="section-title"><span>Berita & Informasi</span> Terkini</h2>
+
+        <h2 class="section-title">
+            <span>Berita & Informasi</span> Terkini
+        </h2>
+
         <p class="section-subtitle">
             Ikuti berbagai berita dan informasi terkini mengenai program, penyaluran, kegiatan, serta
             kisah inspiratif dari Dompet Al-Qur'an Indonesia. Kami berkomitmen menghadirkan informasi
@@ -235,47 +414,119 @@
         </p>
 
         <div class="berita-tabs reveal">
-            <button type="button" class="berita-tab is-active" data-filter="semua">Semua</button>
+            <button
+                type="button"
+                class="berita-tab is-active"
+                data-filter="semua"
+            >
+                Semua
+            </button>
+
             @foreach ($kategoriOptions as $kategori)
-                <button type="button" class="berita-tab" data-filter="{{ strtolower($kategori) }}">{{ $kategori }}</button>
+                <button
+                    type="button"
+                    class="berita-tab"
+                    data-filter="{{ strtolower($kategori) }}"
+                >
+                    {{ $kategori }}
+                </button>
             @endforeach
+
             @foreach ($filterProgramOptions as $program)
-                <button type="button" class="berita-tab" data-filter="{{ strtolower($program) }}">{{ $program }}</button>
+                <button
+                    type="button"
+                    class="berita-tab"
+                    data-filter="{{ strtolower($program) }}"
+                >
+                    {{ $program }}
+                </button>
             @endforeach
         </div>
 
         <div class="berita-grid reveal" id="beritaGrid">
+
             @forelse ($berita as $item)
-                <div class="berita-card is-visible"
-                     data-kategori="{{ strtolower($item->kategori) }}"
-                     data-program="{{ strtolower($item->filter_program) }}">
+
+                <div
+                    class="berita-card is-visible"
+                    data-kategori="{{ strtolower($item->kategori) }}"
+                    data-program="{{ strtolower($item->filter_program) }}"
+                >
+
                     <a href="{{ route('berita.show', $item) }}">
+
                         @if ($item->thumbnail)
-                            <img src="{{ asset('storage/' . $item->thumbnail) }}" alt="{{ $item->judul }}" class="berita-thumb">
+
+                            <img
+                                src="{{ asset('storage/' . $item->thumbnail) }}"
+                                alt="{{ $item->judul }}"
+                                class="berita-thumb"
+                                loading="lazy"
+                                decoding="async"
+                            >
+
                         @else
+
                             <div class="berita-thumb"></div>
+
                         @endif
+
                     </a>
+
                     <div class="berita-body">
-                        <h3 class="berita-title"><a href="{{ route('berita.show', $item) }}">{{ $item->judul }}</a></h3>
+
+                        <h3 class="berita-title">
+                            <a href="{{ route('berita.show', $item) }}">
+                                {{ $item->judul }}
+                            </a>
+                        </h3>
+
                         <div class="berita-meta">
+
                             <span class="publisher">
-                                <span>{{ $item->nama_penerbit }} · {{ $item->tanggal_terbit->translatedFormat('d M Y') }}</span>
+                                <span>
+                                    {{ $item->nama_penerbit }} ·
+                                    {{ $item->tanggal_terbit->translatedFormat('d M Y') }}
+                                </span>
                             </span>
-                            <span class="berita-badge">{{ $item->filter_program }}</span>
+
+                            <span class="berita-badge">
+                                {{ $item->filter_program }}
+                            </span>
+
                         </div>
+
                     </div>
+
                 </div>
+
             @empty
-                <p class="berita-empty">Belum ada berita yang dipublikasikan.</p>
+
+                <p class="berita-empty">
+                    Belum ada berita yang dipublikasikan.
+                </p>
+
             @endforelse
 
             @if ($berita->isNotEmpty())
-                <p class="berita-empty" id="beritaEmpty" style="display: none;">Tidak ada berita untuk kategori ini.</p>
+
+                <p
+                    class="berita-empty"
+                    id="beritaEmpty"
+                    style="display: none;"
+                >
+                    Tidak ada berita untuk kategori ini.
+                </p>
+
             @endif
+
         </div>
 
-        <div class="berita-pagination" id="beritaPagination"></div>
+        <div
+            class="berita-pagination"
+            id="beritaPagination"
+        ></div>
+
     </div>
 </section>
 
@@ -283,123 +534,313 @@
      VIDEO KEBAIKAN
      ========================================================== --}}
 @if ($videoKebaikan->isNotEmpty())
+
 <section class="section section-blue" id="video-kebaikan">
+
     <div class="container">
+
         <div class="video-kebaikan-grid reveal">
+
             <div class="video-kebaikan-text">
-                <h2 class="video-kebaikan-title"> Cerita Kebaikan yang <span>Memberi Arti</span></h2>
-                <p>Lihat lebih dekat berbagai aksi dan program kebaikan yang kami hadirkan untuk membantu masyarakat yang membutuhkan. 
-                    Setiap langkah adalah wujud kepedulian, setiap bantuan menjadi harapan, dan setiap kontribusi membawa manfaat bagi 
-                    sesama. Ikuti dokumentasi perjalanan kebaikan kami dan temukan cerita di balik setiap program yang dijalankan 
-                    langsung di channel YouTube {{ $videoKebaikan->first()->channel_name }}.</p>
+
+                <h2 class="video-kebaikan-title">
+                    Cerita Kebaikan yang <span>Memberi Arti</span>
+                </h2>
+
+                <p>
+                    Lihat lebih dekat berbagai aksi dan program kebaikan yang kami hadirkan
+                    untuk membantu masyarakat yang membutuhkan.
+                    Setiap langkah adalah wujud kepedulian, setiap bantuan menjadi harapan,
+                    dan setiap kontribusi membawa manfaat bagi sesama.
+                    Ikuti dokumentasi perjalanan kebaikan kami dan temukan cerita di balik
+                    setiap program yang dijalankan langsung di channel YouTube
+                    {{ $videoKebaikan->first()->channel_name }}.
+                </p>
+
             </div>
 
             <div class="video-kebaikan-media">
-                @php $featured = $videoKebaikan->first(); @endphp
 
-                <div class="video-featured" data-video-id="{{ $featured->video_id }}">
-                    <div class="video-frame video-frame-featured" style="background-image:url('{{ $featured->thumbnail_url }}')">
+                @php
+                    $featured = $videoKebaikan->first();
+                @endphp
+
+                <div
+                    class="video-featured"
+                    data-video-id="{{ $featured->video_id }}"
+                >
+
+                    <div
+                        class="video-frame video-frame-featured"
+                        style="background-image:url('{{ $featured->thumbnail_url }}')"
+                    >
+
                         <div class="video-featured-top">
+
                             <div class="video-featured-channel">
+
                                 <span class="video-channel-avatar">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.6-.46-5.32a2.9 2.9 0 0 0-2-2C18.88 4.2 12 4.2 12 4.2s-6.88 0-8.54.48a2.9 2.9 0 0 0-2 2C1 8.4 1 12 1 12s0 3.6.46 5.32a2.9 2.9 0 0 0 2 2C5.12 19.8 12 19.8 12 19.8s6.88 0 8.54-.48a2.9 2.9 0 0 0 2-2C23 15.6 23 12 23 12z"/><path fill="#fff" d="M9.75 15.5V8.5L15.75 12z"/></svg>
+
+                                    <svg width="16" height="16" viewBox="0 0 24 24"
+                                         fill="currentColor">
+
+                                        <path d="M23 12s0-3.6-.46-5.32a2.9 2.9 0 0 0-2-2C18.88 4.2 12 4.2 12 4.2s-6.88 0-8.54.48a2.9 2.9 0 0 0-2 2C1 8.4 1 12 1 12s0 3.6.46 5.32a2.9 2.9 0 0 0 2 2C5.12 19.8 12 19.8 12 19.8s6.88 0 8.54-.48a2.9 2.9 0 0 0 2-2C23 15.6 23 12 23 12z"/>
+
+                                        <path
+                                            fill="#fff"
+                                            d="M9.75 15.5V8.5L15.75 12z"
+                                        />
+
+                                    </svg>
+
                                 </span>
+
                                 <span>
-                                    <span class="video-featured-title">{{ $featured->title }}</span>
-                                    <span class="video-featured-channel-name">{{ $featured->channel_name }}</span>
+
+                                    <span class="video-featured-title">
+                                        {{ $featured->title }}
+                                    </span>
+
+                                    <span class="video-featured-channel-name">
+                                        {{ $featured->channel_name }}
+                                    </span>
+
                                 </span>
+
                             </div>
 
-                            <a href="https://www.youtube.com/watch?v={{ $featured->video_id }}" target="_blank" rel="noopener noreferrer" class="video-youtube-badge">
+                            <a
+                                href="https://www.youtube.com/watch?v={{ $featured->video_id }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="video-youtube-badge"
+                            >
                                 Tonton di YouTube
                             </a>
+
                         </div>
 
-                        <button type="button" class="video-play-btn" aria-label="Putar video">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+                        <button
+                            type="button"
+                            class="video-play-btn"
+                            aria-label="Putar video"
+                        >
+                            <svg
+                                width="22"
+                                height="22"
+                                viewBox="0 0 24 24"
+                                fill="#fff"
+                            >
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
                         </button>
+
                     </div>
+
                 </div>
 
                 @if ($videoKebaikan->count() > 1)
+
                 <div class="video-kebaikan-slider">
-                    <div class="video-kebaikan-list" id="videoKebaikanList">
+
+                    <div
+                        class="video-kebaikan-list"
+                        id="videoKebaikanList"
+                    >
+
                         @foreach ($videoKebaikan->skip(1) as $video)
-                            <div class="video-thumb-card" data-video-id="{{ $video->video_id }}">
-                                <div class="video-frame video-frame-thumb" style="background-image:url('{{ $video->thumbnail_url }}')">
-                                    <button type="button" class="video-play-btn video-play-btn-sm" aria-label="Putar video">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+
+                            <div
+                                class="video-thumb-card"
+                                data-video-id="{{ $video->video_id }}"
+                            >
+
+                                <div
+                                    class="video-frame video-frame-thumb"
+                                    style="background-image:url('{{ $video->thumbnail_url }}')"
+                                >
+
+                                    <button
+                                        type="button"
+                                        class="video-play-btn video-play-btn-sm"
+                                        aria-label="Putar video"
+                                    >
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="#fff"
+                                        >
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
                                     </button>
+
                                 </div>
-                                <p class="video-thumb-title">{{ $video->title }}</p>
+
+                                <p class="video-thumb-title">
+                                    {{ $video->title }}
+                                </p>
+
                             </div>
+
                         @endforeach
+
                     </div>
+
                 </div>
+
                 @endif
+
             </div>
+
         </div>
+
     </div>
+
 </section>
+
 @endif
 
 {{-- ==========================================================
      CTA
      ========================================================== --}}
 <section class="section" id="cta">
+
     <div class="container cta-container">
+
         <div class="cta-photo">
-            <img src="{{ asset('assets/jk (1).png') }}" alt="Bersama Dompet Al-Qur'an Indonesia" class="cta-photo-img">
+
+            <img
+                src="{{ asset('assets/jk (1).png') }}"
+                alt="Bersama Dompet Al-Qur'an Indonesia"
+                class="cta-photo-img"
+                loading="lazy"
+                decoding="async"
+            >
+
         </div>
 
         <div class="cta-content">
-            <div class="cta-top">
-                <h3 class="cta-title">Siap Jadi<br><span>#JembatanKebaikan?</span></h3>
 
-                <a href="#" class="btn btn-primary cta-btn">
+            <div class="cta-top">
+
+                <h3 class="cta-title">
+                    Siap Jadi<br>
+                    <span>#JembatanKebaikan?</span>
+                </h3>
+
+                <a
+                    href="#"
+                    class="btn btn-primary cta-btn"
+                >
                     Gabung Sekarang
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+
+                    <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M5 12h14"/>
+                        <path d="m12 5 7 7-7 7"/>
+                    </svg>
+
                 </a>
+
             </div>
 
-            <p class="cta-text">Yuk, gabung jadi penghubung kebaikan bersama relawan kebaikan lainnya!</p>
+            <p class="cta-text">
+                Yuk, gabung jadi penghubung kebaikan bersama relawan kebaikan lainnya!
+            </p>
+
         </div>
+
     </div>
+
 </section>
 
 {{-- ==========================================================
      QR DONASI
      ========================================================== --}}
 <section class="section" id="qr-donasi">
+
     <div class="container">
+
         <div class="qr-donasi-card">
-            <div class="qr-donasi-pattern" aria-hidden="true"></div>
+
+            <div
+                class="qr-donasi-pattern"
+                aria-hidden="true"
+            ></div>
 
             <div class="qr-donasi-inner">
+
                 <div class="qr-donasi-scan">
+
                     <div class="qr-donasi-frame">
-                        <span class="qr-scanline" aria-hidden="true"></span>
-                        <img src="{{ asset('assets/qris.png') }}" alt="QRIS Donasi Dompet Al-Qur'an Indonesia" class="qr-donasi-img">
+
+                        <span
+                            class="qr-scanline"
+                            aria-hidden="true"
+                        ></span>
+
+                        <img
+                            src="{{ asset('assets/qris.png') }}"
+                            alt="QRIS Donasi Dompet Al-Qur'an Indonesia"
+                            class="qr-donasi-img"
+                            loading="lazy"
+                            decoding="async"
+                        >
+
                     </div>
+
                     <div class="qr-donasi-trust">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
-                        <span>QRIS resmi, diawasi Bank Indonesia</span>
+
+                        <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+                            <path d="m9 12 2 2 4-4"/>
+                        </svg>
+
+                        <span>
+                            QRIS resmi, diawasi Bank Indonesia
+                        </span>
+
                     </div>
+
                 </div>
 
                 <div class="qr-donasi-content">
+
                     <h2 class="qr-donasi-heading">
                         Donasi Lebih Mudah,<br>
                         <span>Kapan Saja</span> dan <span>Di Mana Saja</span>
                     </h2>
+
                     <p class="qr-donasi-desc">
-                        Tak perlu transfer manual atau catat nomor rekening. Cukup pindai kode
-                        QRIS di samping lewat aplikasi e-wallet atau m-banking favoritmu.
+                        Tak perlu transfer manual atau catat nomor rekening.
+                        Cukup pindai kode QRIS di samping lewat aplikasi
+                        e-wallet atau m-banking favoritmu.
                     </p>
 
-
                     <div class="qr-donasi-apps">
-                        <p class="qr-donasi-apps-label">Didukung oleh</p>
+
+                        <p class="qr-donasi-apps-label">
+                            Didukung oleh
+                        </p>
+
                         @php
                             $qrisApps = [
                                 ['name' => 'OVO', 'logo' => 'ewallet-ovo.png'],
@@ -408,18 +849,36 @@
                                 ['name' => 'ShopeePay', 'logo' => 'ewallet-shopeepay.png'],
                             ];
                         @endphp
+
                         <div class="qr-donasi-apps-list">
+
                             @foreach ($qrisApps as $app)
+
                                 <span class="qr-donasi-app-badge">
-                                    <img src="{{ asset('assets/' . $app['logo']) }}" alt="{{ $app['name'] }}">
+
+                                    <img
+                                        src="{{ asset('assets/' . $app['logo']) }}"
+                                        alt="{{ $app['name'] }}"
+                                        loading="lazy"
+                                        decoding="async"
+                                    >
+
                                 </span>
+
                             @endforeach
+
                         </div>
+
                     </div>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
+
 </section>
 
 @include('partials.footer')
@@ -433,17 +892,23 @@
      ========================================================== --}}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+
     /* ============================================================
        A. Auto-slide carousel untuk section Iklan
        ============================================================ */
+
     const track = document.getElementById('iklanTrack');
+
     if (track) {
+
         const originalSlides = Array.from(track.children);
         const totalSlides = originalSlides.length;
 
         // Kalau iklan cuma 1-2, gak perlu digeser otomatis.
         if (totalSlides > 2) {
-            // Gandakan slide biar transisi loop dari slide terakhir balik ke awal terlihat mulus.
+
+            // Gandakan slide biar transisi loop dari slide terakhir
+            // balik ke awal terlihat mulus.
             originalSlides.forEach(function (slide) {
                 track.appendChild(slide.cloneNode(true));
             });
@@ -453,13 +918,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
             function measure() {
                 const trackStyle = window.getComputedStyle(track);
-                const gap = parseFloat(trackStyle.columnGap || trackStyle.gap || 0);
-                slideStep = track.children[0].getBoundingClientRect().width + gap;
+                const gap = parseFloat(
+                    trackStyle.columnGap ||
+                    trackStyle.gap ||
+                    0
+                );
+
+                slideStep =
+                    track.children[0].getBoundingClientRect().width +
+                    gap;
             }
 
             function goTo(index, animate) {
-                track.style.transition = animate ? 'transform 0.6s ease' : 'none';
-                track.style.transform = 'translateX(' + (-index * slideStep) + 'px)';
+
+                track.style.transition =
+                    animate
+                        ? 'transform 0.6s ease'
+                        : 'none';
+
+                track.style.transform =
+                    'translateX(' +
+                    (-index * slideStep) +
+                    'px)';
             }
 
             measure();
@@ -471,270 +951,497 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             setInterval(function () {
+
                 currentIndex++;
+
                 goTo(currentIndex, true);
 
-                // Setelah nyampe slide duplikat pertama, lompat diam-diam balik ke index 0.
+                // Setelah nyampe slide duplikat pertama,
+                // lompat diam-diam balik ke index 0.
                 if (currentIndex >= totalSlides) {
+
                     setTimeout(function () {
+
                         currentIndex = 0;
+
                         goTo(currentIndex, false);
+
                     }, 620);
                 }
+
             }, 5000);
         }
     }
 
+
     /* ============================================================
-       B. Video Kebaikan — pakai YouTube IFrame Player API supaya
-       tombol pause/play custom kita yang pegang kendali penuh,
-       bukan bergantung tap ke kontrol native di dalam iframe
-       (yang sering gagal di layar sempit / touch device).
+       B. Video Kebaikan — YouTube IFrame Player API
        ============================================================ */
-    var ytPlayers = {};      // mountId -> instance YT.Player
+
+    var ytPlayers = {};
     var ytApiReady = false;
     var ytPendingQueue = [];
 
-    var videoButtons = document.querySelectorAll('.video-play-btn');
+    var videoButtons =
+        document.querySelectorAll('.video-play-btn');
 
     if (videoButtons.length) {
-        // 1. Muat script YouTube IFrame API sekali saja
-        var ytTag = document.createElement('script');
-        ytTag.src = 'https://www.youtube.com/iframe_api';
+
+        // Muat script YouTube IFrame API sekali saja.
+        var ytTag =
+            document.createElement('script');
+
+        ytTag.src =
+            'https://www.youtube.com/iframe_api';
+
         document.head.appendChild(ytTag);
 
         window.onYouTubeIframeAPIReady = function () {
+
             ytApiReady = true;
-            ytPendingQueue.forEach(function (fn) { fn(); });
+
+            ytPendingQueue.forEach(function (fn) {
+                fn();
+            });
+
             ytPendingQueue = [];
         };
 
         var whenYtApiReady = function (fn) {
-            if (ytApiReady) fn();
-            else ytPendingQueue.push(fn);
+
+            if (ytApiReady) {
+                fn();
+            } else {
+                ytPendingQueue.push(fn);
+            }
+
         };
 
-        // 2. Bikin player + tombol toggle custom di dalam .video-frame tertentu.
-        // PENTING: semua ukuran & posisi di-set langsung lewat inline style JS
-        // (bukan mengandalkan class CSS di file terpisah), supaya player selalu
-        // full-size dan tombol selalu terlihat, apa pun kondisi file CSS-nya.
+        // Bikin player + tombol toggle custom.
         var initYtPlayer = function (frame, wrapper) {
-            var videoId = wrapper.dataset.videoId;
+
+            var videoId =
+                wrapper.dataset.videoId;
 
             frame.style.backgroundImage = 'none';
-            frame.style.position = frame.style.position || 'relative';
+            frame.style.position =
+                frame.style.position || 'relative';
+
             frame.innerHTML = '';
 
-            var mount = document.createElement('div');
-            mount.id = 'yt-player-' + videoId + '-' + Math.random().toString(36).slice(2, 7);
-            // Mount ini akan DIGANTI oleh YT jadi <iframe>. Style di bawah tetap
-            // dipakai sebagai acuan lewat onReady (lihat getIframe() di bawah).
+            var mount =
+                document.createElement('div');
+
+            mount.id =
+                'yt-player-' +
+                videoId +
+                '-' +
+                Math.random()
+                    .toString(36)
+                    .slice(2, 7);
+
             mount.style.position = 'absolute';
             mount.style.inset = '0';
             mount.style.width = '100%';
             mount.style.height = '100%';
+
             frame.appendChild(mount);
 
-            // Tombol play/pause milik kita sendiri. Visual (warna, blur, shadow,
-            // hover) diatur lewat class CSS ".video-toggle-btn" di landing.css.
-            // Posisi & ukuran dasar tetap di-inline sebagai jaring pengaman,
-            // supaya tombol tidak pernah hilang walau CSS telat/gagal ke-load.
-            var toggleBtn = document.createElement('button');
+            var toggleBtn =
+                document.createElement('button');
+
             toggleBtn.type = 'button';
-            toggleBtn.className = 'video-toggle-btn';
-            toggleBtn.setAttribute('aria-label', 'Play/Pause video');
-            toggleBtn.style.position = 'absolute';
+            toggleBtn.className =
+                'video-toggle-btn';
+
+            toggleBtn.setAttribute(
+                'aria-label',
+                'Play/Pause video'
+            );
+
+            toggleBtn.style.position =
+                'absolute';
+
             toggleBtn.style.zIndex = '5';
             toggleBtn.style.top = '50%';
             toggleBtn.style.left = '50%';
-            toggleBtn.style.transform = 'translate(-50%, -50%)';
+
+            toggleBtn.style.transform =
+                'translate(-50%, -50%)';
+
             toggleBtn.style.width = '56px';
             toggleBtn.style.height = '56px';
+
             toggleBtn.style.display = 'flex';
             toggleBtn.style.alignItems = 'center';
             toggleBtn.style.justifyContent = 'center';
             toggleBtn.style.cursor = 'pointer';
+
             toggleBtn.innerHTML =
-                '<svg class="icon-pause" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>' +
-                '<svg class="icon-play" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M8 5v14l11-7z"/></svg>';
+                '<svg class="icon-pause" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">' +
+                    '<rect x="6" y="5" width="4" height="14" rx="1"/>' +
+                    '<rect x="14" y="5" width="4" height="14" rx="1"/>' +
+                '</svg>' +
+
+                '<svg class="icon-play" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none">' +
+                    '<path d="M8 5v14l11-7z"/>' +
+                '</svg>';
+
             frame.appendChild(toggleBtn);
 
-            // --- Auto-hide: tombol otomatis menghilang beberapa detik setelah
-            // video playing (biar nggak nutupin gambar terus), dan muncul lagi
-            // kalau video di-tap/klik atau lagi di-pause. -------------------
             var hideTimer = null;
 
             function showToggleBtn() {
+
                 toggleBtn.style.opacity = '1';
                 toggleBtn.style.pointerEvents = 'auto';
+
             }
 
             function hideToggleBtn() {
+
                 toggleBtn.style.opacity = '0';
                 toggleBtn.style.pointerEvents = 'none';
+
             }
 
             function scheduleAutoHide() {
+
                 clearTimeout(hideTimer);
-                hideTimer = setTimeout(function () {
-                    var p = ytPlayers[mount.id];
-                    if (p && typeof p.getPlayerState === 'function' && p.getPlayerState() === YT.PlayerState.PLAYING) {
-                        hideToggleBtn();
-                    }
-                }, 1800);
+
+                hideTimer =
+                    setTimeout(function () {
+
+                        var p =
+                            ytPlayers[mount.id];
+
+                        if (
+                            p &&
+                            typeof p.getPlayerState === 'function' &&
+                            p.getPlayerState() ===
+                            YT.PlayerState.PLAYING
+                        ) {
+
+                            hideToggleBtn();
+
+                        }
+
+                    }, 1800);
             }
 
             toggleBtn.style.opacity = '1';
             toggleBtn.style.pointerEvents = 'auto';
-            toggleBtn.style.transition = (toggleBtn.style.transition ? toggleBtn.style.transition + ', ' : '') + 'opacity 0.25s ease';
 
-            // Tap di mana pun pada frame (bukan cuma tombolnya) memunculkan
-            // kembali tombol & reset timer auto-hide — mirip kontrol video pada umumnya.
-            frame.addEventListener('click', function (e) {
-                if (e.target === toggleBtn || toggleBtn.contains(e.target)) return;
-                showToggleBtn();
-                scheduleAutoHide();
-            });
-            // -------------------------------------------------------------
+            toggleBtn.style.transition =
+                (toggleBtn.style.transition
+                    ? toggleBtn.style.transition + ', '
+                    : '') +
+                'opacity 0.25s ease';
+
+            frame.addEventListener(
+                'click',
+                function (e) {
+
+                    if (
+                        e.target === toggleBtn ||
+                        toggleBtn.contains(e.target)
+                    ) {
+                        return;
+                    }
+
+                    showToggleBtn();
+                    scheduleAutoHide();
+
+                }
+            );
 
             whenYtApiReady(function () {
-                var player = new YT.Player(mount.id, {
-                    videoId: videoId,
-                    width: '100%',
-                    height: '100%',
-                    playerVars: {
-                        autoplay: 1,
-                        rel: 0,
-                        playsinline: 1, // cegah iOS Safari maksa fullscreen
-                        controls: 1     // seek bar native tetap ada, tombol kita cuma jaminan pause/play
-                    },
-                    events: {
-                        onReady: function (e) {
-                            // Paksa iframe hasil YT full-size, terlepas dari CSS eksternal.
-                            var iframeEl = e.target.getIframe();
-                            if (iframeEl) {
-                                iframeEl.style.position = 'absolute';
-                                iframeEl.style.inset = '0';
-                                iframeEl.style.width = '100%';
-                                iframeEl.style.height = '100%';
-                            }
-                            e.target.playVideo();
-                        },
-                        onStateChange: function (e) {
-                            var playing = e.data === YT.PlayerState.PLAYING;
-                            toggleBtn.querySelector('.icon-pause').style.display = playing ? '' : 'none';
-                            toggleBtn.querySelector('.icon-play').style.display = playing ? 'none' : '';
 
-                            if (playing) {
-                                // Video baru mulai/lanjut jalan -> tombol tampil dulu,
-                                // lalu dijadwalkan menghilang.
-                                showToggleBtn();
-                                scheduleAutoHide();
-                            } else {
-                                // Paused, ended, buffering, dll -> tombol selalu tampil.
-                                clearTimeout(hideTimer);
-                                showToggleBtn();
+                var player =
+                    new YT.Player(
+                        mount.id,
+                        {
+                            videoId: videoId,
+
+                            width: '100%',
+                            height: '100%',
+
+                            playerVars: {
+                                autoplay: 1,
+                                rel: 0,
+                                playsinline: 1,
+                                controls: 1
+                            },
+
+                            events: {
+
+                                onReady: function (e) {
+
+                                    var iframeEl =
+                                        e.target.getIframe();
+
+                                    if (iframeEl) {
+
+                                        iframeEl.style.position =
+                                            'absolute';
+
+                                        iframeEl.style.inset = '0';
+                                        iframeEl.style.width = '100%';
+                                        iframeEl.style.height = '100%';
+
+                                    }
+
+                                    e.target.playVideo();
+
+                                },
+
+                                onStateChange: function (e) {
+
+                                    var playing =
+                                        e.data ===
+                                        YT.PlayerState.PLAYING;
+
+                                    toggleBtn
+                                        .querySelector(
+                                            '.icon-pause'
+                                        )
+                                        .style.display =
+                                        playing
+                                            ? ''
+                                            : 'none';
+
+                                    toggleBtn
+                                        .querySelector(
+                                            '.icon-play'
+                                        )
+                                        .style.display =
+                                        playing
+                                            ? 'none'
+                                            : '';
+
+                                    if (playing) {
+
+                                        showToggleBtn();
+                                        scheduleAutoHide();
+
+                                    } else {
+
+                                        clearTimeout(
+                                            hideTimer
+                                        );
+
+                                        showToggleBtn();
+
+                                    }
+                                }
                             }
                         }
-                    }
-                });
-                ytPlayers[mount.id] = player;
+                    );
 
-                toggleBtn.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    var p = ytPlayers[mount.id];
-                    if (!p || typeof p.getPlayerState !== 'function') return;
-                    var state = p.getPlayerState();
-                    if (state === YT.PlayerState.PLAYING) {
-                        p.pauseVideo();
-                    } else {
-                        p.playVideo();
-                        showToggleBtn();
-                        scheduleAutoHide();
+                ytPlayers[mount.id] =
+                    player;
+
+                toggleBtn.addEventListener(
+                    'click',
+                    function (e) {
+
+                        e.stopPropagation();
+
+                        var p =
+                            ytPlayers[mount.id];
+
+                        if (
+                            !p ||
+                            typeof p.getPlayerState !==
+                            'function'
+                        ) {
+                            return;
+                        }
+
+                        var state =
+                            p.getPlayerState();
+
+                        if (
+                            state ===
+                            YT.PlayerState.PLAYING
+                        ) {
+
+                            p.pauseVideo();
+
+                        } else {
+
+                            p.playVideo();
+
+                            showToggleBtn();
+                            scheduleAutoHide();
+
+                        }
+
                     }
-                });
+                );
+
             });
         };
 
-        // 3. Sambungkan ke tombol "play" poster yang sudah ada
+
+        // Sambungkan ke tombol play poster.
         videoButtons.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                var wrapper = btn.closest('[data-video-id]');
-                var frame = btn.closest('.video-frame');
-                if (!wrapper || !frame) return;
-                initYtPlayer(frame, wrapper);
-            });
+
+            btn.addEventListener(
+                'click',
+                function () {
+
+                    var wrapper =
+                        btn.closest('[data-video-id]');
+
+                    var frame =
+                        btn.closest('.video-frame');
+
+                    if (!wrapper || !frame) {
+                        return;
+                    }
+
+                    initYtPlayer(
+                        frame,
+                        wrapper
+                    );
+
+                }
+            );
+
         });
     }
 
-    /* ============================================================
-       C. Bikin slider video kebaikan bisa digeser pakai mouse
-       (klik-tahan-geser) dan roda mouse vertikal (khusus saat
-       kursor di atas slider), supaya tetap bisa "di-slide" walau
-       pengguna pakai mouse biasa di desktop.
 
-       FIX: drag-scroll manual ini HANYA untuk perangkat dengan
-       mouse/pointer halus (desktop). Di touch device (HP/tablet),
-       event mousedown/mousemove/click "kompatibilitas" dari
-       sentuhan jari membuat `moved` selalu true, lalu listener
-       click di sini memanggil stopPropagation() dan membatalkan
-       tap ke tombol play/pause. Karena scroll native + tap native
-       sudah jalan baik di touch device (lihat CSS: overflow-x:auto
-       + -webkit-overflow-scrolling: touch), kita skip semua logic
-       drag-scroll manual ini kalau pointer-nya coarse (jari).
+    /* ============================================================
+       C. Slider video kebaikan
        ============================================================ */
-    var list = document.getElementById('videoKebaikanList');
+
+    var list =
+        document.getElementById(
+            'videoKebaikanList'
+        );
+
     if (list) {
-        var isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+
+        var isCoarsePointer =
+            window.matchMedia(
+                '(pointer: coarse)'
+            ).matches;
 
         if (!isCoarsePointer) {
+
             let isDown = false;
             let startX = 0;
             let scrollStart = 0;
             let moved = false;
 
-            list.classList.add('is-draggable');
+            list.classList.add(
+                'is-draggable'
+            );
 
-            list.addEventListener('mousedown', function (e) {
-                isDown = true;
-                moved = false;
-                list.classList.add('is-dragging');
-                startX = e.pageX;
-                scrollStart = list.scrollLeft;
-            });
+            list.addEventListener(
+                'mousedown',
+                function (e) {
 
-            window.addEventListener('mouseup', function () {
-                isDown = false;
-                list.classList.remove('is-dragging');
-            });
+                    isDown = true;
+                    moved = false;
 
-            window.addEventListener('mousemove', function (e) {
-                if (!isDown) return;
-                e.preventDefault();
-                const delta = e.pageX - startX;
-                if (Math.abs(delta) > 3) moved = true;
-                list.scrollLeft = scrollStart - delta;
-            });
+                    list.classList.add(
+                        'is-dragging'
+                    );
 
-            // Cegah link/video ke-klik kalau ternyata itu drag, bukan klik biasa.
-            list.addEventListener('click', function (e) {
-                if (moved) {
-                    e.preventDefault();
-                    e.stopPropagation();
+                    startX = e.pageX;
+                    scrollStart =
+                        list.scrollLeft;
+
                 }
-            }, true);
+            );
 
-            // Roda mouse vertikal -> geser horizontal, hanya saat memang ada overflow.
-            list.addEventListener('wheel', function (e) {
-                if (list.scrollWidth <= list.clientWidth) return;
-                if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                    e.preventDefault();
-                    list.scrollLeft += e.deltaY;
+            window.addEventListener(
+                'mouseup',
+                function () {
+
+                    isDown = false;
+
+                    list.classList.remove(
+                        'is-dragging'
+                    );
+
                 }
-            }, { passive: false });
+            );
+
+            window.addEventListener(
+                'mousemove',
+                function (e) {
+
+                    if (!isDown) {
+                        return;
+                    }
+
+                    e.preventDefault();
+
+                    const delta =
+                        e.pageX - startX;
+
+                    if (Math.abs(delta) > 3) {
+                        moved = true;
+                    }
+
+                    list.scrollLeft =
+                        scrollStart - delta;
+
+                }
+            );
+
+            list.addEventListener(
+                'click',
+                function (e) {
+
+                    if (moved) {
+
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                    }
+
+                },
+                true
+            );
+
+            list.addEventListener(
+                'wheel',
+                function (e) {
+
+                    if (
+                        list.scrollWidth <=
+                        list.clientWidth
+                    ) {
+                        return;
+                    }
+
+                    if (
+                        Math.abs(e.deltaY) >
+                        Math.abs(e.deltaX)
+                    ) {
+
+                        e.preventDefault();
+
+                        list.scrollLeft +=
+                            e.deltaY;
+
+                    }
+
+                },
+                {
+                    passive: false
+                }
+            );
         }
     }
+
 });
 </script>
+
 </body>
 </html>

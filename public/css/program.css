@@ -483,7 +483,7 @@
 .cpm__card-text {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: var(--fs-md);
+  font-size: var(--fs-base);
   line-height: 1.6;
   color: var(--text-dark);
   text-align: left;
@@ -500,24 +500,26 @@
 .cpm__card-name {
   display: block;
   font-weight: var(--fw-bold);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-md);
   color: var(--text-dark);
 }
 
 .cpm__card-role {
   display: block;
-  font-size: var(--fs-xs);
+  font-size: var(--fs-base);
   color: var(--text-muted);
   margin-top: 3px;
 }
 
+/* Avatar — sedikit diperbesar untuk desktop (140px -> 160px),
+   offset overlap kanan disesuaikan supaya proporsinya tetap sama. */
 .cpm__card-avatar {
   position: absolute;
   top: 50%;
-  right: -70px;
+  right: -60px;
   transform: translateY(-50%);
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid var(--border-soft);
@@ -689,9 +691,9 @@
     padding: 44px 105px 32px 32px;
   }
   .cpm__card-avatar {
-    width: 110px;
-    height: 110px;
-    right: -55px;
+    width: 85px;
+    height: 85px;
+    right: -42px;
   }
   .cpm__track {
     gap: 75px;
@@ -721,7 +723,14 @@
 @media (max-width: 860px) {
   .cpm { padding: 36px 0; }
   .program-hero { min-height: auto; }
-  .program-hero__media { min-height: auto; }
+  .program-hero__media {
+    min-height: auto;
+    /* Padding aslinya asimetris (kiri var(--space-7) vs kanan var(--space-2)),
+       ok di layout 2 kolom desktop, tapi bikin gambar hero tampak bergeser
+       ke kanan begitu kolom dipaksa jadi 1fr di mobile. Disamakan supaya
+       flex justify-content: center benar-benar center. */
+    padding: var(--space-4) var(--space-2);
+  }
 
   .program-hero__inner { grid-template-columns: 1fr; gap: var(--space-8); text-align: center; }
   .program-hero__content { padding-right: 0; }
@@ -783,8 +792,8 @@
   .program-pokok__card {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
-    justify-items: center;
-    text-align: center;
+    justify-items: start;
+    text-align: left;
     row-gap: 24px;
   }
 
@@ -800,17 +809,17 @@
   .program-pokok__card:nth-child(even) .program-pokok__content {
     grid-column: 1;
     grid-row: 2;
-    justify-items: center;
-    text-align: center;
+    justify-items: start;
+    text-align: left;
   }
 
   .program-pokok__desc {
-    justify-self: center;
+    justify-self: start;
     max-width: 42ch;
   }
 
   .program-pokok__actions {
-    justify-content: center;
+    justify-content: flex-start;
   }
 }
 
@@ -842,35 +851,61 @@
     display: flex !important;
     transform: none !important;
     width: max-content;
-    gap: 75px;
-    padding: 0 60px 0 15px;
+    gap: 16px;
+    padding: 0 15px;
   }
 
-  /* Card Item Mobile */
+  /* Card Item Mobile — kompak, quote kecil normal di dalam kartu,
+     teks, lalu baris nama+role sejajar dengan avatar. Padding kiri
+     dan kanan kartu dibuat sama persis (22px) di semua sisi. */
   .cpm__card {
-    flex: 0 0 calc(100vw - 120px);
-    max-width: 320px;
+    flex: 0 0 calc(100vw - 90px);
+    max-width: 280px;
     scroll-snap-align: center;
     scroll-snap-stop: always;
-    padding: 40px 80px 24px 20px;
-  }
-
-  .cpm__card-avatar {
-    width: 85px;
-    height: 85px;
-    right: -42px;
+    border-radius: 18px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "quote  quote"
+      "text   text"
+      "person avatar";
+    column-gap: 14px;
+    row-gap: 10px;
+    padding: 22px;
   }
 
   .cpm__card-quote {
-    width: 40px;
-    height: 34px;
-    top: -16px;
-    left: 16px;
+    grid-area: quote;
+    position: static;
+    width: 30px;
+    height: 24px;
   }
 
   .cpm__card-text {
+    grid-area: text;
     padding: 0;
+    margin: 0;
     font-size: var(--fs-sm);
+    max-width: none;
+  }
+
+  .cpm__card-person {
+    grid-area: person;
+    align-self: center;
+    padding-left: 0;
+  }
+
+  .cpm__card-avatar {
+    grid-area: avatar;
+    position: static;
+    transform: none;
+    width: 46px;
+    height: 46px;
+    align-self: center;
+    justify-self: end;
   }
 
   .faq {
@@ -899,9 +934,8 @@
   .program-pokok {
     padding: 48px 0;
   }
-
   .program-pokok .section-title {
-    font-size: var(--fs-h3);
+    font-size: var(--fs-h2);
     margin-bottom: var(--space-6);
   }
 

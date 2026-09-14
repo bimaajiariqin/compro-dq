@@ -15,12 +15,12 @@ class VideoKebaikanController extends Controller
     {
         $videoKebaikan = VideoKebaikan::orderByDesc('created_at')->get();
 
-        return view('Admin.video-kebaikan.index', compact('videoKebaikan'));
+        return view('admin.video-kebaikan.index', compact('videoKebaikan'));
     }
 
     public function create(): View
     {
-        return view('Admin.video-kebaikan.create');
+        return view('admin.video-kebaikan.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -52,7 +52,7 @@ class VideoKebaikanController extends Controller
 
     public function edit(VideoKebaikan $videokebaikan): View
     {
-        return view('Admin.video-kebaikan.edit', ['video' => $videokebaikan]);
+        return view('admin.video-kebaikan.edit', ['video' => $videokebaikan]);
     }
 
     public function update(Request $request, VideoKebaikan $videokebaikan): RedirectResponse

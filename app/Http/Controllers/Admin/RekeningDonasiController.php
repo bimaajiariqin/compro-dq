@@ -24,12 +24,12 @@ class RekeningDonasiController extends Controller
     {
         $rekening = RekeningDonasi::orderBy('kategori')->orderBy('nama_bank')->get();
 
-        return view('Admin.rekening-donasi.index', compact('rekening'));
+        return view('admin.rekening-donasi.index', compact('rekening'));
     }
 
     public function create(): View
     {
-        return view('Admin.rekening-donasi.create', [
+        return view('admin.rekening-donasi.create', [
             'kategoriOptions' => self::KATEGORI,
         ]);
     }
@@ -55,7 +55,7 @@ class RekeningDonasiController extends Controller
 
     public function edit(RekeningDonasi $rekening_donasi): View
     {
-        return view('Admin.rekening-donasi.edit', [
+        return view('admin.rekening-donasi.edit', [
             'rekening' => $rekening_donasi,
             'kategoriOptions' => self::KATEGORI,
         ]);

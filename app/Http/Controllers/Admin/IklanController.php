@@ -22,12 +22,12 @@ class IklanController extends Controller
     {
         $iklan = Iklan::orderByDesc('created_at')->get();
 
-        return view('Admin.iklan.index', compact('iklan'));
+        return view('admin.iklan.index', compact('iklan'));
     }
 
     public function create(): View
     {
-        return view('Admin.iklan.create');
+        return view('admin.iklan.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -51,7 +51,7 @@ class IklanController extends Controller
 
     public function edit(Iklan $iklan): View
     {
-        return view('Admin.iklan.edit', compact('iklan'));
+        return view('admin.iklan.edit', compact('iklan'));
     }
 
     public function update(Request $request, Iklan $iklan): RedirectResponse

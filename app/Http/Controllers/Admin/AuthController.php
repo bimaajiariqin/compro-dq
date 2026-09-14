@@ -20,7 +20,7 @@ class AuthController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
-        return view('Admin.auth.login');
+        return view('admin.auth.login');
     }
 
     /**

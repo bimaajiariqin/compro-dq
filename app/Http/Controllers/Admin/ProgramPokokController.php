@@ -25,14 +25,14 @@ class ProgramPokokController extends Controller
 
         $kategoriList = $this->kategoriOptions;
 
-        return view('Admin.program-pokok.index', compact('programPokok', 'kategoriList'));
+        return view('admin.program-pokok.index', compact('programPokok', 'kategoriList'));
     }
 
     public function create()
     {
         $kategoriOptions = $this->kategoriOptions;
 
-        return view('Admin.program-pokok.create', compact('kategoriOptions'));
+        return view('admin.program-pokok.create', compact('kategoriOptions'));
     }
 
     public function store(Request $request)
@@ -54,7 +54,7 @@ class ProgramPokokController extends Controller
     {
         $kategoriOptions = $this->kategoriOptions;
 
-        return view('Admin.program-pokok.edit', compact('programPokok', 'kategoriOptions'));
+        return view('admin.program-pokok.edit', compact('programPokok', 'kategoriOptions'));
     }
 
     public function update(Request $request, ProgramPokok $programPokok)

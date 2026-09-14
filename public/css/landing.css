@@ -426,7 +426,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-4); /* diperkecil dari var(--space-8) agar jarak ke konten di bawah lebih rapat */
 }
 
 .berita-grid {
@@ -999,7 +999,8 @@
     margin-left: 0;
   }
 
-  /* Tab kategori jadi baris scroll horizontal, tak lagi wrap bertumpuk */
+  /* Tab kategori jadi baris scroll horizontal, tak lagi wrap bertumpuk.
+     Margin & padding diperkecil agar jarak atas-bawah tab lebih rapat. */
   .berita-tabs {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -1008,8 +1009,8 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
     gap: 10px;
-    margin: 0 -16px var(--space-6);
-    padding: 0 20px 4px;
+    margin: 0 -16px var(--space-3); /* diperkecil dari var(--space-6) */
+    padding: 0 20px 2px;            /* diperkecil dari 0 20px 4px */
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 2%, #000 92%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 2%, #000 92%, transparent);
   }
@@ -1046,8 +1047,8 @@
   .testimoni-card { padding: var(--space-6) 36px var(--space-5); }
   .testimoni-quote { font-size: 0.95rem; }
 
-  .berita-title { font-size: 13px; }
-  .berita-meta { font-size: 0.7rem; }
+  .berita-title { font-size: 15px; }
+  .berita-meta { font-size: 0.8rem; }
 
   .cta-section { padding: 44px 0; }
   .cta-photo { max-width: 200px; }

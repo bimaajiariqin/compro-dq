@@ -42,12 +42,12 @@ class BeritaController extends Controller
         $kategoriList = self::KATEGORI;
         $filterProgramList = self::FILTER_PROGRAM;
 
-        return view('Admin.berita.index', compact('berita', 'kategoriList', 'filterProgramList'));
+        return view('admin.berita.index', compact('berita', 'kategoriList', 'filterProgramList'));
     }
 
     public function create(): View
     {
-        return view('Admin.berita.create', [
+        return view('admin.berita.create', [
             'kategoriOptions' => self::KATEGORI,
             'filterProgramOptions' => self::FILTER_PROGRAM,
         ]);
@@ -73,7 +73,7 @@ class BeritaController extends Controller
 
     public function edit(Berita $berita): View
     {
-        return view('Admin.berita.edit', [
+        return view('admin.berita.edit', [
             'berita' => $berita,
             'kategoriOptions' => self::KATEGORI,
             'filterProgramOptions' => self::FILTER_PROGRAM,
