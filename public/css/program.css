@@ -908,6 +908,17 @@
     justify-self: end;
   }
 
+  /* Nama & jabatan dikecilkan khusus di mobile supaya proporsional
+     dengan avatar yang lebih kecil dan card yang lebih kompak. */
+  .cpm__card-name {
+    font-size: var(--fs-sm);
+  }
+
+  .cpm__card-role {
+    font-size: var(--fs-xs);
+    margin-top: 2px;
+  }
+
   .faq {
     padding: 40px 0;
   }
@@ -951,5 +962,17 @@
 
   .program-pokok__btn {
     padding: 10px 22px;
+  }
+
+  .program-hero__desc {
+    font-size: var(--fs-base);
+  }
+
+  .program-berita__lead {
+    font-size: var(--fs-base);
+  }
+
+  .program-pokok__desc {
+    font-size: var(--fs-base);
   }
 }

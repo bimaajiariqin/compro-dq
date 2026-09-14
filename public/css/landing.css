@@ -187,7 +187,9 @@
 
 .iklan-slide {
   display: block;
-  flex: 0 0 calc(50% - 10px);
+  /* 2 slide per tampilan di desktop — lebar dihitung dari 50% dikurangi
+     setengah gap, supaya 2 slide + 1 gap pas mengisi lebar container */
+  flex: 0 0 calc(50% - (var(--space-5) / 2));
   border-radius: var(--radius-sm);
   overflow: hidden;
   box-shadow: var(--shadow-card);
@@ -198,7 +200,8 @@
 
 @media (max-width: 640px) {
   .iklan-track { gap: 14px; }
-  .iklan-slide { flex: 0 0 82%; }
+  /* 1 slide penuh per tampilan di mobile */
+  .iklan-slide { flex: 0 0 100%; }
 }
 
 /* ==========================================================================
