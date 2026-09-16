@@ -73,7 +73,7 @@
         <div class="berita-pagination" id="beritaPagination"></div>
 
         {{-- ============================================================
-             LIST MOBILE — editorial minimalis, satu kolom, tanpa pagination.
+             LIST MOBILE — editorial minimalis, satu kolom, dengan pagination
              Independen total dari .berita-card / .berita-grid desktop.
              ============================================================ --}}
         <div class="berita-mobile-list" id="beritaMobileList">
@@ -101,6 +101,8 @@
             @endforelse
         </div>
 
+        <div class="berita-mobile-pagination" id="beritaMobilePagination"></div>
+
         @if ($berita->isNotEmpty())
             <p class="berita-mobile-empty" id="beritaMobileEmpty" style="display: none;">Tidak ada berita untuk kategori ini.</p>
         @else
@@ -113,6 +115,5 @@
 @include('partials.footer')
 
 <script src="{{ asset('js/berita.js') }}"></script>
-<script src="{{ asset('js/berita-mobile.js') }}"></script>
 </body>
 </html>

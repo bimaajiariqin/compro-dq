@@ -154,7 +154,12 @@
   .about { grid-template-columns: 0.85fr 1fr; }
 }
 
-.about-text p { line-height: 1.5; }
+.about-text p {
+  line-height: 1.5;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
 
 .about-image img {
   width: 100%;
@@ -432,6 +437,16 @@
   margin-bottom: var(--space-4); /* diperkecil dari var(--space-8) agar jarak ke konten di bawah lebih rapat */
 }
 
+/* Deskripsi section Berita — dibuat rata kiri-kanan (justify), berbeda
+   dari .section-subtitle default (yang biasanya center) di section lain. */
+#berita .section-subtitle {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .berita-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -552,8 +567,149 @@
   padding: var(--space-8) 0;
 }
 
-.berita-pagination { display: flex; justify-content: center; gap: 6px; margin-top: var(--space-7); }
-/* #beritaPagination sudah didefinisikan bersama di global.css */
+/* ============================================================
+   Pagination Berita (Compact, Outline Arrow, Solid Active Number)
+   ============================================================ */
+
+#beritaPagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: var(--space-6, 28px);
+}
+
+/* Tombol Panah (Prev/Next) — Garis Tepi/Outline Only */
+#beritaPagination .berita-page-arrow {
+  all: unset;
+  box-sizing: border-box !important;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: 1px solid var(--text-brand) !important;
+  color: var(--text-brand) !important;
+  -webkit-tap-highlight-color: transparent !important;
+  transition: background var(--transition-fast), color var(--transition-fast), opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+#beritaPagination .berita-page-arrow svg {
+  display: block;
+  width: 12px;
+  height: 12px;
+}
+
+#beritaPagination .berita-page-arrow:hover:not(:disabled),
+#beritaPagination .berita-page-arrow:focus-visible {
+  background: var(--text-brand) !important;
+  color: #ffffff !important;
+  outline: none !important;
+}
+
+#beritaPagination .berita-page-arrow:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+#beritaPagination .berita-page-arrow:disabled {
+  opacity: 0.25 !important;
+  border-color: var(--text-brand) !important;
+  color: var(--text-brand) !important;
+  cursor: not-allowed;
+}
+
+/* Container Kapsul Abu-abu */
+#beritaPagination .berita-page-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-soft, #f4f4f5);
+  border-radius: 9999px;
+  padding: 5px 14px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#beritaPagination .berita-page-pill::-webkit-scrollbar {
+  display: none;
+}
+
+/* Tombol Angka Halaman */
+#beritaPagination .berita-page-number {
+  all: unset;
+  box-sizing: border-box !important;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 28px !important;
+  height: 28px !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px;
+  font-weight: var(--fw-medium, 500);
+  color: var(--text-muted, #4b5563);
+  text-align: center;
+  border: 1px solid transparent;
+  background: transparent !important;
+  -webkit-tap-highlight-color: transparent !important;
+  transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
+}
+
+/* Hover & Focus pada Angka: Hanya Border Lingkaran Warna Brand (Tanpa Abu-abu) */
+#beritaPagination .berita-page-number:hover:not(.is-active),
+#beritaPagination .berita-page-number:focus-visible:not(.is-active) {
+  border-color: var(--text-brand) !important;
+  color: var(--text-brand) !important;
+  background: transparent !important;
+  outline: none !important;
+}
+
+/* Saat Angka Diklik (Active Click): Tetap Transparan & Garis Tepi */
+#beritaPagination .berita-page-number:active:not(.is-active) {
+  border-color: var(--text-brand) !important;
+  color: var(--text-brand) !important;
+  background: transparent !important;
+}
+
+/* Halaman Aktif (Active State): Solid Warna Brand + Teks Putih */
+#beritaPagination .berita-page-number.is-active {
+  background: var(--text-brand) !important;
+  color: #ffffff !important;
+  border-color: var(--text-brand) !important;
+  font-weight: var(--fw-semibold, 600);
+}
+
+/* Elipsis (...) */
+#beritaPagination .berita-page-dots {
+  flex-shrink: 0;
+  width: 16px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted, #6b7280);
+  font-size: 13px;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Responsif Mobile */
+@media (max-width: 480px) {
+  #beritaPagination { gap: 6px; }
+  #beritaPagination .berita-page-arrow { width: 28px !important; height: 28px !important; }
+  #beritaPagination .berita-page-pill { gap: 6px; padding: 4px 10px; }
+  #beritaPagination .berita-page-number { width: 24px !important; height: 24px !important; font-size: 12px; }
+}
 
 /* ==========================================================================
    Video Kebaikan
@@ -589,7 +745,13 @@
 }
 .video-kebaikan-title span { color: var(--text-brand); }
 
-.video-kebaikan-text p { line-height: 1.5; margin: 0 0 var(--space-4); }
+.video-kebaikan-text p {
+  line-height: 1.5;
+  margin: 0 0 var(--space-4);
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
 .video-kebaikan-text p:last-child { margin-bottom: 0; }
 
 .video-frame {

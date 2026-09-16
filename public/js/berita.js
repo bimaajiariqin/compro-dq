@@ -1,8 +1,17 @@
+/* ============================================================
+   Matikan scroll restoration otomatis browser supaya reload
+   halaman /berita tidak "mengembalikan" posisi scroll terakhir
+   (misalnya ke area pagination), dan selalu mulai dari atas.
+   ============================================================ */
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 document.addEventListener('DOMContentLoaded', function () {
 
   /* ============================================================
      1. Generic scroll-reveal for elements with .reveal
-     (dipakai oleh .berita-tabs dan .berita-grid)
      ============================================================ */
   var revealEls = document.querySelectorAll('.reveal');
   if (revealEls.length && 'IntersectionObserver' in window) {
@@ -21,19 +30,25 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ============================================================
-     2. Berita — filter tabs + client-side pagination (dots)
-     Halaman dibatasi 4 BARIS. Jumlah kartu per halaman dihitung
-     otomatis dari jumlah kolom grid yang sedang render (responsif
-     terhadap resize / breakpoint), bukan angka tetap.
+     2. Berita — filter tabs bersama + pagination desktop & mobile
+        - Desktop: pageSize dinamis (jumlah kolom grid x 4 baris)
+        - Mobile : pageSize tetap 15 berita per halaman
      ============================================================ */
   var beritaTabs = document.querySelectorAll('.berita-tab');
   var beritaCards = document.querySelectorAll('.berita-card');
   var beritaGrid = document.getElementById('beritaGrid');
   var beritaPagination = document.getElementById('beritaPagination');
   var beritaEmpty = document.getElementById('beritaEmpty');
+
+  var mobileItems = document.querySelectorAll('.berita-mobile-item');
+  var mobilePagination = document.getElementById('beritaMobilePagination');
+  var mobileEmpty = document.getElementById('beritaMobileEmpty');
+  var MOBILE_PAGE_SIZE = 15;
+
   var ROWS_PER_PAGE = 4;
-  var currentPage = 0;
   var currentFilter = 'semua';
+  var desktopPage = 0;
+  var mobilePage = 0;
   var beritaResizeTimer = null;
 
   function getGridColumns() {
@@ -44,54 +59,184 @@ document.addEventListener('DOMContentLoaded', function () {
     return cols.length || 1;
   }
 
-  function getBeritaPageSize() {
+  function getDesktopPageSize() {
     return getGridColumns() * ROWS_PER_PAGE;
   }
 
-  function getFilteredCards() {
-    return Array.prototype.filter.call(beritaCards, function (card) {
-      if (currentFilter === 'semua') return true;
-      var kategori = (card.dataset.kategori || '').toLowerCase();
-      var program = (card.dataset.program || '').toLowerCase();
-      return kategori === currentFilter || program === currentFilter;
-    });
+  function matchesFilter(el) {
+    if (currentFilter === 'semua') return true;
+    var kategori = (el.dataset.kategori || '').toLowerCase();
+    var program = (el.dataset.program || '').toLowerCase();
+    return kategori === currentFilter || program === currentFilter;
   }
 
-  function renderBeritaPage() {
-    var filtered = getFilteredCards();
-    var pageSize = getBeritaPageSize();
-    var totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
-    currentPage = Math.min(currentPage, totalPages - 1);
+  function getFilteredCards() {
+    return Array.prototype.filter.call(beritaCards, matchesFilter);
+  }
 
-    beritaCards.forEach(function (card) { card.classList.remove('is-visible'); });
+  function getFilteredMobileItems() {
+    return Array.prototype.filter.call(mobileItems, matchesFilter);
+  }
 
-    filtered.forEach(function (card, i) {
-      var page = Math.floor(i / pageSize);
-      if (page === currentPage) card.classList.add('is-visible');
-    });
-
-    if (beritaEmpty) {
-      beritaEmpty.style.display = filtered.length ? 'none' : 'block';
+  /* ----------------------------------------------------------
+     Daftar nomor halaman dengan elipsis — dipakai desktop & mobile
+     ---------------------------------------------------------- */
+  function buildPageList(current, total) {
+    if (total <= 6) {
+      var all = [];
+      for (var p = 1; p <= total; p++) all.push(p);
+      return all;
     }
 
-    if (beritaPagination) {
-      beritaPagination.innerHTML = '';
-      if (totalPages > 1) {
-        for (var p = 0; p < totalPages; p++) {
-          var dot = document.createElement('button');
-          dot.type = 'button';
-          dot.setAttribute('aria-label', 'Halaman ' + (p + 1));
-          if (p === currentPage) dot.classList.add('is-active');
-          (function (pageIndex) {
-            dot.addEventListener('click', function () {
-              currentPage = pageIndex;
-              renderBeritaPage();
-              if (beritaGrid) beritaGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-          })(p);
-          beritaPagination.appendChild(dot);
-        }
+    var pageSet = {};
+    function addPage(p) { if (p >= 1 && p <= total) pageSet[p] = true; }
+
+    addPage(1);
+    addPage(total - 2); addPage(total - 1); addPage(total);
+    addPage(current);
+
+    var pages = Object.keys(pageSet).map(Number).sort(function (a, b) { return a - b; });
+
+    var result = [];
+    for (var i = 0; i < pages.length; i++) {
+      if (i > 0 && pages[i] - pages[i - 1] > 1) result.push('...');
+      result.push(pages[i]);
+    }
+    return result;
+  }
+
+  /* ----------------------------------------------------------
+     Render tombol Arrow-Pill-Arrow generik — dipakai desktop & mobile
+
+     PENTING: fungsi ini TIDAK melakukan scrollIntoView apa pun.
+     Scroll-ke-posisi hanya boleh terjadi sebagai AKIBAT dari aksi
+     user (klik nomor/arrow), bukan setiap kali di-render — kalau
+     scrollIntoView ditaruh di sini, dia akan ikut kepanggil saat
+     render pertama kali (page load / refresh) dan bikin browser
+     otomatis scroll ke area pagination meskipun user belum
+     ngapa-ngapain.
+     ---------------------------------------------------------- */
+  function renderPaginationControls(container, current, totalPages, onGoToPage) {
+    container.innerHTML = '';
+    if (totalPages <= 1) return;
+
+    var activePageNumber = current + 1;
+
+    var prevBtn = document.createElement('button');
+    prevBtn.type = 'button';
+    prevBtn.className = 'berita-page-arrow berita-page-prev';
+    prevBtn.setAttribute('aria-label', 'Halaman sebelumnya');
+    prevBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    prevBtn.disabled = current === 0;
+    prevBtn.addEventListener('click', function () { onGoToPage(current - 1); });
+    container.appendChild(prevBtn);
+
+    var pill = document.createElement('div');
+    pill.className = 'berita-page-pill';
+
+    buildPageList(activePageNumber, totalPages).forEach(function (item) {
+      if (item === '...') {
+        var dots = document.createElement('span');
+        dots.className = 'berita-page-dots';
+        dots.textContent = '...';
+        dots.setAttribute('aria-hidden', 'true');
+        pill.appendChild(dots);
+        return;
       }
+
+      var numBtn = document.createElement('button');
+      numBtn.type = 'button';
+      numBtn.className = 'berita-page-number';
+      numBtn.textContent = item;
+      numBtn.setAttribute('aria-label', 'Halaman ' + item);
+      if (item === activePageNumber) numBtn.classList.add('is-active');
+      (function (pageIndex) {
+        numBtn.addEventListener('click', function () { onGoToPage(pageIndex); });
+      })(item - 1);
+      pill.appendChild(numBtn);
+    });
+
+    container.appendChild(pill);
+
+    var nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.className = 'berita-page-arrow berita-page-next';
+    nextBtn.setAttribute('aria-label', 'Halaman berikutnya');
+    nextBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    nextBtn.disabled = current === totalPages - 1;
+    nextBtn.addEventListener('click', function () { onGoToPage(current + 1); });
+    container.appendChild(nextBtn);
+
+    // Auto-scroll horizontal pill (supaya nomor aktif kelihatan di
+    // dalam pill-nya sendiri kalau nomornya banyak) TETAP dipakai,
+    // tapi di-scope ke dalam pill saja (bukan window), jadi tidak
+    // ikut menggeser scroll utama halaman.
+    var activeEl = pill.querySelector('.berita-page-number.is-active');
+    if (activeEl && typeof activeEl.scrollIntoView === 'function') {
+      activeEl.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+  }
+
+  /* ---------------- Desktop render ---------------- */
+  function renderDesktopPage(opts) {
+    if (!beritaCards.length) return;
+    var scrollAfter = !!(opts && opts.scrollAfter);
+
+    var filtered = getFilteredCards();
+    var pageSize = getDesktopPageSize();
+    var totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+    desktopPage = Math.min(desktopPage, totalPages - 1);
+
+    beritaCards.forEach(function (card) { card.classList.remove('is-visible'); });
+    filtered.forEach(function (card, i) {
+      if (Math.floor(i / pageSize) === desktopPage) card.classList.add('is-visible');
+    });
+
+    if (beritaEmpty) beritaEmpty.style.display = filtered.length ? 'none' : 'block';
+
+    if (beritaPagination) {
+      renderPaginationControls(beritaPagination, desktopPage, totalPages, function (p) {
+        desktopPage = Math.max(0, Math.min(p, totalPages - 1));
+        renderDesktopPage({ scrollAfter: true });
+      });
+    }
+
+    // Scroll ke atas grid HANYA kalau dipicu klik pagination,
+    // bukan saat render awal / refresh halaman.
+    if (scrollAfter && beritaGrid) {
+      beritaGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  /* ---------------- Mobile render (maksimal 15 berita/halaman) ---------------- */
+  function renderMobilePage(opts) {
+    if (!mobileItems.length) return;
+    var scrollAfter = !!(opts && opts.scrollAfter);
+
+    var filtered = getFilteredMobileItems();
+    var totalPages = Math.max(1, Math.ceil(filtered.length / MOBILE_PAGE_SIZE));
+    mobilePage = Math.min(mobilePage, totalPages - 1);
+
+    mobileItems.forEach(function (item) { item.classList.add('is-hidden-filter'); });
+    filtered.forEach(function (item, i) {
+      if (Math.floor(i / MOBILE_PAGE_SIZE) === mobilePage) {
+        item.classList.remove('is-hidden-filter');
+      }
+    });
+
+    if (mobileEmpty) mobileEmpty.style.display = filtered.length ? 'none' : 'block';
+
+    if (mobilePagination) {
+      renderPaginationControls(mobilePagination, mobilePage, totalPages, function (p) {
+        mobilePage = Math.max(0, Math.min(p, totalPages - 1));
+        renderMobilePage({ scrollAfter: true });
+      });
+    }
+
+    // Scroll ke pagination HANYA kalau dipicu klik pagination,
+    // bukan saat render awal / refresh halaman.
+    if (scrollAfter && mobilePagination) {
+      mobilePagination.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
@@ -101,25 +246,25 @@ document.addEventListener('DOMContentLoaded', function () {
         beritaTabs.forEach(function (t) { t.classList.remove('is-active'); });
         tab.classList.add('is-active');
         currentFilter = (tab.dataset.filter || 'semua').toLowerCase();
-        currentPage = 0;
-        renderBeritaPage();
+        desktopPage = 0;
+        mobilePage = 0;
+        renderDesktopPage();
+        renderMobilePage();
       });
     });
   }
 
-  if (beritaCards.length) {
-    renderBeritaPage();
+  // Render pertama kali (page load / refresh): TIDAK scroll ke mana pun.
+  renderDesktopPage();
+  renderMobilePage();
 
-    // Jumlah kolom bisa berubah saat layar di-resize (breakpoint),
-    // jadi kartu per halaman & dot dihitung ulang (di-debounce).
-    window.addEventListener('resize', function () {
-      clearTimeout(beritaResizeTimer);
-      beritaResizeTimer = setTimeout(function () {
-        currentPage = 0;
-        renderBeritaPage();
-      }, 200);
-    });
-  }
+  window.addEventListener('resize', function () {
+    clearTimeout(beritaResizeTimer);
+    beritaResizeTimer = setTimeout(function () {
+      desktopPage = 0;
+      renderDesktopPage();
+    }, 200);
+  });
 
   /* ============================================================
      3. Program dropdown links -> scroll to Berita section and

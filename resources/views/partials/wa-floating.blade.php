@@ -45,14 +45,14 @@
 
     @media (max-width: 576px) {
         .wa-floating-btn {
-            width: 50px;
-            height: 50px;
-            bottom: 16px;
+            width: 62px;
+            height: 62px;
+            bottom: 18px;
             right: 16px;
         }
         .wa-floating-icon {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
         }
     }
 </style>

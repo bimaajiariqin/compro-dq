@@ -1,12 +1,13 @@
 /* ==========================================================================
-   Berita — Mobile List (Minimalist, with depth)
+   Berita — Mobile List (Editorial Style)
    File independen dari landing.css. Hanya aktif di layar <=640px.
-   Tiap item jadi "kartu" tipis dengan soft shadow berlapis (bukan garis
-   divider datar), berpisah lewat jarak antar-kartu — memberi kedalaman
-   tanpa jadi ramai/berat.
    ========================================================================== */
 
 .berita-mobile-list {
+  display: none;
+}
+
+.berita-mobile-pagination {
   display: none;
 }
 
@@ -16,7 +17,7 @@
 
 @media (max-width: 640px) {
 
-  /* Sembunyikan grid desktop + dot pagination sepenuhnya di mobile */
+  /* Sembunyikan grid + pagination desktop di mobile */
   .berita-grid,
   .berita-pagination {
     display: none !important;
@@ -24,8 +25,7 @@
 
   .berita-mobile-list {
     display: block;
-    margin-top: -8px; /* menarik daftar lebih dekat ke baris filter tab di atasnya */
-    padding: 0 0 8px;
+    padding: 4px 0 8px;
   }
 
   .berita-mobile-item {
@@ -33,63 +33,32 @@
     display: flex;
     align-items: flex-start;
     gap: 14px;
-    max-height: 220px;
-    margin-bottom: 12px;
-    padding: 14px;
-    border-radius: 16px;
-    background: var(--bg-white, #fff);
-    box-shadow:
-      0 1px 2px rgba(16, 24, 40, 0.05),
-      0 6px 16px -10px rgba(16, 24, 40, 0.16);
-    overflow: hidden;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-soft, #e5e7eb);
     text-decoration: none;
-    opacity: 1;
-    transform: scale(1) translateY(0);
-    transition: max-height 0.32s ease, opacity 0.22s ease,
-                margin 0.32s ease, padding 0.32s ease,
-                transform 0.15s ease, box-shadow 0.15s ease;
-    animation: berita-mobile-fade-in 0.4s ease both;
   }
 
-  .berita-mobile-item:active {
-    transform: scale(0.98);
-    box-shadow:
-      0 1px 1px rgba(16, 24, 40, 0.05),
-      0 2px 6px -4px rgba(16, 24, 40, 0.14);
+  .berita-mobile-item:first-child {
+    padding-top: 4px;
   }
 
-  /* Filter tab: item yang tidak cocok collapse halus (bukan display:none
-     tiba-tiba) — shadow ikut lebur lewat opacity */
+  .berita-mobile-item:last-child {
+    border-bottom: none;
+  }
+
   .berita-mobile-item.is-hidden-filter {
-    max-height: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    opacity: 0;
-    box-shadow: none;
-    pointer-events: none;
+    display: none;
   }
 
-  @keyframes berita-mobile-fade-in {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .berita-mobile-item:nth-child(1) { animation-delay: 0.02s; }
-  .berita-mobile-item:nth-child(2) { animation-delay: 0.06s; }
-  .berita-mobile-item:nth-child(3) { animation-delay: 0.10s; }
-  .berita-mobile-item:nth-child(4) { animation-delay: 0.14s; }
-  .berita-mobile-item:nth-child(5) { animation-delay: 0.18s; }
-  .berita-mobile-item:nth-child(n+6) { animation-delay: 0.2s; }
+  /* --- Thumbnail --- */
 
   .berita-mobile-thumb-wrap {
     flex-shrink: 0;
-    width: 76px;
-    height: 76px;
-    border-radius: 12px;
+    width: 110px;
+    height: 78px;
+    border-radius: 6px;
     overflow: hidden;
     background: var(--bg-soft, #f3f4f6);
-    box-shadow: inset 0 0 0 1px rgba(16, 24, 40, 0.04);
   }
 
   .berita-mobile-thumb {
@@ -99,27 +68,27 @@
     object-fit: cover;
   }
 
+  /* --- Konten --- */
+
   .berita-mobile-content {
     flex: 1;
     min-width: 0;
-    display: flex;
-    flex-direction: column;
-    padding-right: 18px; /* ruang untuk chevron di kanan */
   }
 
   .berita-mobile-category {
-    font-size: 10px;
-    font-weight: 600;
+    display: block;
+    font-size: 10.5px;
+    font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--text-brand, #3365AF);
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
 
   .berita-mobile-title {
     font-size: 14px;
     font-weight: 600;
-    line-height: 1.42;
+    line-height: 1.4;
     color: var(--text-dark, #111827);
     margin-bottom: 6px;
     display: -webkit-box;
@@ -136,42 +105,88 @@
     text-overflow: ellipsis;
   }
 
-  /* Chevron dibentuk dari border, ditaruh di atas lingkaran tipis supaya
-     terasa jadi elemen sendiri, bukan cuma tempelan di tepi kartu */
   .berita-mobile-arrow {
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: var(--bg-soft, #f3f4f6);
-    transform: translateY(-50%);
+    display: none;
   }
 
-  .berita-mobile-arrow::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 5px;
-    height: 5px;
-    border-top: 1.5px solid var(--text-muted, #9aa1ac);
-    border-right: 1.5px solid var(--text-muted, #9aa1ac);
-    transform: translate(-65%, -50%) rotate(45deg);
-  }
+  /* --- Empty state --- */
 
   .berita-mobile-empty {
+    display: block;
     text-align: center;
     font-size: 0.85rem;
     color: var(--text-muted, #9ca3af);
-    padding: 32px 0;
+    padding: 40px 0;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .berita-mobile-item {
-      animation: none !important;
-      transition: none !important;
-    }
+  /* --- Pagination mobile (Arrow-Pill-Arrow, sama konsep dengan desktop) --- */
+
+  .berita-mobile-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding-bottom: 8px;
+  }
+
+  .berita-mobile-pagination .berita-page-arrow {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--border-soft, #e5e7eb);
+    background: #fff;
+    color: var(--text-dark, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .berita-mobile-pagination .berita-page-arrow:disabled {
+    opacity: 0.35;
+  }
+
+  .berita-mobile-pagination .berita-page-pill {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 180px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .berita-mobile-pagination .berita-page-pill::-webkit-scrollbar {
+    display: none;
+  }
+
+  .berita-mobile-pagination .berita-page-number {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    font-size: 12.5px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted, #9ca3af);
+  }
+
+  .berita-mobile-pagination .berita-page-number.is-active {
+    background: var(--text-brand, #3365AF);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .berita-mobile-pagination .berita-page-dots {
+    flex-shrink: 0;
+    font-size: 12.5px;
+    color: var(--text-muted, #9ca3af);
+    padding: 0 2px;
   }
 }
