@@ -246,43 +246,53 @@
      ===================================================================== --}}
 <section class="section faq" id="faq">
     <div class="container">
+        <div class="faq__inner">
 
-        <h2 class="faq__title">Pertanyaan Yang Sering Diajukan</h2>
+            {{-- Kolom intro kiri --}}
+            <div class="faq__intro">
+                <h2 class="faq__title">Ada Pertanyaan?<br>Kami Bantu Jawab.</h2>
+                <p class="faq__desc">
+                    Temukan jawaban atas pertanyaan yang paling sering diajukan seputar program ini. Jika masih
+                    ada yang ingin ditanyakan, tim kami siap membantu.
+                </p>
+            </div>
 
-        <div class="faq__list" data-faq-list>
-            @forelse ($faqs as $item)
-                <div class="faq__item" data-faq-item>
-                    <button
-                        type="button"
-                        class="faq__question"
-                        data-faq-toggle
-                        aria-expanded="false"
-                        aria-controls="faq-answer-{{ $item->id }}"
-                    >
-                        <span>{{ $item->pertanyaan }}</span>
-                        <span class="faq__icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                        </span>
-                    </button>
+            {{-- Daftar accordion FAQ --}}
+            <div class="faq__list" data-faq-list>
+                @forelse ($faqs as $item)
+                    <div class="faq__item" data-faq-item>
+                        <button
+                            type="button"
+                            class="faq__question"
+                            data-faq-toggle
+                            aria-expanded="false"
+                            aria-controls="faq-answer-{{ $item->id }}"
+                        >
+                            <span>{{ $item->pertanyaan }}</span>
+                            <span class="faq__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </span>
+                        </button>
 
-                    <div
-                        class="faq__answer"
-                        id="faq-answer-{{ $item->id }}"
-                        data-faq-answer
-                    >
-                        <div class="faq__answer-inner">
-                            {{ $item->jawaban }}
+                        <div
+                            class="faq__answer"
+                            id="faq-answer-{{ $item->id }}"
+                            data-faq-answer
+                        >
+                            <div class="faq__answer-inner">
+                                {{ $item->jawaban }}
+                            </div>
                         </div>
                     </div>
-                </div>
-            @empty
-                <p class="faq__empty">Belum ada pertanyaan untuk kategori ini.</p>
-            @endforelse
-        </div>
+                @empty
+                    <p class="faq__empty">Belum ada pertanyaan untuk kategori ini.</p>
+                @endforelse
+            </div>
 
+        </div>
     </div>
 </section>
 

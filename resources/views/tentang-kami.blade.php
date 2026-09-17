@@ -103,6 +103,10 @@
 </section>
 
 {{-- ============ LEGALITAS LEMBAGA ============ --}}
+{{-- Kartu SELALU berupa <div> biasa (tidak bisa diklik). Yang bisa diklik hanya
+     teks "Lihat Izin", dan hanya bila kolom `link` terisi. Kalau `link` kosong,
+     teks itu tetap tampil sebagai <span> supaya tinggi & tampilan antar kartu
+     seragam, tapi tidak bisa diklik. --}}
 <section class="section section--soft">
     <div class="container">
         <h2 class="section-title">Legalitas <span class="eyebrow">Lembaga</span></h2>
@@ -124,11 +128,17 @@
                         @endif
                     </span>
                     <p class="legalitas-card__label">{{ $item->label }}</p>
+
                     @if ($item->link)
                         <a href="{{ $item->link }}" target="_blank" rel="noopener" class="legalitas-card__link">
                             Lihat Izin
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M7 7h10v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
                         </a>
+                    @else
+                        <span class="legalitas-card__link legalitas-card__link--disabled">
+                            Lihat Izin
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M7 7h10v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                        </span>
                     @endif
                 </div>
             @endforeach

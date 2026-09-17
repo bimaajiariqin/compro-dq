@@ -20,7 +20,16 @@
 }
 .rekening-title span { color: var(--text-brand); }
 
-.rekening-subtitle { color: var(--text-muted); font-size: var(--fs-base); line-height: 1.5; }
+/* PERUBAHAN: subtitle kini rata kiri-kanan (justify), konsisten dengan
+   .program-hero__desc & .program-berita__lead di program.css. */
+.rekening-subtitle {
+  color: var(--text-muted);
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
 
 .rekening-group { margin-bottom: var(--space-8); }
 .rekening-group:last-child { margin-bottom: 0; }

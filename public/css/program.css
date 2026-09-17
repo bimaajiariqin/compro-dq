@@ -2,6 +2,215 @@
    program.css
    ========================================================================== */
 
+/* ==========================================================================
+   faq.css
+   Section FAQ — layout 2 kolom: intro kiri (judul, deskripsi, link) +
+   accordion kanan. Class list (.faq__item, .faq__question, .faq__icon,
+   .faq__answer, data-faq-*, .is-open) dipertahankan sama persis supaya
+   js/faq-accordion.js tidak perlu diubah.
+   ========================================================================== */
+
+.faq {
+  padding: 64px 0;
+}
+
+.faq__inner {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 80px;
+  align-items: start;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+/* -------------------------------------------------------------------- */
+/* Kolom kiri — intro                                                   */
+/* -------------------------------------------------------------------- */
+
+.faq__intro {
+  position: sticky;
+  top: 100px;
+}
+
+.faq__title {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h1);
+  line-height: 1.15;
+  color: var(--text-dark);
+  margin: 0 0 var(--space-4);
+}
+
+.faq__desc {
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0 0 var(--space-5);
+  max-width: 34ch;
+}
+
+
+/* -------------------------------------------------------------------- */
+/* Kolom kanan — accordion                                              */
+/* -------------------------------------------------------------------- */
+
+.faq__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.faq__item:first-child {
+  border-top: 1px solid var(--border-soft);
+}
+
+.faq__question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 22px 2px;
+  font-family: inherit;
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-md);
+  color: var(--text-dark);
+  line-height: 1.5;
+  transition: color var(--transition-base);
+}
+
+.faq__item.is-open .faq__question {
+  font-weight: var(--fw-semibold);
+}
+
+.faq__icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  color: var(--text-dark);
+}
+
+.faq__icon::before,
+.faq__icon::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  border-radius: 1px;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.faq__icon::before {
+  width: 100%;
+  height: 2px;
+}
+
+.faq__icon::after {
+  width: 2px;
+  height: 100%;
+}
+
+.faq__item.is-open .faq__icon {
+  color: var(--text-brand);
+}
+
+.faq__item.is-open .faq__icon::after {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+.faq__icon svg {
+  display: none;
+}
+
+.faq__answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-base);
+}
+
+.faq__item.is-open .faq__answer {
+  grid-template-rows: 1fr;
+}
+
+.faq__answer-inner {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: var(--fs-base);
+  line-height: 1.7;
+  margin: 0;
+  padding: 0 26px 0 2px;
+}
+
+.faq__answer-inner,
+.faq__answer-inner * {
+  margin: 0 !important;
+}
+
+.faq__answer-inner p + p {
+  margin-top: 12px !important;
+}
+
+.faq__item.is-open .faq__answer-inner {
+  padding-bottom: 22px;
+}
+
+.faq__empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  padding: var(--space-5) 0;
+}
+
+/* -------------------------------------------------------------------- */
+/* Responsive                                                           */
+/* -------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .faq__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .faq__intro {
+    position: static;
+  }
+
+  .faq__desc {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .faq {
+    padding: 40px 0;
+  }
+
+  .faq__title {
+    font-size: var(--fs-h2);
+  }
+
+  .faq__question {
+    font-size: var(--fs-base);
+    padding: 18px 2px;
+  }
+
+  .faq__answer-inner {
+    font-size: var(--fs-base);
+  }
+}
+
+
 /* -------------------------------------------------------------------- */
 /* Hero                                                                 */
 /* -------------------------------------------------------------------- */
@@ -276,12 +485,19 @@
   padding: 48px 0;
 }
 
+/* PERUBAHAN: deskripsi kini rata kiri-kanan (justify), sama seperti gaya
+   deskripsi hero (.program-hero__desc) — text-justify + hyphens supaya
+   spasi antar kata di baris terakhir tidak melebar aneh, dan kata panjang
+   tetap bisa terpenggal rapi di ujung baris. */
 .program-berita__lead {
   color: var(--text-muted);
   font-size: var(--fs-md);
   line-height: 1.5;
   max-width: 1200px;
   margin: 0 0 var(--space-6);
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 
 .program-berita__slider {
@@ -548,143 +764,6 @@
 }
 
 /* -------------------------------------------------------------------- */
-/* FAQ Section                                                          */
-/* -------------------------------------------------------------------- */
-
-.faq {
-  padding: 64px 0;
-}
-
-.faq__title {
-  font-family: var(--font-display);
-  font-weight: var(--fw-semibold);
-  font-size: var(--fs-h2);
-  color: var(--text-dark);
-  text-align: center;
-  margin: 0 0 var(--space-8);
-}
-
-.faq__list {
-  display: flex;
-  flex-direction: column;
-  max-width: 1040px;
-  margin: 0 auto;
-}
-
-.faq__item {
-  border-bottom: 1px solid var(--border-soft);
-}
-
-.faq__item:first-child {
-  border-top: 1px solid var(--border-soft);
-}
-
-.faq__question {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-5);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  padding: 18px 2px;
-  font-family: inherit;
-  font-weight: var(--fw-medium);
-  font-size: var(--fs-md);
-  color: var(--text-dark);
-  line-height: 1.5;
-  transition: color var(--transition-base);
-}
-
-.faq__item.is-open .faq__question {
-  font-weight: var(--fw-semibold);
-}
-
-.faq__icon {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  width: 15px;
-  height: 15px;
-  color: var(--text-dark);
-}
-
-.faq__icon::before,
-.faq__icon::after {
-  content: '';
-  position: absolute;
-  background: currentColor;
-  border-radius: 1px;
-  transition: transform var(--transition-base), opacity var(--transition-base);
-}
-
-.faq__icon::before {
-  width: 100%;
-  height: 2px;
-}
-
-.faq__icon::after {
-  width: 2px;
-  height: 100%;
-}
-
-.faq__item.is-open .faq__icon {
-  color: var(--text-brand);
-}
-
-.faq__item.is-open .faq__icon::after {
-  transform: rotate(90deg);
-  opacity: 0;
-}
-
-.faq__icon svg {
-  display: none;
-}
-
-.faq__answer {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--transition-base);
-}
-
-.faq__item.is-open .faq__answer {
-  grid-template-rows: 1fr;
-}
-
-.faq__answer-inner {
-  overflow: hidden;
-  color: var(--text-muted);
-  font-size: var(--fs-base);
-  line-height: 1.7;
-  margin: 0;
-  padding: 0 26px 0 2px;
-}
-
-.faq__answer-inner,
-.faq__answer-inner * {
-  margin: 0 !important;
-}
-
-.faq__answer-inner p + p {
-  margin-top: 12px !important;
-}
-
-.faq__item.is-open .faq__answer-inner {
-  padding-bottom: 18px;
-}
-
-.faq__empty {
-  text-align: center;
-  color: var(--text-muted);
-  font-size: var(--fs-sm);
-  padding: var(--space-5) 0;
-}
-
-/* -------------------------------------------------------------------- */
 /* Responsive Adaptation                                                */
 /* -------------------------------------------------------------------- */
 
@@ -700,10 +779,6 @@
   }
   .cpm__track {
     gap: 75px;
-  }
-
-  .faq__list {
-    max-width: 100%;
   }
 
   .program-pokok__grid {
@@ -922,29 +997,6 @@
     margin-top: 2px;
   }
 
-  .faq {
-    padding: 40px 0;
-  }
-
-  .faq__title {
-    margin-bottom: var(--space-6);
-  }
-
-  .faq__question {
-    gap: var(--space-3);
-    font-size: var(--fs-base);
-    padding: 18px 2px;
-  }
-
-  .faq__answer-inner {
-    font-size: var(--fs-base);
-    padding: 0 2px;
-  }
-
-  .faq__item.is-open .faq__answer-inner {
-    padding-bottom: 18px;
-  }
-
   .program-pokok {
     padding: 48px 0;
   }
@@ -973,6 +1025,9 @@
 
   .program-berita__lead {
     font-size: var(--fs-base);
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
   }
 
   .program-pokok__desc {
