@@ -5,9 +5,16 @@
 /* ==========================================================================
    faq.css
    Section FAQ — layout 2 kolom: intro kiri (judul, deskripsi, link) +
-   accordion kanan. Class list (.faq__item, .faq__question, .faq__icon,
-   .faq__answer, data-faq-*, .is-open) dipertahankan sama persis supaya
-   js/faq-accordion.js tidak perlu diubah.
+   accordion kanan.
+
+   Semua class & state (.faq__item, .faq__question, .faq__icon,
+   .faq__answer, .faq__answer-inner, .is-open, data-faq-*) dipertahankan
+   persis, jadi js/faq-accordion.js tidak perlu diubah.
+
+   Prinsip: minimal. Satu gerakan yang berarti (plus berputar jadi silang
+   saat dibuka), satu perubahan warna (teks jadi brand saat aktif), tidak
+   ada ornamen tambahan. Garis pembatas antar item sendiri yang jadi
+   struktur visualnya.
    ========================================================================== */
 
 .faq {
@@ -49,7 +56,6 @@
   max-width: 34ch;
 }
 
-
 /* -------------------------------------------------------------------- */
 /* Kolom kanan — accordion                                              */
 /* -------------------------------------------------------------------- */
@@ -86,9 +92,24 @@
   transition: color var(--transition-base);
 }
 
+.faq__question:hover {
+  color: var(--text-brand);
+}
+
+.faq__question:focus-visible {
+  outline: 2px solid var(--text-brand);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
 .faq__item.is-open .faq__question {
   font-weight: var(--fw-semibold);
+  color: var(--text-brand);
 }
+
+/* -------------------------------------------------------------------- */
+/* Ikon: plus yang berputar jadi silang                                 */
+/* -------------------------------------------------------------------- */
 
 .faq__icon {
   position: relative;
@@ -99,6 +120,7 @@
   width: 16px;
   height: 16px;
   color: var(--text-dark);
+  transition: color var(--transition-base), transform var(--transition-base);
 }
 
 .faq__icon::before,
@@ -107,7 +129,7 @@
   position: absolute;
   background: currentColor;
   border-radius: 1px;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  transition: transform var(--transition-base), background var(--transition-base);
 }
 
 .faq__icon::before {
@@ -120,18 +142,22 @@
   height: 100%;
 }
 
-.faq__item.is-open .faq__icon {
+.faq__question:hover .faq__icon {
   color: var(--text-brand);
 }
 
-.faq__item.is-open .faq__icon::after {
-  transform: rotate(90deg);
-  opacity: 0;
+.faq__item.is-open .faq__icon {
+  color: var(--text-brand);
+  transform: rotate(135deg);
 }
 
 .faq__icon svg {
   display: none;
 }
+
+/* -------------------------------------------------------------------- */
+/* Jawaban                                                              */
+/* -------------------------------------------------------------------- */
 
 .faq__answer {
   display: grid;
@@ -150,6 +176,8 @@
   line-height: 1.7;
   margin: 0;
   padding: 0 26px 0 2px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .faq__answer-inner,
@@ -163,6 +191,8 @@
 
 .faq__item.is-open .faq__answer-inner {
   padding-bottom: 22px;
+  opacity: 1;
+  transition-delay: 0.1s;
 }
 
 .faq__empty {
@@ -179,7 +209,10 @@
 @media (max-width: 900px) {
   .faq__inner {
     grid-template-columns: 1fr;
-    gap: 40px;
+    /* Di layout 1 kolom, jarak intro → list cukup diatur lewat margin
+       .faq__desc di bawah, jadi gap grid tidak perlu selebar versi
+       2 kolom desktop (80px). */
+    gap: 8px;
   }
 
   .faq__intro {
@@ -188,6 +221,8 @@
 
   .faq__desc {
     max-width: none;
+    /* Rapatkan jarak deskripsi ke accordion di bawahnya. */
+    margin-bottom: var(--space-3);
   }
 }
 
@@ -200,6 +235,10 @@
     font-size: var(--fs-h2);
   }
 
+  .faq__desc {
+    margin-bottom: var(--space-2);
+  }
+
   .faq__question {
     font-size: var(--fs-base);
     padding: 18px 2px;
@@ -207,6 +246,21 @@
 
   .faq__answer-inner {
     font-size: var(--fs-base);
+  }
+}
+
+/* -------------------------------------------------------------------- */
+/* Aksesibilitas gerak                                                  */
+/* -------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .faq__question,
+  .faq__icon,
+  .faq__icon::before,
+  .faq__icon::after,
+  .faq__answer,
+  .faq__answer-inner {
+    transition: none !important;
   }
 }
 
