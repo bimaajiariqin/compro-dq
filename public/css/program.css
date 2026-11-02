@@ -42,7 +42,7 @@
 .faq__title {
   font-family: var(--font-display);
   font-weight: var(--fw-bold);
-  font-size: var(--fs-h1);
+  font-size: var(--fs-h2);
   line-height: 1.15;
   color: var(--text-dark);
   margin: 0 0 var(--space-4);
@@ -93,7 +93,7 @@
 }
 
 .faq__question:hover {
-  color: var(--text-brand);
+  color: var(--text-dark);
 }
 
 .faq__question:focus-visible {
@@ -104,7 +104,10 @@
 
 .faq__item.is-open .faq__question {
   font-weight: var(--fw-semibold);
-  color: var(--text-brand);
+  color: var(--text-dark);
+  /* Rapatkan jarak ke jawaban: padding bawah baris pertanyaan dikecilkan
+     hanya saat item terbuka, tanpa mengubah tinggi baris saat tertutup. */
+  padding-bottom: 8px;
 }
 
 /* -------------------------------------------------------------------- */
@@ -143,11 +146,11 @@
 }
 
 .faq__question:hover .faq__icon {
-  color: var(--text-brand);
+  color: var(--text-dark);
 }
 
 .faq__item.is-open .faq__icon {
-  color: var(--text-brand);
+  color: var(--text-dark);
   transform: rotate(135deg);
 }
 
@@ -190,7 +193,7 @@
 }
 
 .faq__item.is-open .faq__answer-inner {
-  padding-bottom: 22px;
+  padding-bottom: 18px;
   opacity: 1;
   transition-delay: 0.1s;
 }
@@ -497,7 +500,7 @@
   align-items: center;
   justify-content: center;
   padding: 12px 26px;
-  border-radius: 999px;
+  border-radius: 10px; /* sebelumnya: 999px (pill penuh) — dibuat lebih kecil/rounded-square */
   font-size: var(--fs-xs);
   font-weight: var(--fw-semibold);
   text-decoration: none;
@@ -817,6 +820,28 @@
   color: var(--text-muted);
 }
 
+/* Saat kosong, matikan trik lebar penuh milik slider (padding-right: 50vw,
+   margin-right negatif, clip-path) supaya track kembali jadi kotak normal
+   selebar section — tanpa ini pusat teks jatuh di tengah area yang melebar
+   ke kanan (sebagian di luar layar), bukan di tengah section yang terlihat.
+   !important dipakai supaya konsisten menang di semua breakpoint, termasuk
+   aturan mobile (640px) yang juga menulis ulang properti-properti ini. */
+.cpm__slider:has(.berita-empty) {
+  margin: 0 !important;
+  padding: 0 !important;
+  clip-path: none !important;
+  overflow: hidden !important;
+}
+
+.cpm__track:has(.berita-empty) {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  gap: 0 !important;
+  padding: var(--space-6) 0 !important;
+}
+
 /* -------------------------------------------------------------------- */
 /* Responsive Adaptation                                                */
 /* -------------------------------------------------------------------- */
@@ -885,10 +910,24 @@
     margin: 0 auto;
   }
 
+  /* ---- Berita Terkait (mobile carousel) ----
+     Sebelumnya kartu dibatasi 78vw/max-width:300px TAPI slider-nya tetap
+     di dalam padding container biasa — hasilnya kartu kedua nongol cukup
+     lebar dan teksnya kepotong di tengah kata, terlihat rusak.
+
+     Sekarang dibuat mengikuti pola persis .berita-grid di home: slider
+     dibuat "bleed" ke tepi viewport (margin -16px + padding 20px),
+     lalu lebar kartu dihitung relatif ke lebar layar itu sendiri (82vw).
+     Hasilnya: kartu pertama tampil penuh, kartu berikutnya cuma "mengintip"
+     tipis & rapi di tepi kanan — persis seperti carousel Berita di home. */
   .program-berita__slider {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
+    scroll-padding-left: 20px;
+    margin: 0 -16px;
+    padding: 4px 20px 14px;
+    -ms-overflow-style: none;
     scrollbar-width: none;
   }
   .program-berita__slider::-webkit-scrollbar { display: none; }
@@ -897,17 +936,19 @@
     display: flex !important;
     transform: none !important;
     width: max-content;
-    gap: var(--space-4);
+    gap: var(--space-5);
   }
 
   .program-berita__slider .program-berita__track:has(.berita-empty) {
     display: block !important;
     width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   .program-berita__card {
-    flex: 0 0 78vw;
-    max-width: 300px;
+    flex: 0 0 82vw;
+    max-width: 360px;
     scroll-snap-align: start;
   }
 

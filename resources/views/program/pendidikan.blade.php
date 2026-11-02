@@ -39,9 +39,9 @@
         </div>
 
         <div class="program-hero__content">
-            <h1 class="program-hero__title">Program <span>Peduli Pendidikan</span></h1>
+            <h1 class="program-hero__title">Program <span>Education Care</span></h1>
             <p class="program-hero__desc">
-                Peduli Pendidikan merupakan program Dompet Al-Qur'an Indonesia yang mendukung pendidikan anak-anak
+                Education Care merupakan program Dompet Al-Qur'an Indonesia yang mendukung pendidikan anak-anak
                 dan generasi muda dari keluarga prasejahtera melalui beasiswa, perlengkapan sekolah, pembinaan
                 karakter Islami, dan dukungan sarana belajar. Program ini bertujuan menciptakan generasi Qurani
                 yang cerdas, berdaya, berakhlak mulia, dan siap meraih masa depan yang lebih baik.

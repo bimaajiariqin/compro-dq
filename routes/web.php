@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\RekeningDonasiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\IklanController;
 use App\Http\Controllers\Admin\VideoKebaikanController;
+use App\Http\Controllers\Admin\VideoPertanyaanController;
 use App\Http\Controllers\Admin\ProgramPokokController;
 use App\Http\Controllers\Admin\MitraKebaikanController;
 use App\Http\Controllers\Admin\HeroSettingController;
@@ -75,6 +76,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             ->parameters(['rekening-donasi' => 'rekening_donasi']);
         Route::resource('iklan', IklanController::class);
         Route::resource('videokebaikan', VideoKebaikanController::class); // hapus ->names('admin.videokebaikan');
+        Route::resource('videopertanyaan', VideoPertanyaanController::class);
         Route::resource('program-pokok', ProgramPokokController::class)
             ->parameters(['program-pokok' => 'programPokok']);
         Route::resource('mitra', MitraKebaikanController::class)->except(['show']);

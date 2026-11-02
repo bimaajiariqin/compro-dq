@@ -409,10 +409,10 @@
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
                 <div class="nav-dropdown">
-                    <a href="{{ route('program.pendidikan') }}">Peduli Pendidikan</a>
-                    <a href="{{ route('program.ekonomi') }}">Peduli Ekonomi</a>
-                    <a href="{{ route('program.dakwah') }}">Peduli Dakwah</a>
-                    <a href="{{ route('program.kemanusiaan') }}">Peduli Kemanusiaan</a>
+                    <a href="{{ route('program.pendidikan') }}">Education Care</a>
+                    <a href="{{ route('program.ekonomi') }}">Economy Care</a>
+                    <a href="{{ route('program.dakwah') }}">Dakwah Care</a>
+                    <a href="{{ route('program.kemanusiaan') }}">Humanity Care</a>
                 </div>
             </div>
 
@@ -476,10 +476,10 @@
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
                 <div class="mobile-submenu" id="programSubmenu">
-                    <a href="{{ route('program.pendidikan') }}">Peduli Pendidikan</a>
-                    <a href="{{ route('program.ekonomi') }}">Peduli Ekonomi</a>
-                    <a href="{{ route('program.dakwah') }}">Peduli Dakwah</a>
-                    <a href="{{ route('program.kemanusiaan') }}">Peduli Kemanusiaan</a>
+                    <a href="{{ route('program.pendidikan') }}">Education Care</a>
+                    <a href="{{ route('program.ekonomi') }}">Economy Care</a>
+                    <a href="{{ route('program.dakwah') }}">Dakwah Care</a>
+                    <a href="{{ route('program.kemanusiaan') }}">Humanity Care</a>
                 </div>
             </div>
 

@@ -41,9 +41,9 @@
         </div>
 
         <div class="program-hero__content">
-            <h1 class="program-hero__title">Program <span>Peduli Kemanusiaan</span></h1>
+            <h1 class="program-hero__title">Program <span>Humanity Care</span></h1>
             <p class="program-hero__desc">
-                Peduli Kemanusiaan merupakan program Dompet Al-Qur'an Indonesia yang berfokus pada pemberian
+                Humanity Care merupakan program Dompet Al-Qur'an Indonesia yang berfokus pada pemberian
                 bantuan kemanusiaan bagi masyarakat yang terdampak bencana, krisis, dan kondisi darurat. Melalui
                 bantuan pangan, layanan kesehatan, hunian sementara, serta pemulihan pascabencana, program ini
                 bertujuan menghadirkan kepedulian, meringankan beban para penyintas, dan membantu mereka bangkit

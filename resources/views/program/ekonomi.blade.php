@@ -41,9 +41,9 @@
         </div>
 
         <div class="program-hero__content">
-            <h1 class="program-hero__title">Program <span>Peduli Ekonomi</span></h1>
+            <h1 class="program-hero__title">Program <span>Economy Care</span></h1>
             <p class="program-hero__desc">
-                Peduli Ekonomi merupakan program Dompet Al-Qur'an Indonesia yang berfokus pada pemberdayaan
+                Economy Care merupakan program Dompet Al-Qur'an Indonesia yang berfokus pada pemberdayaan
                 ekonomi masyarakat prasejahtera melalui bantuan modal usaha, pelatihan keterampilan,
                 pendampingan usaha, dan penguatan ekonomi berbasis syariah. Program ini bertujuan menciptakan
                 masyarakat yang mandiri, produktif, dan berdaya sehingga mampu meningkatkan kesejahteraan

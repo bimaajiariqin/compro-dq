@@ -44,10 +44,11 @@
   line-height: 1.5;
 }
 
-/* Single hero photo (previously a 3-photo collage) */
+/* Single hero photo (previously a 3-photo collage).
+   Diperbesar: max-width 700px -> 960px. */
 .hero-photo-wrap {
   position: relative;
-  max-width: 700px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -76,7 +77,7 @@
 .hero-stats {
   position: relative;
   z-index: 1;
-  max-width: 700px;
+  max-width: 760px; /* sedikit dilebarkan agar proporsional dengan foto yang lebih besar */
   margin: -20px auto 0;
   background: var(--bg-white);
   border-radius: var(--radius-full);
@@ -369,7 +370,17 @@
   animation: mitra-scroll 140s linear infinite;
 }
 
-.mitra-marquee:hover .mitra-track { animation-play-state: paused; }
+/* FIX: pause-on-hover HANYA aktif di perangkat yang benar-benar punya
+   mouse (hover: hover + pointer: fine). Di touchscreen, :hover disimulasikan
+   saat tap dan sering "nyangkut" (terutama karena logo ini adalah <a> yang
+   membuka tab baru, sehingga tidak pernah ada mouseleave asli untuk
+   membersihkan hover state) — akibatnya animasi berhenti permanen setelah
+   di-tap sekali. Dengan media query ini, mobile/tablet tidak pernah
+   menjalankan aturan pause sama sekali, jadi marquee selalu jalan otomatis
+   terlepas dari tap. Di desktop, perilaku pause-on-hover tetap seperti semula. */
+@media (hover: hover) and (pointer: fine) {
+  .mitra-marquee:hover .mitra-track { animation-play-state: paused; }
+}
 
 /* Kartu putih pembungkus tiap logo — ukurannya seragam untuk semua mitra,
    baik yang punya link (<a class="mitra-logo-link">) maupun yang tidak
@@ -733,6 +744,18 @@
 
 @media (min-width: 900px) {
   .video-kebaikan-media { margin-left: auto; }
+}
+
+/* Video Pertanyaan — kebalikan Video Kebaikan: video di KIRI, teks di KANAN
+   (desktop saja). Di mobile urutan tetap teks lalu video, sama seperti
+   Video Kebaikan. */
+@media (min-width: 900px) {
+  .video-pertanyaan-grid { grid-template-columns: 1.15fr 0.85fr; }
+  .video-pertanyaan-grid .video-kebaikan-media {
+    order: -1;
+    margin-left: 0;
+    margin-right: auto;
+  }
 }
 
 .video-kebaikan-title {

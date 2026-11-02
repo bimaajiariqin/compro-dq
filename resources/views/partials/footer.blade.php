@@ -4,6 +4,7 @@
       Butuh variabel $visitorStats (array: hari_ini, bulan_ini, tahun_ini)
       dari controller — lihat HomeController::index().
       ========================================================== --}}
+  @include('partials.wa-floating')
   <footer class="footer" id="siteFooter">
       <div class="container">
           <div class="footer-grid">
@@ -42,6 +43,10 @@
                       <a href="https://www.tiktok.com/@dompetalquran.id" aria-label="TikTok">
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.34 2.1 1.83 3.82 3.9 4.24v3.1a7.6 7.6 0 0 1-3.9-1.28v6.86a5.94 5.94 0 1 1-5.94-5.94c.2 0 .4.01.6.04v3.2a2.72 2.72 0 1 0 1.9 2.6V3h3.44z"/></svg>
                       </a>
+                      {{-- GANTI href di bawah dengan URL channel YouTube DQ yang sebenarnya --}}
+                      <a href="https://www.youtube.com/@dompetalquran" target="_blank" rel="noopener" aria-label="YouTube">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 0 0 .5 6.2C0 8.08 0 12 0 12s0 3.92.5 5.8a3.02 3.02 0 0 0 2.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 0 0 2.12-2.14C24 15.92 24 12 24 12s0-3.92-.5-5.8zM9.6 15.57V8.43L15.82 12 9.6 15.57z"/></svg>
+                      </a>
                   </div>
               </div>
 
@@ -65,10 +70,10 @@
 
                   <p class="footer-heading" style="grid-column: 2; grid-row: 1;">Program Kami</p>
                   <ul class="footer-links" style="grid-column: 2; grid-row: 2;">
-                      <li><a href="{{ route('program.pendidikan') }}">Peduli Pendidikan</a></li>
-                      <li><a href="{{ route('program.ekonomi') }}">Peduli Ekonomi</a></li>
-                      <li><a href="{{ route('program.dakwah') }}">Peduli Dakwah</a></li>
-                      <li><a href="{{ route('program.kemanusiaan') }}">Peduli Kemanusiaan</a></li>
+                      <li><a href="{{ route('program.pendidikan') }}">Education Care</a></li>
+                      <li><a href="{{ route('program.ekonomi') }}">Economy Care</a></li>
+                      <li><a href="{{ route('program.dakwah') }}">Dakwah Care</a></li>
+                      <li><a href="{{ route('program.kemanusiaan') }}">Humanity Care</a></li>
                   </ul>
 
                   <p class="footer-heading" style="grid-column: 2; grid-row: 3;">Pengunjung Website</p>
@@ -193,6 +198,7 @@
 
   .footer-social {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
   }
 

@@ -41,9 +41,9 @@
         </div>
 
         <div class="program-hero__content">
-            <h1 class="program-hero__title">Program <span>Peduli Dakwah</span></h1>
+            <h1 class="program-hero__title">Program <span>Dakwah Care</span></h1>
             <p class="program-hero__desc">
-                Peduli Dakwah merupakan program Dompet Al-Qur'an Indonesia yang berfokus pada penguatan syiar
+                Dakwah Care merupakan program Dompet Al-Qur'an Indonesia yang berfokus pada penguatan syiar
                 Islam melalui distribusi Al-Qur'an, pembinaan umat dan mualaf, dukungan bagi dai, serta
                 pengembangan sarana ibadah dan pendidikan keislaman. Program ini bertujuan memperluas akses
                 pembelajaran Islam, menumbuhkan nilai-nilai Qurani, serta membangun masyarakat yang beriman,

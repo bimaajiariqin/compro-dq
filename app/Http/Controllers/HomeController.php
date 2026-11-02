@@ -8,6 +8,7 @@ use App\Models\HeroStat;
 use App\Models\Iklan;
 use App\Models\Testimoni;
 use App\Models\VideoKebaikan;
+use App\Models\VideoPertanyaan;
 use App\Models\WebsiteVisit;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -23,11 +24,20 @@ class HomeController extends Controller
 
         $testimoni = Testimoni::orderByDesc('created_at')->get();
 
-        $berita = Berita::orderByDesc('tanggal_terbit')->take(24)->get();
+        // FIX: take(24) dihapus supaya SEMUA berita ikut dikirim ke
+        // landing page, bukan cuma 24 yang terbaru. Sebelumnya berita
+        // dengan tanggal_terbit lebih lama (mis. kategori/program
+        // "Ekonomi") bisa terpotong limit ini dan jadi tidak pernah
+        // muncul sama sekali di tab manapun -- termasuk tab "Semua".
+        // Pagination tampilan tetap ditangani di client-side oleh
+        // landing.js (ROWS_PER_PAGE), jadi aman dari sisi UI.
+        $berita = Berita::orderByDesc('tanggal_terbit')->get();
 
         $iklan = Iklan::orderByDesc('created_at')->get();
 
         $videoKebaikan = VideoKebaikan::orderByDesc('created_at')->get();
+
+        $videoPertanyaan = VideoPertanyaan::orderByDesc('created_at')->get();
 
         $heroSetting = HeroSetting::first();
 
@@ -52,6 +62,7 @@ class HomeController extends Controller
             'berita'               => $berita,
             'iklan'                => $iklan,
             'videoKebaikan'        => $videoKebaikan,
+            'videoPertanyaan'      => $videoPertanyaan,
             'kategoriOptions'      => self::KATEGORI,
             'filterProgramOptions' => self::FILTER_PROGRAM,
             'heroSetting'          => $heroSetting,

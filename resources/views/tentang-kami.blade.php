@@ -97,7 +97,7 @@
         </div>
 
         <div class="visi-misi__image fade-in">
-            <img src="assets/visi.png" alt="Amil Dompet Al-Qur'an">
+            <img src="assets/visi(36).png" alt="Amil Dompet Al-Qur'an">
         </div>
     </div>
 </section>

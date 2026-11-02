@@ -702,6 +702,173 @@
 @endif
 
 {{-- ==========================================================
+     VIDEO PERTANYAAN
+     ========================================================== --}}
+@if ($videoPertanyaan->isNotEmpty())
+
+<section class="section" id="video-pertanyaan">
+
+    <div class="container">
+
+        <div class="video-kebaikan-grid video-pertanyaan-grid reveal">
+
+            <div class="video-kebaikan-text">
+
+                <h2 class="video-kebaikan-title">
+                    Jawaban untuk <span>Pertanyaan Anda</span>
+                </h2>
+
+                <p>
+                    Punya pertanyaan seputar zakat, infak, sedekah, atau wakaf?
+                    Tonton video penjelasan dari tim kami langsung di channel YouTube
+                    {{ $videoPertanyaan->first()->channel_name }}.
+                </p>
+
+            </div>
+
+            <div class="video-kebaikan-media">
+
+                @php
+                    $featuredPertanyaan = $videoPertanyaan->first();
+                @endphp
+
+                <div
+                    class="video-featured"
+                    data-video-id="{{ $featuredPertanyaan->video_id }}"
+                >
+
+                    <div
+                        class="video-frame video-frame-featured"
+                        style="background-image:url('{{ $featuredPertanyaan->thumbnail_url }}')"
+                    >
+
+                        <div class="video-featured-top">
+
+                            <div class="video-featured-channel">
+
+                                <span class="video-channel-avatar">
+
+                                    <svg width="16" height="16" viewBox="0 0 24 24"
+                                         fill="currentColor">
+
+                                        <path d="M23 12s0-3.6-.46-5.32a2.9 2.9 0 0 0-2-2C18.88 4.2 12 4.2 12 4.2s-6.88 0-8.54.48a2.9 2.9 0 0 0-2 2C1 8.4 1 12 1 12s0 3.6.46 5.32a2.9 2.9 0 0 0 2 2C5.12 19.8 12 19.8 12 19.8s6.88 0 8.54-.48a2.9 2.9 0 0 0 2-2C23 15.6 23 12 23 12z"/>
+
+                                        <path
+                                            fill="#fff"
+                                            d="M9.75 15.5V8.5L15.75 12z"
+                                        />
+
+                                    </svg>
+
+                                </span>
+
+                                <span>
+
+                                    <span class="video-featured-title">
+                                        {{ $featuredPertanyaan->title }}
+                                    </span>
+
+                                    <span class="video-featured-channel-name">
+                                        {{ $featuredPertanyaan->channel_name }}
+                                    </span>
+
+                                </span>
+
+                            </div>
+
+                            <a
+                                href="https://www.youtube.com/watch?v={{ $featuredPertanyaan->video_id }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="video-youtube-badge"
+                            >
+                                Tonton di YouTube
+                            </a>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="video-play-btn"
+                            aria-label="Putar video"
+                        >
+                            <svg
+                                width="22"
+                                height="22"
+                                viewBox="0 0 24 24"
+                                fill="#fff"
+                            >
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                @if ($videoPertanyaan->count() > 1)
+
+                <div class="video-kebaikan-slider">
+
+                    <div
+                        class="video-kebaikan-list"
+                        id="videoPertanyaanList"
+                    >
+
+                        @foreach ($videoPertanyaan->skip(1) as $video)
+
+                            <div
+                                class="video-thumb-card"
+                                data-video-id="{{ $video->video_id }}"
+                            >
+
+                                <div
+                                    class="video-frame video-frame-thumb"
+                                    style="background-image:url('{{ $video->thumbnail_url }}')"
+                                >
+
+                                    <button
+                                        type="button"
+                                        class="video-play-btn video-play-btn-sm"
+                                        aria-label="Putar video"
+                                    >
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="#fff"
+                                        >
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+
+                                </div>
+
+                                <p class="video-thumb-title">
+                                    {{ $video->title }}
+                                </p>
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                </div>
+
+                @endif
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+@endif
+
+{{-- ==========================================================
      CTA
      ========================================================== --}}
 <section class="section" id="cta">
@@ -1314,15 +1481,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /* ============================================================
-       C. Slider video kebaikan
+       C. Slider video kebaikan & video pertanyaan
        ============================================================ */
 
-    var list =
-        document.getElementById(
-            'videoKebaikanList'
-        );
-
-    if (list) {
+    document.querySelectorAll('.video-kebaikan-list').forEach(function (list) {
 
         var isCoarsePointer =
             window.matchMedia(
@@ -1438,7 +1600,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             );
         }
-    }
+    });
 
 });
 </script>
